@@ -44,11 +44,14 @@ export interface OllamaPullChunk {
   error?: string;
 }
 
-/** Parametri di generazione, mappati sul campo "options" di /api/chat */
+export type ProviderId = "ollama" | "anthropic" | "openai";
+
+/** Parametri di generazione. numCtx è specifico di Ollama, maxTokens dei provider cloud. */
 export interface ModelParams {
   temperature: number;
   topP: number;
   numCtx: number;
+  maxTokens: number;
   systemPrompt: string;
 }
 
@@ -56,6 +59,7 @@ export const DEFAULT_PARAMS: ModelParams = {
   temperature: 0.8,
   topP: 0.9,
   numCtx: 4096,
+  maxTokens: 1024,
   systemPrompt: "",
 };
 
@@ -63,6 +67,7 @@ export const DEFAULT_PARAMS: ModelParams = {
 export interface Conversation {
   id: string;
   title: string;
+  provider: ProviderId;
   model: string;
   params: ModelParams;
   messages: ChatMessage[];

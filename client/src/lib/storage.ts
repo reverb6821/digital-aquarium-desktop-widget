@@ -1,5 +1,5 @@
 import { storage } from "@neutralinojs/lib";
-import type { Conversation, ModelParams } from "./types";
+import type { Conversation, ModelParams, ProviderId } from "./types";
 
 const CONVERSATION_PREFIX = "conversation:";
 const LAST_SETTINGS_KEY = "app:last-settings";
@@ -61,13 +61,21 @@ export async function listConversations(): Promise<ConversationSummary[]> {
 }
 
 interface LastSettings {
+  provider: ProviderId;
   model: string;
   params: ModelParams;
 }
 
-/** Ricorda l'ultimo modello/parametri usati, per pre-compilare le nuove conversazioni. */
-export async function saveLastSettings(model: string, params: ModelParams): Promise<void> {
-  await storage.setData(LAST_SETTINGS_KEY, JSON.stringify({ model, params } satisfies LastSettings));
+/** Ricorda l'ultimo provider/modello/parametri usati, per pre-compilare le nuove conversazioni. */
+export async function saveLastSettings(
+  provider: ProviderId,
+  model: string,
+  params: ModelParams
+): Promise<void> {
+  await storage.setData(
+    LAST_SETTINGS_KEY,
+    JSON.stringify({ provider, model, params } satisfies LastSettings)
+  );
 }
 
 export async function loadLastSettings(): Promise<LastSettings | null> {
