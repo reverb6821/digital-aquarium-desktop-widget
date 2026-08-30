@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Send, Square, AlertCircle, Settings2 } from "lucide-react";
+import { Send, Square, AlertCircle, Settings2, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageBubble } from "@/components/message-bubble";
 import { ModelSelector } from "@/components/model-selector";
 import { SettingsPanel } from "@/components/settings-panel";
 import { ConversationSidebar } from "@/components/conversation-sidebar";
+import { PullModelDialog } from "@/components/pull-model-dialog";
 import { streamChat, checkOllama, DEFAULT_MODEL } from "@/lib/ollama";
 import {
   saveConversation,
@@ -43,6 +44,7 @@ export function ChatWindow() {
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showPullDialog, setShowPullDialog] = useState(false);
   const [ollamaStatus, setOllamaStatus] = useState<OllamaStatus>({
     checked: false,
     ok: true,
@@ -55,11 +57,16 @@ export function ChatWindow() {
   const conversationRef = useRef<Conversation | null>(null);
   conversationRef.current = conversation;
 
+  const refreshOllamaStatus = useCallback(async () => {
+    const status = await checkOllama();
+    setOllamaStatus({ checked: true, ...status });
+    return status;
+  }, []);
+
   // Bootstrap: verifica Ollama, ripristina ultime impostazioni e conversazioni salvate
   useEffect(() => {
     (async () => {
-      const status = await checkOllama();
-      setOllamaStatus({ checked: true, ...status });
+      const status = await refreshOllamaStatus();
 
       const last = await loadLastSettings();
       const defaultModel = last?.model || status.models[0] || DEFAULT_MODEL;
@@ -236,6 +243,14 @@ export function ChatWindow() {
               </div>
             )}
             <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setShowPullDialog(true)}
+              title="Scarica o rimuovi modelli"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
+            <Button
               variant={showSettings ? "default" : "outline"}
               size="icon"
               onClick={() => setShowSettings((v) => !v)}
@@ -300,6 +315,13 @@ export function ChatWindow() {
           )}
         </div>
       </div>
+
+      <PullModelDialog
+        open={showPullDialog}
+        onOpenChange={setShowPullDialog}
+        installedModels={ollamaStatus.models}
+        onChanged={refreshOllamaStatus}
+      />
     </div>
   );
 }

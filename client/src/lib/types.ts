@@ -35,6 +35,15 @@ export interface OllamaStatus {
   models: string[];
 }
 
+/** Forma di ogni riga NDJSON restituita da POST /api/pull con stream:true */
+export interface OllamaPullChunk {
+  status: string; // es. "pulling manifest", "downloading", "verifying sha256 digest", "success"
+  digest?: string;
+  total?: number;
+  completed?: number;
+  error?: string;
+}
+
 /** Parametri di generazione, mappati sul campo "options" di /api/chat */
 export interface ModelParams {
   temperature: number;

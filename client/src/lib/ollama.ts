@@ -1,4 +1,9 @@
-import type { ChatMessage, OllamaChatStreamChunk, OllamaTagsResponse } from "./types";
+import type {
+  ChatMessage,
+  OllamaChatStreamChunk,
+  OllamaTagsResponse,
+  OllamaPullChunk,
+} from "./types";
 
 // Host di Ollama. In sviluppo locale è quasi sempre questo.
 // Ricorda di avviare Ollama con: OLLAMA_ORIGINS="*" ollama serve
@@ -98,6 +103,87 @@ export async function streamChat({
   }
 
   return fullText;
+}
+
+/**
+ * Scarica un modello da Ollama (equivalente a `ollama pull <model>`),
+ * segnalando il progresso via NDJSON streaming.
+ *
+ * @param model nome del modello, es. "llama3.1" o "qwen2.5:14b"
+ * @param onProgress chiamato per ogni riga di stato ricevuta
+ * @param signal per poter annullare il download
+ */
+export async function streamPull(
+  model: string,
+  onProgress: (chunk: OllamaPullChunk) => void,
+  signal: AbortSignal
+): Promise<void> {
+  const response = await fetch(`${OLLAMA_HOST}/api/pull`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: model, stream: true }),
+    signal,
+  });
+
+  if (!response.ok || !response.body) {
+    const text = await response.text().catch(() => "");
+    throw new Error(
+      `Ollama ha risposto con errore ${response.status}: ${text || response.statusText}`
+    );
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      let json: OllamaPullChunk;
+      try {
+        json = JSON.parse(trimmed) as OllamaPullChunk;
+      } catch {
+        continue;
+      }
+
+      if (json.error) {
+        throw new Error(json.error);
+      }
+
+      onProgress(json);
+
+      if (json.status === "success") {
+        return;
+      }
+    }
+  }
+}
+
+/**
+ * Elimina un modello scaricato localmente (equivalente a `ollama rm <model>`).
+ */
+export async function deleteModel(model: string): Promise<void> {
+  const response = await fetch(`${OLLAMA_HOST}/api/delete`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: model }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(
+      `Ollama ha risposto con errore ${response.status}: ${text || response.statusText}`
+    );
+  }
 }
 
 export interface OllamaCheckResult {
