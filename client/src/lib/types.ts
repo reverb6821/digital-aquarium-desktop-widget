@@ -34,3 +34,29 @@ export interface OllamaStatus {
   ok: boolean;
   models: string[];
 }
+
+/** Parametri di generazione, mappati sul campo "options" di /api/chat */
+export interface ModelParams {
+  temperature: number;
+  topP: number;
+  numCtx: number;
+  systemPrompt: string;
+}
+
+export const DEFAULT_PARAMS: ModelParams = {
+  temperature: 0.8,
+  topP: 0.9,
+  numCtx: 4096,
+  systemPrompt: "",
+};
+
+/** Una conversazione completa, così come viene persistita su disco */
+export interface Conversation {
+  id: string;
+  title: string;
+  model: string;
+  params: ModelParams;
+  messages: ChatMessage[];
+  createdAt: number;
+  updatedAt: number;
+}

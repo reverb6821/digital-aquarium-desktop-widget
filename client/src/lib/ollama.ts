@@ -4,35 +4,51 @@ import type { ChatMessage, OllamaChatStreamChunk, OllamaTagsResponse } from "./t
 // Ricorda di avviare Ollama con: OLLAMA_ORIGINS="*" ollama serve
 export const OLLAMA_HOST = "http://localhost:11434";
 
-// Modello fisso per l'MVP. Cambialo con un modello che hai già scaricato
-// (verifica con `ollama list`).
-export const MODEL = "llama3";
+// Usato solo come fallback se non c'è ancora nessun modello selezionato
+// e la lista da `ollama list` non è (ancora) disponibile.
+export const DEFAULT_MODEL = "llama3";
 
-export interface OllamaCheckResult {
-  ok: boolean;
-  models: string[];
+export interface StreamChatParams {
+  model: string;
+  messages: ChatMessage[];
+  systemPrompt?: string;
+  temperature?: number;
+  topP?: number;
+  numCtx?: number;
+  onToken: (chunkText: string) => void;
+  signal: AbortSignal;
 }
 
 /**
  * Invia una conversazione a Ollama e riceve la risposta in streaming.
- *
- * @param messages storico dei messaggi della conversazione
- * @param onToken chiamato per ogni pezzo di testo ricevuto
- * @param signal per poter interrompere la generazione
  * @returns il testo completo generato
  */
-export async function streamChat(
-  messages: ChatMessage[],
-  onToken: (chunkText: string) => void,
-  signal: AbortSignal
-): Promise<string> {
+export async function streamChat({
+  model,
+  messages,
+  systemPrompt,
+  temperature,
+  topP,
+  numCtx,
+  onToken,
+  signal,
+}: StreamChatParams): Promise<string> {
+  const fullMessages: ChatMessage[] = systemPrompt?.trim()
+    ? [{ role: "system", content: systemPrompt }, ...messages]
+    : messages;
+
   const response = await fetch(`${OLLAMA_HOST}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: MODEL,
-      messages,
+      model,
+      messages: fullMessages,
       stream: true,
+      options: {
+        temperature,
+        top_p: topP,
+        num_ctx: numCtx,
+      },
     }),
     signal,
   });
@@ -84,8 +100,14 @@ export async function streamChat(
   return fullText;
 }
 
+export interface OllamaCheckResult {
+  ok: boolean;
+  models: string[];
+}
+
 /**
- * Controlla se Ollama è raggiungibile e restituisce la lista modelli.
+ * Controlla se Ollama è raggiungibile e restituisce la lista modelli
+ * installati (usata sia per il banner di stato sia per il selettore).
  */
 export async function checkOllama(): Promise<OllamaCheckResult> {
   try {
