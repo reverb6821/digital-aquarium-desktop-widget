@@ -1,36 +1,28 @@
-import { storage } from "@neutralinojs/lib";
+import * as keychain from "./keychain";
 import type { ProviderId } from "@/lib/types";
 
-const PREFIX = "apikey:";
-
-/**
- * ATTENZIONE: le chiavi sono salvate in chiaro nello storage locale
- * dell'app (file system dell'utente), non cifrate. È lo stesso approccio
- * usato da molti client desktop di LLM, ma vale la pena saperlo.
- */
 export async function saveApiKey(provider: ProviderId, key: string): Promise<void> {
   const trimmed = key.trim();
   if (!trimmed) {
     await deleteApiKey(provider);
     return;
   }
-  await storage.setData(PREFIX + provider, trimmed);
+  await keychain.saveSecret(provider, trimmed);
 }
 
 export async function loadApiKey(provider: ProviderId): Promise<string | null> {
   try {
-    const value = await storage.getData(PREFIX + provider);
-    return value || null;
+    return await keychain.loadSecret(provider);
   } catch {
-    return null; // chiave non ancora salvata
+    return null;
   }
 }
 
 export async function deleteApiKey(provider: ProviderId): Promise<void> {
   try {
-    await storage.removeData(PREFIX + provider);
+    await keychain.deleteSecret(provider);
   } catch {
-    /* già assente, va bene così */
+    /* già assente o keychain non disponibile, va bene così */
   }
 }
 

@@ -1,8 +1,8 @@
 import { storage } from "@neutralinojs/lib";
 import type { Conversation, ModelParams, ProviderId } from "./types";
 
-const CONVERSATION_PREFIX = "conversation:";
-const LAST_SETTINGS_KEY = "app:last-settings";
+const CONVERSATION_PREFIX = "conversation-";
+const LAST_SETTINGS_KEY = "app-last-settings";
 
 export interface ConversationSummary {
   id: string;

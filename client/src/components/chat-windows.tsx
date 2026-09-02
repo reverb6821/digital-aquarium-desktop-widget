@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Send, Square, AlertCircle, Settings2, Download, KeyRound } from "lucide-react";
+import { Send, Square, AlertCircle, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageBubble } from "@/components/message-bubble";
-import { ModelSelector } from "@/components/model-selector";
-import { ProviderSelector } from "@/components/providers/provider-selector";
-import { SettingsPanel } from "@/components/settings-panel";
+import { UnifiedModelSelector, type ModelOption } from "@/components/shared/unified-model-selector";
 import { ConversationSidebar } from "@/components/conversation-sidebar";
 import { PullModelDialog } from "@/components/pull-model-dialog";
-import { ApiKeysDialog } from "@/components/providers/apikeys-dialog";
 import { DEFAULT_MODEL } from "@/lib/ollama";
 import { PROVIDER_LIST, getProvider, type ProviderStatus } from "@/lib/providers";
 import { loadAllApiKeys } from "@/lib/api-keys";
+import { loadDefaultParams } from "@/lib/default-params";
 import {
   saveConversation,
   loadConversation,
@@ -57,20 +55,30 @@ function titleFromMessage(text: string): string {
   return clean.length > 40 ? clean.slice(0, 40) + "…" : clean;
 }
 
+/** Modelli realmente selezionabili ora: Ollama se raggiungibile, i cloud solo se hanno una chiave valida. */
+function buildModelOptions(statusMap: ProviderStatusMap): ModelOption[] {
+  const options: ModelOption[] = [];
+  for (const provider of PROVIDER_LIST) {
+    const status = statusMap[provider.id];
+    if (!status?.ok) continue;
+    for (const model of status.models) {
+      options.push({ provider: provider.id, model });
+    }
+  }
+  return options;
+}
+
 export function ChatWindow() {
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [summaries, setSummaries] = useState<ConversationSummary[]>([]);
   const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [showPullDialog, setShowPullDialog] = useState(false);
-  const [showApiKeysDialog, setShowApiKeysDialog] = useState(false);
   const [apiKeys, setApiKeys] = useState<Partial<Record<ProviderId, string>>>({});
   const [providerStatus, setProviderStatus] = useState<ProviderStatusMap>(emptyStatusMap());
 
   const abortRef = useRef<AbortController | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  // Sempre aggiornato con l'ultimo stato, utile dentro closures async (streaming, finally, ecc.)
   const conversationRef = useRef<Conversation | null>(null);
   conversationRef.current = conversation;
   const apiKeysRef = useRef<Partial<Record<ProviderId, string>>>({});
@@ -83,12 +91,9 @@ export function ChatWindow() {
     return status;
   }, []);
 
-  const refreshAllProviders = useCallback(async () => {
-    await Promise.all(PROVIDER_LIST.map((p) => refreshProviderStatus(p.id)));
-  }, [refreshProviderStatus]);
-
   // Bootstrap: carica le chiavi salvate, verifica ogni provider, ripristina
-  // ultime impostazioni e conversazioni salvate
+  // ultime impostazioni e conversazioni salvate. Rieseguito ogni volta che si
+  // torna su questa rotta (es. da /settings), così i modelli sono aggiornati.
   useEffect(() => {
     (async () => {
       const keys = await loadAllApiKeys(CLOUD_PROVIDER_IDS);
@@ -108,11 +113,17 @@ export function ChatWindow() {
       setProviderStatus(statusMap);
 
       const last = await loadLastSettings();
-      const defaultProvider: ProviderId = last?.provider || "ollama";
-      const providerModels = statusMap[defaultProvider]?.models ?? [];
-      const defaultModel =
-        last?.model || providerModels[0] || getProvider(defaultProvider).fallbackModels[0] || DEFAULT_MODEL;
-      const defaultParams = last?.params || DEFAULT_PARAMS;
+      const options = buildModelOptions(statusMap);
+      const lastStillValid =
+        last && options.some((o) => o.provider === last.provider && o.model === last.model);
+
+      const defaultProvider: ProviderId = lastStillValid
+        ? last!.provider
+        : options[0]?.provider || "ollama";
+      const defaultModel = lastStillValid
+        ? last!.model
+        : options[0]?.model || getProvider(defaultProvider).fallbackModels[0] || DEFAULT_MODEL;
+      const defaultParams = last?.params || (await loadDefaultParams()) || DEFAULT_PARAMS;
 
       const list = await listConversations();
       setSummaries(list);
@@ -204,8 +215,14 @@ export function ChatWindow() {
 
       const finalConv = conversationRef.current;
       if (finalConv) {
-        await persist({ ...finalConv, updatedAt: Date.now() });
-        await saveLastSettings(finalConv.provider, finalConv.model, finalConv.params);
+        try {
+          await persist({ ...finalConv, updatedAt: Date.now() });
+          await saveLastSettings(finalConv.provider, finalConv.model, finalConv.params);
+        } catch (persistErr) {
+          // Prima non arrivava a schermo: se il salvataggio fallisce (storage, permessi,
+          // dato corrotto...) ora almeno lo vediamo in console invece di sparire nel nulla.
+          console.error("Errore nel salvataggio della conversazione:", persistErr);
+        }
       }
     }
   }
@@ -224,7 +241,8 @@ export function ChatWindow() {
   function handleNewConversation() {
     const conv = conversationRef.current;
     const provider = conv?.provider || "ollama";
-    const model = conv?.model || providerStatus[provider]?.models[0] || getProvider(provider).fallbackModels[0];
+    const model =
+      conv?.model || providerStatus[provider]?.models[0] || getProvider(provider).fallbackModels[0];
     const params = conv?.params || DEFAULT_PARAMS;
     setConversation(createConversation(provider, model, params));
   }
@@ -243,26 +261,15 @@ export function ChatWindow() {
     }
   }
 
-  function handleProviderChange(providerId: ProviderId) {
-    setConversation((prev) => {
-      if (!prev) return prev;
-      const models = providerStatus[providerId]?.models ?? [];
-      const nextModel = models[0] || getProvider(providerId).fallbackModels[0];
-      return { ...prev, provider: providerId, model: nextModel };
-    });
-  }
-
-  function handleModelChange(model: string) {
-    setConversation((prev) => (prev ? { ...prev, model } : prev));
-  }
-
-  function handleParamsChange(params: ModelParams) {
-    setConversation((prev) => (prev ? { ...prev, params } : prev));
+  function handleModelOptionChange(option: ModelOption) {
+    setConversation((prev) =>
+      prev ? { ...prev, provider: option.provider, model: option.model } : prev
+    );
   }
 
   if (!conversation) {
     return (
-      <div className="flex h-screen items-center justify-center text-sm text-muted-foreground">
+      <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
         Caricamento…
       </div>
     );
@@ -270,11 +277,11 @@ export function ChatWindow() {
 
   const activeProvider = getProvider(conversation.provider);
   const activeStatus = providerStatus[conversation.provider];
-  const activeModels = activeStatus?.models.length ? activeStatus.models : activeProvider.fallbackModels;
+  const modelOptions = buildModelOptions(providerStatus);
   const showOllamaTools = conversation.provider === "ollama";
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-full bg-background">
       <ConversationSidebar
         conversations={summaries}
         activeId={conversation.id}
@@ -284,24 +291,22 @@ export function ChatWindow() {
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Header */}
-        <header className="flex items-center justify-between gap-2 border-b px-4 py-2.5">
+        {/* Toolbar: qui, non nell'header globale, perché è specifica della chat */}
+        <div className="flex items-center justify-between gap-2 border-b px-4 py-2.5">
+          <UnifiedModelSelector
+            options={modelOptions}
+            value={{ provider: conversation.provider, model: conversation.model }}
+            onChange={handleModelOptionChange}
+            disabled={isGenerating}
+          />
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold">Ollama Chat</span>
-            <ProviderSelector
-              value={conversation.provider}
-              onChange={handleProviderChange}
-              disabled={isGenerating}
-            />
-            <ModelSelector
-              models={activeModels}
-              value={conversation.model}
-              onChange={handleModelChange}
-              disabled={isGenerating}
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            {activeStatus?.checked && !activeStatus.ok && (
+            {modelOptions.length === 0 && (
+              <div className="flex items-center gap-1.5 text-xs text-destructive">
+                <AlertCircle className="h-3.5 w-3.5" />
+                Nessun modello disponibile — configura un provider in Impostazioni
+              </div>
+            )}
+            {modelOptions.length > 0 && activeStatus?.checked && !activeStatus.ok && (
               <div className="flex items-center gap-1.5 text-xs text-destructive">
                 <AlertCircle className="h-3.5 w-3.5" />
                 {activeProvider.requiresApiKey
@@ -319,35 +324,17 @@ export function ChatWindow() {
                 <Download className="h-4 w-4" />
               </Button>
             )}
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowApiKeysDialog(true)}
-              title="API key servizi esterni"
-            >
-              <KeyRound className="h-4 w-4" />
-            </Button>
-            <Button
-              variant={showSettings ? "default" : "outline"}
-              size="icon"
-              onClick={() => setShowSettings((v) => !v)}
-              title="Parametri del modello"
-            >
-              <Settings2 className="h-4 w-4" />
-            </Button>
           </div>
-        </header>
+        </div>
 
         <div className="flex min-h-0 flex-1">
           {/* Messaggi */}
-          <div
-            ref={scrollRef}
-            className="chat-scroll flex-1 space-y-3 overflow-y-auto px-4 py-4"
-          >
+          <div ref={scrollRef} className="chat-scroll flex-1 space-y-3 overflow-y-auto px-4 py-4">
             {conversation.messages.length === 0 && (
               <p className="pt-10 text-center text-sm text-muted-foreground">
-                Scrivi un messaggio per iniziare la conversazione con {conversation.model} (
-                {activeProvider.name}).
+                {modelOptions.length === 0
+                  ? "Configura un provider (Ollama in locale, o una API key in Impostazioni) per iniziare."
+                  : `Scrivi un messaggio per iniziare la conversazione con ${conversation.model} (${activeProvider.name}).`}
               </p>
             )}
             {conversation.messages.map((m, i) => (
@@ -356,24 +343,11 @@ export function ChatWindow() {
                 role={m.role}
                 content={m.content}
                 isStreaming={
-                  isGenerating &&
-                  i === conversation.messages.length - 1 &&
-                  m.role === "assistant"
+                  isGenerating && i === conversation.messages.length - 1 && m.role === "assistant"
                 }
               />
             ))}
           </div>
-
-          {/* Pannello parametri, apribile/chiudibile */}
-          {showSettings && (
-            <div className="chat-scroll w-72 shrink-0 overflow-y-auto border-l">
-              <SettingsPanel
-                provider={conversation.provider}
-                params={conversation.params}
-                onChange={handleParamsChange}
-              />
-            </div>
-          )}
         </div>
 
         {/* Input */}
@@ -391,11 +365,20 @@ export function ChatWindow() {
               <Square className="h-4 w-4" />
             </Button>
           ) : (
-            <Button size="icon" onClick={handleSend} disabled={!input.trim()} title="Invia">
+            <Button
+              size="icon"
+              onClick={handleSend}
+              disabled={!input.trim() || modelOptions.length === 0}
+              title="Invia"
+            >
               <Send className="h-4 w-4" />
             </Button>
           )}
         </div>
+        <p className="px-3 pb-2 text-center text-[10px] text-muted-foreground">
+          Le risposte sono generate da un'IA e possono contenere errori — verifica le
+          informazioni importanti.
+        </p>
       </div>
 
       {showOllamaTools && (
@@ -406,17 +389,6 @@ export function ChatWindow() {
           onChanged={() => refreshProviderStatus("ollama")}
         />
       )}
-
-      <ApiKeysDialog
-        open={showApiKeysDialog}
-        onOpenChange={setShowApiKeysDialog}
-        onChanged={async () => {
-          const keys = await loadAllApiKeys(CLOUD_PROVIDER_IDS);
-          setApiKeys(keys);
-          apiKeysRef.current = keys;
-          await refreshAllProviders();
-        }}
-      />
     </div>
   );
 }

@@ -44,7 +44,7 @@ export interface OllamaPullChunk {
   error?: string;
 }
 
-export type ProviderId = "ollama" | "anthropic" | "openai";
+export type ProviderId = "ollama" | "anthropic" | "openai" | "gemini" | "deepseek";
 
 /** Parametri di generazione. numCtx è specifico di Ollama, maxTokens dei provider cloud. */
 export interface ModelParams {

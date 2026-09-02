@@ -1,5 +1,5 @@
 {
-  "applicationId": "js.neutralino.zero",
+  "applicationId": "com.ai.client",
   "version": "1.0.0",
   "defaultMode": "window",
   "documentRoot": "/client/dist/",
@@ -8,16 +8,23 @@
   "enableNativeAPI": true,
   "nativeAllowList": [
     "app.*",
-    "filesystem.readDirectory"
+    "filesystem.readDirectory",
+    "os.*",
+    "computer.*",
+    "debug.log",
+    "events.*",
+    "storage.*"
   ],
   "modes": {
     "window": {
       "title": "local-ai-client",
-      "width": 800,
-      "height": 500,
-      "minWidth": 400,
-      "minHeight": 200,
-      "icon": "/client/public/icon.svg"
+      "width": 900,
+      "height": 720,
+      "minWidth": 420,
+      "minHeight": 400,
+      "icon": "/client/public/icon.svg",
+      "resizable": true,
+      "exitProcessOnClose": true
     }
   },
   "cli": {
