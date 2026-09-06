@@ -53,15 +53,17 @@ export function UnifiedModelSelector({
       }}
       disabled={disabled || options.length === 0}
     >
-      <SelectTrigger aria-label="Modello" className="min-w-[12rem]">
+      <SelectTrigger aria-label="Modello" className="min-w-[12rem] font-data text-xs">
         <SelectValue placeholder="Nessun modello disponibile" />
       </SelectTrigger>
       <SelectContent>
         {grouped.map((g) => (
           <SelectGroup key={g.provider.id}>
-            <SelectLabel>{g.provider.name}</SelectLabel>
+            <SelectLabel className="font-display text-[11px] uppercase tracking-wide text-muted-foreground">
+              {g.provider.name}
+            </SelectLabel>
             {g.models.map((o) => (
-              <SelectItem key={encode(o)} value={encode(o)}>
+              <SelectItem key={encode(o)} value={encode(o)} className="font-data text-xs">
                 {o.model}
               </SelectItem>
             ))}

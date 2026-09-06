@@ -15,14 +15,16 @@ export function SettingsPanel({ provider, params, onChange }: SettingsPanelProps
 
   return (
     <div className="space-y-5 p-4">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h3 className="font-display text-xs font-medium uppercase tracking-wide text-muted-foreground">
         Parametri
       </h3>
 
       <div>
         <label className="mb-1 flex items-center justify-between text-xs font-medium text-muted-foreground">
           Temperature
-          <span className="tabular-nums">{params.temperature.toFixed(2)}</span>
+          <span className="font-data tabular-nums text-foreground">
+            {params.temperature.toFixed(2)}
+          </span>
         </label>
         <input
           type="range"
@@ -38,7 +40,9 @@ export function SettingsPanel({ provider, params, onChange }: SettingsPanelProps
       <div>
         <label className="mb-1 flex items-center justify-between text-xs font-medium text-muted-foreground">
           Top P
-          <span className="tabular-nums">{params.topP.toFixed(2)}</span>
+          <span className="font-data tabular-nums text-foreground">
+            {params.topP.toFixed(2)}
+          </span>
         </label>
         <input
           type="range"
@@ -60,6 +64,7 @@ export function SettingsPanel({ provider, params, onChange }: SettingsPanelProps
             type="number"
             min={512}
             step={512}
+            className="font-data"
             value={params.numCtx}
             onChange={(e) => update("numCtx", Number(e.target.value) || 0)}
           />
@@ -75,6 +80,7 @@ export function SettingsPanel({ provider, params, onChange }: SettingsPanelProps
             type="number"
             min={1}
             step={128}
+            className="font-data"
             value={params.maxTokens}
             onChange={(e) => update("maxTokens", Number(e.target.value) || 0)}
           />

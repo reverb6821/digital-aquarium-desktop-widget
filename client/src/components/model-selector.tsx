@@ -27,12 +27,12 @@ export function ModelSelector({ models, value, onChange, disabled }: ModelSelect
       }}
       disabled={disabled || models.length === 0}
     >
-      <SelectTrigger aria-label="Modello">
+      <SelectTrigger aria-label="Modello" className="font-data text-xs">
         <SelectValue placeholder="Modello" />
       </SelectTrigger>
       <SelectContent>
         {items.map((m) => (
-          <SelectItem key={m} value={m}>
+          <SelectItem key={m} value={m} className="font-data text-xs">
             {m}
           </SelectItem>
         ))}

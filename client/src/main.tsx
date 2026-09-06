@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { init } from "@neutralinojs/lib"
 import { routeTree } from './routeTree.gen'
 import './index.css'
+import { TooltipProvider } from './components/ui/tooltip'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -16,7 +17,9 @@ declare module '@tanstack/react-router' {
 }
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-     <RouterProvider router={router} />
+    <TooltipProvider>
+      <RouterProvider router={router} />
+    </TooltipProvider>
   </StrictMode>,
 )
 

@@ -67,7 +67,7 @@ export function ApiKeysDialog({ open, onOpenChange, onChanged }: ApiKeysDialogPr
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>API key servizi esterni</DialogTitle>
+          <DialogTitle className="font-display">API key servizi esterni</DialogTitle>
           <DialogDescription>
             Salvate in locale, in chiaro (non cifrate) — stesso approccio di molti client
             desktop di LLM. Non condividere il file dell'app se ti preoccupa.
@@ -81,14 +81,15 @@ export function ApiKeysDialog({ open, onOpenChange, onChanged }: ApiKeysDialogPr
               <div key={provider.id}>
                 <label className="mb-1 flex items-center justify-between text-xs font-medium text-muted-foreground">
                   {provider.name}
-                  {state === "checking" && <Loader2 className="h-3 w-3 animate-spin" />}
-                  {state === "ok" && <Check className="h-3 w-3 text-green-600" />}
+                  {state === "checking" && <Loader2 className="h-3 w-3 animate-spin text-primary" />}
+                  {state === "ok" && <Check className="h-3 w-3 text-primary" />}
                   {state === "error" && <AlertCircle className="h-3 w-3 text-destructive" />}
                 </label>
                 <div className="flex gap-2">
                   <Input
                     type="password"
                     autoComplete="off"
+                    className="font-data"
                     value={values[provider.id] ?? ""}
                     onChange={(e) =>
                       setValues((v) => ({ ...v, [provider.id]: e.target.value }))
@@ -100,7 +101,7 @@ export function ApiKeysDialog({ open, onOpenChange, onChanged }: ApiKeysDialogPr
                   </Button>
                 </div>
                 {state === "error" && checkError[provider.id] && (
-                  <p className="mt-1 text-xs text-destructive">⚠️ {checkError[provider.id]}</p>
+                  <p className="mt-1 text-xs text-destructive">{checkError[provider.id]}</p>
                 )}
               </div>
             );

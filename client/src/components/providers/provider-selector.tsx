@@ -24,12 +24,12 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
       }}
       disabled={disabled}
     >
-      <SelectTrigger aria-label="Provider">
+      <SelectTrigger aria-label="Provider" className="font-display text-xs">
         <SelectValue placeholder="Provider" />
       </SelectTrigger>
       <SelectContent>
         {PROVIDER_LIST.map((p) => (
-          <SelectItem key={p.id} value={p.id}>
+          <SelectItem key={p.id} value={p.id} className="font-display text-xs">
             {p.name}
           </SelectItem>
         ))}

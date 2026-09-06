@@ -109,7 +109,7 @@ export function PullModelDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Gestisci modelli</DialogTitle>
+          <DialogTitle className="font-display">Gestisci modelli</DialogTitle>
           <DialogDescription>
             Scarica nuovi modelli da Ollama o rimuovi quelli che non usi più.
           </DialogDescription>
@@ -125,6 +125,7 @@ export function PullModelDialog({
               placeholder="es. llama3.1, qwen2.5:14b…"
               list="suggested-models"
               disabled={isPulling}
+              className="font-data"
             />
             <datalist id="suggested-models">
               {SUGGESTED_MODELS.map((m) => (
@@ -145,15 +146,15 @@ export function PullModelDialog({
 
           {progress && (
             <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <Loader2 className="h-3 w-3 animate-spin" />
+              <div className="flex items-center gap-1.5 font-data text-xs text-muted-foreground">
+                <Loader2 className="h-3 w-3 animate-spin text-primary" />
                 {progress.status}
                 {progress.pct !== null && ` — ${progress.pct}%`}
               </div>
               {progress.pct !== null && (
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
                   <div
-                    className="h-full bg-primary transition-all"
+                    className="glow-primary h-full bg-primary transition-all"
                     style={{ width: `${progress.pct}%` }}
                   />
                 </div>
@@ -161,12 +162,12 @@ export function PullModelDialog({
             </div>
           )}
 
-          {error && <p className="text-xs text-destructive">⚠️ {error}</p>}
+          {error && <p className="text-xs text-destructive">{error}</p>}
         </div>
 
         {/* Modelli installati */}
         <div className="mt-5">
-          <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <h4 className="mb-1.5 font-display text-xs font-medium uppercase tracking-wide text-muted-foreground">
             Modelli installati
           </h4>
           <div className="chat-scroll max-h-48 space-y-0.5 overflow-y-auto">
@@ -176,7 +177,7 @@ export function PullModelDialog({
             {installedModels.map((m) => (
               <div
                 key={m}
-                className="flex items-center justify-between rounded-md px-2 py-1.5 text-sm hover:bg-accent/60"
+                className="flex items-center justify-between rounded-md px-2 py-1.5 font-data text-sm hover:bg-accent/10"
               >
                 <span className="truncate">{m}</span>
                 <button
