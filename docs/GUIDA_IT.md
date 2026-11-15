@@ -66,6 +66,9 @@ download: tieni premuto **BOOT**, premi e rilascia **RESET**, poi rilascia **BOO
 Al primo avvio la scheda **formatta la partizione LittleFS** (~12 MB): può restare a schermo nero
 per **10–30 secondi**. Succede una volta sola.
 
+Aggiornando da un firmware precedente alla versione con i biomi d'acqua dolce, l'acquario salvato e
+i preset non vengono migrati: si riparte dal bioma Amazzonico.
+
 Nel monitor seriale dovresti vedere qualcosa di simile:
 
 ```
@@ -150,6 +153,7 @@ Con `BRINGUP_TEST 0` carica lo sketch e segui la checklist:
 | 3 | **Tap sull'acqua** lontano dai pesci | Cadono granelli di cibo, i pesci vicini li inseguono e li mangiano |
 | 4 | **Tap vicino a un pesce** | Il pesce scappa, il banco si disperde e poi si ricompatta |
 | 5 | **Swipe orizzontale con 2 dita** | Dissolvenza e cambio bioma (Acque nere → Sud-Est asiatico → Africa → Malawi → Laghetto → ...) |
+| 5b | Bioma Sud-Est Asia (tasto/swipe) | Le caridine camminano e becchettano sul fondo e scattano via se tocchi vicino; le lumache killer strisciano lente e si ritirano nel guscio al tocco. Bioma Laghetto: lumache Planorbarius |
 | 6 | **Tieni premuto 1 s** | Si apre il menu a destra |
 | 7 | Menu → **Bioma** | 6 anteprime, tocca per cambiare bioma |
 | 8 | Menu → **Acqua / Fondale** | Le modifiche (colori, raggi, altezza, "Rigenera") si vedono subito |
@@ -157,7 +161,7 @@ Con `BRINGUP_TEST 0` carica lo sketch e segui la checklist:
 | 10 | Menu → **Piante e decor → Modalita' modifica** | Tocca e trascina una pianta o decorazione; prova Dietro/Davanti, Colore, Elimina, poi **Fatto** |
 | 11 | Menu → **Ambiente** | Giorno/notte, velocità, luminosità, FPS 20/30, spegnimento schermo |
 | 12 | Menu → **Preset → Salva**, cambia bioma, poi **Carica** | Torna la scena salvata |
-| 13 | Fai una modifica, aspetta **3 s**, premi **RESET** sulla scheda | L'acquario riparte esattamente come l'avevi lasciato |
+| 13 | Fai una modifica, **chiudi il menu**, aspetta **3 s**, premi **RESET** sulla scheda | L'acquario riparte esattamente come l'avevi lasciato (con il menu aperto non si salva nulla) |
 | 14 | Ambiente → "Spegni dopo 5 min", attendi | La retroilluminazione si spegne; il primo tocco la riaccende (quel tocco non dà cibo) |
 | 15 | Creature → porta il totale a 60 | Gli FPS nell'overlay restano ≥ 25 |
 | 16 | Menu aperto | L'acquario continua ad animarsi dietro, ≥ 15 fps |
@@ -206,7 +210,8 @@ Deve terminare con `ALL OK` e salvare gli screenshot in `/tmp/aquarium_test/`.
 | La seriale USB funziona durante il flash ma sparisce dopo l'avvio | EXIO5 (selettore USB/CAN, **da verificare**): in `board_config.h` cambia `EXIO_DEFAULT` aggiungendo `\| EXIO_USB_SEL` e segnalalo |
 | `[touch] GT911 not found` | Premi RESET; se persiste, invia il log completo di avvio |
 | Il tocco risponde ma in un punto sbagliato | Annota le coordinate agli angoli nel bring-up e segnalale (possibile asse invertito) |
-| Immagine che scorre/trema (drift) | Annota modo, FPS e quando succede; prova l'altro `DISPLAY_MODE` |
+| Immagine stirata/spostata per un attimo ~2 s dopo la chiusura del menu | Noto: è il momento in cui la config viene scritta su flash (vedi BUILD.md → Persistence). Segnalalo solo se succede in altri momenti |
+| Immagine che scorre/trema (drift) in altri momenti | Annota modo, FPS e quando succede; prova l'altro `DISPLAY_MODE` |
 | Colori sbagliati (rosso/blu invertiti) | Segnalalo con una foto delle barre colore |
 | Riportare la scheda allo stato iniziale (cancella config e preset) | Vedi sotto |
 

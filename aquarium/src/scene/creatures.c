@@ -26,16 +26,16 @@ const SpeciesDef SPECIES[] = {
      {7, 4, 3, 4, TAIL_FORK, 1, PAT_NONE, BODY_SLIM, 0, 0},
      {{0, C(170,60,25), C(220,95,35), C(245,120,45), C(255,175,110), 0, 0, C(255,140,70), C(20,10,10), 0},
       {0, C(170,130,25), C(225,175,40), C(245,200,60), C(255,230,140), 0, 0, C(255,215,90), C(20,10,10), 0}}},
-    {"angelfish", "Scalare", "amazon", BEH_WANDER, 18, 6, 14, 40, 170, 3, 6, 3,
-     {10, 11, 4, 6, TAIL_FORK, 7, PAT_BANDS, BODY_DISC, 7, FIN_SWEPT},
+    {"angelfish", "Scalare", "amazon", BEH_WANDER, 29, 6, 14, 40, 170, 3, 6, 3,
+     {21, 18, 8, 10, TAIL_FORK, 10, PAT_BANDS, BODY_DISC, 10, FIN_SWEPT},
      {{0, C(120,125,130), C(170,175,180), C(205,208,212), C(232,234,236), C(30,30,36), C(90,90,96), C(195,200,205), C(160,25,25), 0},
       {0, C(200,150,60), C(235,190,90), C(245,212,125), C(250,235,195), C(215,95,35), C(235,150,70), C(240,205,135), C(160,25,25), 0},
       {0, C(16,16,20), C(32,32,38), C(48,48,56), C(66,66,76), C(12,12,16), C(26,26,30), C(44,44,52), C(210,45,45), 0}}},
-    {"discus", "Discus", "blackwater", BEH_WANDER, 16, 5, 12, 50, 180, 3, 6, 3,
-     {12, 11, 3, 6, TAIL_ROUND, 2, PAT_WAVY, BODY_DISC, 2, 0},
-     {{0, C(140,40,30), C(195,70,40), C(220,95,55), C(235,140,90), C(50,200,215), 0, C(200,85,50), C(210,30,20), 0},
-      {0, C(30,60,130), C(45,90,175), C(60,115,200), C(110,160,220), C(120,230,245), 0, C(60,110,190), C(210,30,20), 0},
-      {0, C(200,110,30), C(235,145,50), C(245,170,70), C(250,205,130), C(160,40,30), 0, C(235,150,60), C(210,30,20), 0}}},
+    {"discus", "Discus", "blackwater", BEH_WANDER, 30, 5, 12, 50, 180, 3, 6, 3,
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_DISCUS, 0, 0},
+     {{0, C(85,14,14), C(160,30,25), C(200,48,32), C(225,100,50), C(115,205,235), C(80,150,195), C(150,40,35), C(15,5,5), C(240,45,40)},   // turchese rosso
+      {0, C(18,32,85), C(40,80,170), C(62,118,212), C(115,168,232), C(170,235,252), C(115,195,235), C(50,92,175), C(15,5,5), C(225,55,45)}, // blue diamond
+      {0, C(140,55,20), C(215,115,40), C(240,150,60), C(250,200,130), C(175,40,30), C(205,75,45), C(210,110,50), C(15,5,5), C(230,40,30)}}},  // pigeon blood
     {"corydoras", "Corydoras", "amazon", BEH_BOTTOM, 13, 6, 16, 220, 255, 6, 12, 2,
      {10, 5, 3, 4, TAIL_FORK, 2, PAT_SPOTS, BODY_SLIM, 0, 0},
      {{0, C(110,95,70), C(165,145,105), C(195,175,135), C(225,215,190), 0, C(60,50,35), C(180,165,130), C(15,15,20), 0},
@@ -56,8 +56,8 @@ const SpeciesDef SPECIES[] = {
     {"congo_tetra", "Tetra del Congo", "africa", BEH_SCHOOL, 16, 12, 26, 40, 160, 7, 16, 1,
      {11, 6, 5, 6, TAIL_FORK, 3, PAT_LATERAL, BODY_SLIM, 2, 0},
      {{0, C(70,90,140), C(110,140,190), C(170,180,195), C(230,165,95), C(240,205,95), 0, C(205,205,215), C(150,30,30), 0}}},
-    {"kribensis", "Pelvicachromis", "africa", BEH_WANDER, 15, 6, 14, 150, 240, 2, 4, 1,
-     {11, 5, 4, 4, TAIL_ROUND, 2, PAT_LATERAL, BODY_SLIM, 1, 0},
+    {"kribensis", "Pelvicachromis", "africa", BEH_WANDER, 31, 6, 14, 150, 240, 2, 4, 1,
+     {23, 10, 8, 9, TAIL_ROUND, 4, PAT_LATERAL, BODY_SLIM, 3, 0},
      {{0, C(110,90,60), C(170,150,110), C(200,185,150), C(220,80,140), C(40,30,25), 0, C(230,200,90), C(15,10,10), 0}}},
     {"shrimp", "Caridina", "seasia", BEH_SHRIMP, 12, 3, 8, 255, 255, 8, 30, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_SHRIMP, 0, 0},
@@ -69,13 +69,13 @@ const SpeciesDef SPECIES[] = {
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CONE, 0, 0},
      {{0, C(30,20,15), C(75,48,26), C(120,85,50), C(170,160,130), C(232,192,64), 0, 0, C(15,15,15), 0}}},
     // ---------------- Lago Malawi
-    {"mbuna", "Ciclide mbuna", "malawi", BEH_WANDER, 15, 8, 18, 60, 230, 6, 12, 3,
-     {12, 6, 4, 5, TAIL_ROUND, 2, PAT_BARS, BODY_SLIM, 1, 0},
+    {"mbuna", "Ciclide mbuna", "malawi", BEH_WANDER, 25, 8, 18, 60, 230, 6, 12, 3,
+     {19, 9, 6, 7, TAIL_ROUND, 3, PAT_BARS, BODY_SLIM, 2, 0},
      {{0, C(200,165,20), C(240,205,40), C(250,220,60), C(252,235,130), C(240,205,40), 0, C(25,25,30), C(15,15,15), 0},
       {0, C(40,70,170), C(70,110,210), C(90,135,225), C(140,175,235), C(20,30,70), 0, C(60,90,190), C(15,15,15), 0},
       {0, C(200,90,30), C(235,125,45), C(245,145,60), C(250,190,120), C(215,105,40), 0, C(240,150,70), C(15,15,15), 0}}},
-    {"aulonocara", "Ciclide pavone", "malawi", BEH_WANDER, 17, 6, 14, 40, 200, 3, 6, 2,
-     {13, 6, 5, 6, TAIL_ROUND, 3, PAT_NONE, BODY_SLIM, 1, 0},
+    {"aulonocara", "Ciclide pavone", "malawi", BEH_WANDER, 27, 6, 14, 40, 200, 3, 6, 2,
+     {20, 9, 7, 8, TAIL_ROUND, 4, PAT_NONE, BODY_SLIM, 2, 0},
      {{0, C(35,60,160), C(60,100,215), C(80,125,230), C(150,180,240), 0, 0, C(240,185,50), C(15,15,15), 0},
       {0, C(170,50,30), C(215,75,40), C(235,100,55), C(90,130,220), 0, 0, C(80,120,210), C(15,15,15), 0}}},
     // ---------------- Laghetto
@@ -112,7 +112,7 @@ int species_find(const char *id)
 // ------------------------------------------------------------ sprite generator
 
 #define FISH_FRAMES 4
-#define SPRITE_POOL 12288
+#define SPRITE_POOL 16384
 static uint8_t s_sprite_mem[SPRITE_POOL];
 static int s_sprite_used;
 static SpriteSheet s_sprites[24];
@@ -229,8 +229,8 @@ static void fish_generate(SpriteSheet *ss, const FishShape *f)
                     static const float B[3] = {0.18f, 0.5f, 0.78f};
                     for (int b = 0; b < 3; b++) {
                         float du = (u - B[b]) * (float)f->len;
-                        if (fm_abs(du) < 0.55f) v = 5;
-                        else if (fm_abs(du) < 1.05f) v = 6;
+                        if (fm_abs(du) < 0.75f) v = 5;
+                        else if (fm_abs(du) < 1.3f) v = 6;
                     }
                     break;
                 }
@@ -414,6 +414,81 @@ static void snail_generate(SpriteSheet *ss, int body)
     }
 }
 
+// Discus, facing right: round body ringed by dorsal/anal fins that widen towards
+// the rear (red edge, undulating between frames), wavy turquoise lines (dotted
+// on the belly), striped face, ringed red eye, short fan tail.
+static void discus_generate(SpriteSheet *ss)
+{
+    const float K = 1.3f; // overall scale (1.0 = 24x22 sprite)
+    const int TL = 6;     // tail length
+    const float rx = 7.6f * K, ry = 7.4f * K;
+    const float cx = (float)TL + rx + 1.5f;
+    const int W = (int)(cx + rx + 2.0f), H = (int)(2.0f * ry * 1.48f + 2.0f);
+    const float cy = (float)H * 0.5f;
+    if (!sheet_alloc(ss, W, H)) return;
+    static const float FLAP[FISH_FRAMES] = {0.0f, 1.0f, 0.0f, -1.0f};
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        // tail (behind the fins)
+        for (int tx = 0; tx < TL; tx++) {
+            float d = ((float)TL - (float)tx) / (float)TL; // 1 at the tip
+            float hh = (1.2f + 3.4f * d) * K, off = FLAP[fr] * d * 1.3f * K;
+            for (int y = 0; y < H; y++) {
+                float dy = (float)y + 0.5f - (cy + off);
+                if (fm_abs(dy) > hh) continue;
+                uint8_t v = (y & 1) ? 6 : 7;
+                if (fm_abs(dy) > hh - 0.8f && tx < 2) v = 9;
+                sheet_put(ss, fr, tx, y, v);
+            }
+        }
+        for (int y = 0; y < H; y++)
+            for (int x = 3; x < W; x++) {
+                float dx = (float)x + 0.5f - cx, dy = (float)y + 0.5f - cy;
+                const float xs = (float)x / K, ys = (float)y / K; // pattern space (same density at any scale)
+                float e = fm_sqrt((dx * dx) / (rx * rx) + (dy * dy) / (ry * ry));
+                if (e > 1.0f) { // fin ring
+                    float a = fm_abs(atan2f(dy, dx)); // 0 = snout, pi = tail
+                    float a0 = dy < 0 ? 0.75f : 1.1f; // dorsal starts higher on the head
+                    if (a < a0 || a > 3.0f) continue;
+                    float p = a < 2.55f ? (a - a0) / (2.55f - a0) : (3.0f - a) / 0.45f; // 0..1, widest at the rear
+                    float ramp = fm_clamp((a - a0) / 0.35f, 0.0f, 1.0f);              // soft start on the head
+                    float t = ramp * (0.16f + 0.3f * p) + 0.05f * fm_sin(a * 7.0f + (float)fr * FM_PI * 0.5f);
+                    if (e > 1.0f + t) continue;
+                    uint8_t v = 7;
+                    float st = e * 6.0f + a * 3.0f;                       // streaks parallel to the edge
+                    if (st - (float)(int)st < 0.3f) v = a > 1.9f ? 6 : 5; // turquoise striations
+                    if (e > 1.0f + t - 0.12f) v = 9;             // red edge
+                    sheet_put(ss, fr, x, y, v);
+                    continue;
+                }
+                uint8_t v = 3;
+                if (dy < 0 && e > 0.72f) v = 2;                     // darker back rim
+                if (dy * 0.8f + dx * 0.45f > ry * 0.4f) v = 4;      // warm belly / throat
+                if (dx > rx * 0.5f) { // face: curved horizontal stripes
+                    if (fm_abs(fm_sin(ys * 0.9f + 1.3f * fm_sin(xs * 0.8f))) < 0.4f) v = 5;
+                } else { // wavy vertical lines, solid above, dotted on the belly
+                    if (fm_abs(fm_sin(xs * 1.05f + 1.6f * fm_sin(ys * 0.55f))) < 0.5f)
+                        v = dy < ry * 0.3f ? 5 : (((x + y) & 1) ? 6 : v);
+                }
+                if (e > 1.0f - 0.45f / rx) v = 1; // crisp 1 px outline
+                sheet_put(ss, fr, x, y, v);
+            }
+        // eye: dark pupil ringed red
+        const int ex = (int)(cx + rx * 0.52f), ey = (int)(cy - 1.6f * K);
+        sheet_put(ss, fr, ex, ey, 8);
+        sheet_put(ss, fr, ex + 1, ey - 1, 4); // catch-light
+        sheet_put(ss, fr, ex - 1, ey, 9);
+        sheet_put(ss, fr, ex + 1, ey, 9);
+        sheet_put(ss, fr, ex, ey - 1, 9);
+        sheet_put(ss, fr, ex, ey + 1, 9);
+        // mouth
+        sheet_put(ss, fr, (int)(cx + rx), (int)cy + 1, 1);
+        // pectoral fin, beating
+        sheet_put(ss, fr, ex - 2, ey + 3, 7);
+        sheet_put(ss, fr, ex - 3, ey + 3 + (fr & 1), 7);
+        sheet_put(ss, fr, ex - 4, ey + 4 - (fr & 1), 7);
+    }
+}
+
 static int s_sprite_of[64];
 
 const SpriteSheet *species_sprite(int sp)
@@ -465,6 +540,7 @@ void creatures_init(void)
             if (ns < (int)(sizeof(s_sprites) / sizeof(s_sprites[0]))) {
                 const FishShape *f = &SPECIES[i].shape;
                 if (f->body == BODY_SHRIMP) shrimp_generate(&s_sprites[ns]);
+                else if (f->body == BODY_DISCUS) discus_generate(&s_sprites[ns]);
                 else if (f->body == BODY_RAMSHORN || f->body == BODY_CONE) snail_generate(&s_sprites[ns], f->body);
                 else fish_generate(&s_sprites[ns], f);
                 s_sprite_of[i] = ns++;

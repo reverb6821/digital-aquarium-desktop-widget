@@ -19,7 +19,7 @@ aquarium/                 Arduino sketch (open aquarium/aquarium.ino)
     └── board/    ESP32 ONLY CH422G, GT911, RGB panel (modes A/B), HAL, tasks, bring-up/benchmark
 sim/                      SDL2 simulator + headless test
 assets/tools/png2c.py     indexed PNG (≤16 colours) -> C SpriteSheet array
-docs/                     guides, benchmark.md, SPEC_IT.md, reference.png
+docs/                     guides, benchmark.md, SPEC_IT.md, screenshots/, reference.png
 ```
 
 `engine/ scene/ config/ ui/ app/` include nothing from ESP-IDF/Arduino. They reach the hardware

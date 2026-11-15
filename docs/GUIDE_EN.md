@@ -66,6 +66,9 @@ If no port appears, try another cable. You can also start the board in download 
 On first boot the board **formats the LittleFS partition** (~12 MB): the screen can stay black
 for **10–30 seconds**. This happens only once.
 
+After updating from firmware older than the freshwater-biomes version, the saved tank and
+presets are not migrated: the aquarium starts again from the Amazzonico biome.
+
 The serial monitor should show something like:
 
 ```
@@ -150,6 +153,7 @@ With `BRINGUP_TEST 0`, upload the sketch and go through the checklist:
 | 3 | **Tap on the water**, away from fish | Food pellets sink; nearby fish chase and eat them |
 | 4 | **Tap next to a fish** | The fish flees; the school scatters and then regroups |
 | 5 | **Horizontal swipe with 2 fingers** | Fade and biome change (Blackwater → South-East Asia → Africa → Malawi → Pond → ...) |
+| 5b | South-East Asia biome (key/swipe) | Shrimp walk and pick at the bottom and tail-flip away when you tap near them; the assassin snails crawl slowly and pull into the shell when touched. Pond biome: Planorbarius snails |
 | 6 | **Hold for 1 s** | The menu opens on the right |
 | 7 | Menu → **Bioma** (Biome) | 6 previews; tap one to switch biome |
 | 8 | Menu → **Acqua / Fondale** (Water / Substrate) | Changes (colours, rays, height, "Rigenera" = regenerate) show immediately |
@@ -157,7 +161,7 @@ With `BRINGUP_TEST 0`, upload the sketch and go through the checklist:
 | 10 | Menu → **Piante e decor → Modalita' modifica** (edit mode) | Tap and drag a plant or decoration; try Dietro/Davanti (back/front), Colore, Elimina (delete), then **Fatto** (done) |
 | 11 | Menu → **Ambiente** (Environment) | Day/night, speed, brightness, 20/30 FPS, screen-off timer |
 | 12 | Menu → **Preset → Salva** (save), change biome, then **Carica** (load) | The saved scene comes back |
-| 13 | Make a change, wait **3 s**, press **RESET** on the board | The aquarium restarts exactly as you left it |
+| 13 | Make a change, **close the menu**, wait **3 s**, press **RESET** on the board | The aquarium restarts exactly as you left it (nothing is saved while the menu is open) |
 | 14 | Ambiente → "Spegni dopo 5 min" (screen off after 5 min), wait | The backlight turns off; the first touch turns it back on (that touch does not drop food) |
 | 15 | Creature → raise the total to 60 | Overlay FPS stays ≥ 25 |
 | 16 | Menu open | The aquarium keeps animating behind it at ≥ 15 fps |
@@ -206,7 +210,8 @@ It must end with `ALL OK` and save screenshots in `/tmp/aquarium_test/`.
 | USB serial works while flashing but disappears after boot | EXIO5 (USB/CAN selector, **not yet verified**): in `board_config.h`, add `\| EXIO_USB_SEL` to `EXIO_DEFAULT` and report it |
 | `[touch] GT911 not found` | Press RESET; if it persists, send the full boot log |
 | Touch responds but at the wrong position | Note the corner coordinates from the bring-up test and report them (an axis may be flipped) |
-| Image scrolls/jitters (drift) | Note the mode, FPS and when it happens; try the other `DISPLAY_MODE` |
+| Image stretched/shifted for a moment about 2 s after closing the menu | Known: that is the moment the config is written to flash (see BUILD.md → Persistence). Report it only if it happens at other times |
+| Image scrolls/jitters (drift) at other times | Note the mode, FPS and when it happens; try the other `DISPLAY_MODE` |
 | Wrong colours (red/blue swapped) | Report it with a photo of the colour bars |
 | Reset the board to its initial state (erases config and presets) | See below |
 

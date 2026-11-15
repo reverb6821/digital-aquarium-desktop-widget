@@ -1,0 +1,6 @@
+# builds
+build/
+build-sim/
+sim_data/
+screenshot_*.png
+__pycache__/

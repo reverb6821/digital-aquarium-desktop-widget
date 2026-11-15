@@ -6,7 +6,13 @@ wood, water and light) is generated procedurally in code, so all the art is orig
 tank can be customised from the touch screen. A desktop simulator (SDL2) runs the same code on
 Linux.
 
-![Reference look](docs/reference.png)
+| Amazzonico | Acque nere | Sud-Est Asia |
+|---|---|---|
+| ![Amazon](docs/screenshots/1_amazon.png) | ![Blackwater](docs/screenshots/2_blackwater.png) | ![South-East Asia](docs/screenshots/3_seasia.png) |
+| **Africa Congo** | **Lago Malawi** | **Laghetto** |
+| ![Africa Congo](docs/screenshots/4_africa.png) | ![Lake Malawi](docs/screenshots/5_malawi.png) | ![Pond](docs/screenshots/6_pond.png) |
+
+*Screenshots from the simulator (`aquarium_headless`). The board renders the same frames.*
 
 ## Features
 
@@ -119,7 +125,7 @@ aquarium/            Arduino sketch (aquarium.ino, partitions.csv)
     └── board/       ESP32 only: RGB panel, GT911, CH422G, HAL, FreeRTOS tasks, bring-up test
 sim/                 SDL2 simulator + headless test
 assets/tools/        png2c.py (indexed PNG -> C sprite sheet)
-docs/                guides, benchmark sheet, original spec, reference image
+docs/                guides, benchmark sheet, original spec, screenshots, reference image
 ```
 
 Only `src/board/` touches ESP-IDF/Arduino. Everything else talks to the hardware through

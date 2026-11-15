@@ -21,7 +21,8 @@ typedef enum {
     PAT_WEDGE,    // black triangle on the rear body (rasbora arlecchino)
     PAT_PATCHES   // large blotches (koi)
 } FishPattern;
-typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE } BodyType; // last 3: invertebrates
+typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE, BODY_DISCUS } BodyType;
+// BODY_SHRIMP/RAMSHORN/CONE: invertebrates; BODY_DISCUS: dedicated discus generator
 enum { FIN_FEELERS = 1, FIN_SWEPT = 2 }; // FishShape.flags
 
 // Parameters for the procedural fish sprite generator.
@@ -53,6 +54,7 @@ typedef struct {
     // Fish: 1 dark back edge, 2 back, 3 body, 4 belly, 5 pattern A, 6 pattern B, 7 fins, 8 eye.
     // Shrimp: 1 outline, 2 body, 3 light back, 5 bands, 6 side dots, 7 legs/antennae, 8 eye.
     // Snails: 1 shell lines, 2 shell, 3 highlight, 4 foot, 5 shell bands, 8 eye.
+    // Discus: 1 outline, 2 body shade, 3 body, 4 belly/face, 5 lines, 6 dots/tail, 7 fins, 8 pupil, 9 fin edge/eye ring.
     uint16_t pal[SPECIES_VARIANTS][10];
 } SpeciesDef;
 
