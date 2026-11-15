@@ -21,8 +21,9 @@ typedef enum {
     PAT_WEDGE,    // black triangle on the rear body (rasbora arlecchino)
     PAT_PATCHES   // large blotches (koi)
 } FishPattern;
-typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE, BODY_DISCUS } BodyType;
-// BODY_SHRIMP/RAMSHORN/CONE: invertebrates; BODY_DISCUS: dedicated discus generator
+typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE, BODY_DISCUS, BODY_ANGEL,
+               BODY_CORY, BODY_GOURAMI, BODY_KRIB, BODY_MBUNA, BODY_KUHLI } BodyType;
+// BODY_SHRIMP/RAMSHORN/CONE: invertebrates; BODY_DISCUS and later: dedicated per-species generators
 enum { FIN_FEELERS = 1, FIN_SWEPT = 2 }; // FishShape.flags
 
 // Parameters for the procedural fish sprite generator.
@@ -50,12 +51,22 @@ typedef struct {
     uint8_t default_count, max_count;
     uint8_t variants;
     FishShape shape;              // fish behaviours only
-    // Palettes per variant, indices 1..9 (0 unused/transparent).
+    // Palettes per variant, indices 1..15 (0 unused/transparent).
     // Fish: 1 dark back edge, 2 back, 3 body, 4 belly, 5 pattern A, 6 pattern B, 7 fins, 8 eye.
     // Shrimp: 1 outline, 2 body, 3 light back, 5 bands, 6 side dots, 7 legs/antennae, 8 eye.
     // Snails: 1 shell lines, 2 shell, 3 highlight, 4 foot, 5 shell bands, 8 eye.
+    // Angelfish: 1 dark edge, 2 back, 3 body, 4 belly/sheen, 5 bands, 6 band edge, 7 fins, 8 pupil, 9 iris.
+    // Corydoras: 1 dark edge, 2 back, 3 flank, 4 belly, 5 head, 6 dorsal patch, 7 fins, 8 pupil, 9 eye mask,
+    //   10 iris, 11 barbels, 12 peduncle spot, 13 plate seam, 14 fin rays.
+    // Gourami: 1 dark edge, 2 back, 3 flank, 4 chest, 5 lateral line, 6 pearls, 7 fins, 8 pupil, 9 eye ring,
+    //   10 anal fin edge, 11 feelers.
+    // Kribensis: 1 dark edge, 2 back, 3 flank, 4 belly, 5 stripes, 6 belly patch, 7 fins, 8 pupil, 9 cheek,
+    //   10 fin edge (blue), 11 fin edge (red), 12 fin ocelli, 13 pelvic/lower tail, 14 iris.
+    // Mbuna: 1 dark edge, 2 back, 3 flank, 4 belly, 5 bars, 6 opercle, 7 fins, 8 pupil, 9 iris, 10 fin edge,
+    //   12 egg spots, 13 pelvic fins, 14 pectoral/fin rays.
+    // Kuhli: 1 dark edge, 2 back, 3 flank, 4 belly, 5 saddles, 7 fins, 8 eye.
     // Discus: 1 outline, 2 body shade, 3 body, 4 belly/face, 5 lines, 6 dots/tail, 7 fins, 8 pupil, 9 fin edge/eye ring.
-    uint16_t pal[SPECIES_VARIANTS][10];
+    uint16_t pal[SPECIES_VARIANTS][16]; // sprite_draw reads 16 entries
 } SpeciesDef;
 
 extern const SpeciesDef SPECIES[];
