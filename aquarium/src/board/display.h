@@ -10,3 +10,7 @@ uint16_t *display_begin_frame(void);
 // next frame (the new frame has been latched by the scan-out).
 void display_present(uint16_t *canvas);
 const char *display_mode_name(void);
+// Scan-out health since the last call (then reset), formatted for the [perf] log:
+// refills per refresh (min/max vs expected), refreshes with a wrong refill count,
+// worst refill duration and worst gap between refills vs the bounce-buffer period.
+void display_stats(char *buf, unsigned len);

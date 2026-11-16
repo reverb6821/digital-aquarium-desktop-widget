@@ -153,6 +153,19 @@ The on-screen UI labels are in Italian.
     lines until the next VSYNC. Hence the write policy above: at most one short glitch, about
     2 s after the menu closes. Removing it completely needs ESP-IDF with
     `CONFIG_LCD_RGB_ISR_IRAM_SAFE=y` (or Arduino as an IDF component).
+  - **Late bounce-buffer refills also happen without flash writes**, when the renderer keeps the
+    PSRAM busy (heavy scenes, menu open, frame time > 30 ms): the ISR on core 0 misses one
+    refill slot and, until the next VSYNC, every block is shown one bounce buffer early (image
+    shifted up by `BOUNCE_LINES`, stale stripes). To make this rarer the bounce buffers are 40
+    lines (half the refill interrupts, twice the slack); if they don't fit, or leave less than
+    72 KB of internal RAM, the driver falls back to 20 lines (see the `[lcd]` boot log line).
+  - **Diagnostics:** every 5 s the serial log prints a second `[perf] lcd:` line. `bad` counts the
+    refreshes whose number of refills differs from `exp` (each one is a glitched refresh);
+    `fill-max` is the slowest refill and `gap-max` the longest wait between two refills, to be
+    compared with `period` (time the panel takes to send one bounce buffer). `fill-max` close to
+    `period` = PSRAM contention; `gap-max` well above `period` with a short `fill-max` = the ISR
+    was blocked (interrupts masked, flash access). To trade refresh rate for ISR slack, build with
+    a lower pixel clock, e.g. `--build-property "compiler.cpp.extra_flags=-DLCD_PCLK_HZ=13000000"`.
 - **Own pixel-art UI instead of LVGL.** The widgets are immediate-mode and drawn on the 400×240
   canvas. They look like the rest of the aquarium, need no heavy dependency, and work the same
   in the simulator (tested automatically). Every option from §8/§9 of the spec is there; the

@@ -20,13 +20,26 @@
 #define BRINGUP_TEST 0
 #endif
 
-// Bounce buffer height in display lines (must divide 480).
-#define BOUNCE_LINES 20
+// Bounce buffer height in display lines (must divide 480). Two buffers of
+// 800 x lines x 2 bytes live in internal DMA RAM. Bigger buffers mean fewer
+// refill interrupts and more tolerance to a late refill (PSRAM contention from
+// the renderer, flash writes): a refill that misses its slot makes the panel
+// show every block one buffer early for the rest of that refresh (image shifted
+// up by BOUNCE_LINES, stale stripes). The driver falls back to the small size
+// if the big one does not fit or leaves too little internal RAM.
+#define BOUNCE_LINES 40
+#define BOUNCE_LINES_FALLBACK 20
+#define BOUNCE_MIN_FREE_INTERNAL (72 * 1024) // keep this much internal RAM for tasks/stacks
 
 // ---------------------------------------------------------------- LCD (RGB565)
 #define LCD_H_RES 800
 #define LCD_V_RES 480
-#define LCD_PCLK_HZ (16 * 1000 * 1000) // demo value; refresh = 16e6/(820*500) ~= 39 Hz
+// Pixel clock. Demo value 16 MHz -> refresh = 16e6/(820*500) ~= 39 Hz. A lower clock (e.g.
+// -DLCD_PCLK_HZ=13000000 -> ~32 Hz) gives the bounce-buffer ISR proportionally more time per
+// refill, at the cost of refresh rate (the render is capped at 30 fps anyway).
+#ifndef LCD_PCLK_HZ
+#define LCD_PCLK_HZ (16 * 1000 * 1000)
+#endif
 #define LCD_HSYNC_PULSE 4
 #define LCD_HSYNC_BP 8
 #define LCD_HSYNC_FP 8

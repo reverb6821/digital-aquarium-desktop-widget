@@ -33,8 +33,8 @@ typedef enum {
 
 typedef enum {
     DECOR_ROCK_BIG = 0,
-    DECOR_ROCK_FLAT,
-    DECOR_ROCK_TALL,    // pietra verticale (Seiryu)
+    DECOR_DRAGON_STONE, // dragon stone (Ohko): guglie porose color ruggine
+    DECOR_SEIRYU_STONE, // seiryu stone: pietra grigia a strati con venature bianche
     DECOR_ROCK_CLUSTER, // gruppo di sassi
     DECOR_ROCK_SLATE,   // lastre di ardesia impilate
     DECOR_DRIFTWOOD,    // tronco sdraiato
@@ -47,6 +47,22 @@ typedef enum {
 
 enum { LAYER_BACK = 0, LAYER_FRONT = 1 };
 
+// Limits for the placement offsets (edit mode).
+#define CFG_DY_MIN (-200)
+#define CFG_DY_MAX 12
+#define CFG_SCALE_MIN 50
+#define CFG_SCALE_MAX 200
+#define CFG_SCALE_STEP 10
+
+// Normalise an angle in degrees to -180..179.
+static inline int16_t cfg_norm_rot(int a)
+{
+    a %= 360;
+    if (a < -180) a += 360;
+    if (a >= 180) a -= 360;
+    return (int16_t)a;
+}
+
 typedef struct {
     uint8_t type;
     int16_t x;
@@ -54,6 +70,9 @@ typedef struct {
     uint8_t height;
     uint16_t color;
     uint32_t seed;
+    int16_t dy;  // vertical offset of the base from the substrate (px, negative = up)
+    int16_t rot; // rotation around the base, degrees (positive = clockwise)
+    uint8_t scale; // size in percent (CFG_SCALE_MIN..CFG_SCALE_MAX, 100 = original; 0 is read as 100)
 } PlantCfg;
 
 typedef struct {
@@ -61,6 +80,9 @@ typedef struct {
     int16_t x;
     uint8_t layer;
     uint16_t color;
+    int16_t dy;  // vertical offset of the base from the substrate (px, negative = up)
+    int16_t rot; // rotation around the base, degrees (positive = clockwise)
+    uint8_t scale; // size in percent (CFG_SCALE_MIN..CFG_SCALE_MAX, 100 = original; 0 is read as 100)
 } DecorCfg;
 
 typedef struct {

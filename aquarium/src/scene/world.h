@@ -35,6 +35,8 @@ void plants_build(const AquariumConfig *c);
 void plants_draw(Canvas *cv, int layer, float t, int highlight_index);
 // Plant index under canvas point (for edit mode), -1 if none.
 int plants_hit(int x, int y);
+// Canvas bounding box of a built plant (index as in the config), sway included.
+void plants_bounds(int index, int *x0, int *y0, int *x1, int *y1);
 
 // ---- decor.c ----
 // Static decor (rocks, wood, shells...) into the caches; dynamic ones per frame.

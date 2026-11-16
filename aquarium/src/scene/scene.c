@@ -150,11 +150,7 @@ static void draw_selection(Canvas *cv)
     if (s_sel_kind == SEL_DECOR && s_sel_index < s_cfg.decor_count) {
         decor_bounds(&s_cfg.decor[s_sel_index], &x0, &y0, &x1, &y1);
     } else if (s_sel_kind == SEL_PLANT && s_sel_index < s_cfg.plant_count) {
-        const PlantCfg *p = &s_cfg.plants[s_sel_index];
-        x0 = p->x - 8;
-        x1 = p->x + 8;
-        y1 = world_floor(p->x) + 3;
-        y0 = y1 - p->height - 4;
+        plants_bounds(s_sel_index, &x0, &y0, &x1, &y1);
     } else {
         return;
     }

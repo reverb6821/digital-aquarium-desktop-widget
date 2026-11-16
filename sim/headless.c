@@ -10,12 +10,14 @@
 #include "../aquarium/src/engine/hal.h"
 #include "../aquarium/src/scene/scene.h"
 #include "../aquarium/src/scene/themes.h"
+#include "../aquarium/src/scene/world.h"
 #include "png_write.h"
 
 extern HalTouch g_sim_touch;
 extern uint32_t g_sim_fake_ms;
 extern int g_sim_use_fake_clock;
 
+#define BAR_Y_TEST (CANVAS_H - 24) // edit-mode bottom bar
 static uint16_t px[CANVAS_W * CANVAS_H];
 static Canvas cv;
 static const char *outdir = ".";
@@ -51,12 +53,52 @@ static void tap(int x, int y)
     frames(12); // > double-tap window
 }
 
+// Centre of dashboard tile `i` on the menu home page (2 columns, 46 px tiles).
+static void tap_tile(int i)
+{
+    tap(202 + (i % 2) * 99 + 46, 31 + (i / 2) * 52 + 23);
+}
+
 static void shot(const char *name)
 {
     char path[512];
     snprintf(path, sizeof(path), "%s/%s.png", outdir, name);
     png_write_rgb565(path, px, CANVAS_W, CANVAS_H, 2);
     printf("  screenshot %s\n", path);
+}
+
+// Find a canvas point where scene_pick() selects exactly (kind, index).
+static bool pick_point(int kind, int index, int *ox, int *oy)
+{
+    int x0, y0, x1, y1;
+    if (kind == SEL_PLANT) plants_bounds(index, &x0, &y0, &x1, &y1);
+    else decor_bounds(&app_cfg()->decor[index], &x0, &y0, &x1, &y1);
+    for (int y = (y0 + y1) / 2; y >= y0; y -= 2)
+        for (int x = x0; x <= x1; x += 2) {
+            int idx;
+            if (y < BAR_Y_TEST && scene_pick(x, y, &idx) == kind && idx == index) {
+                *ox = x;
+                *oy = y;
+                return true;
+            }
+        }
+    return false;
+}
+
+// Press at (x, y), drag vertically by dy in 4 px steps, release.
+static void drag_v(int x, int y, int dy)
+{
+    down(x, y);
+    frames(3);
+    int step = dy < 0 ? -4 : 4;
+    for (int k = step; dy < 0 ? k >= dy : k <= dy; k += step) {
+        g_sim_touch.y[0] = (int16_t)((y + k) * 2);
+        frames(1);
+    }
+    g_sim_touch.y[0] = (int16_t)((y + dy) * 2); // land exactly on the target
+    frames(3);
+    up();
+    frames(3);
 }
 
 static void check(bool ok, const char *what)
@@ -104,7 +146,7 @@ int main(int argc, char **argv)
     shot("03_menu");
     static const char *pages[] = {"theme", "water", "substrate", "plants", "creatures", "env", "presets"};
     for (int p = 0; p < 7; p++) {
-        tap(260, 21 + 4 + p * 24 + 8); // page buttons
+        tap_tile(p); // dashboard tiles
         frames(2);
         char name[64];
         snprintf(name, sizeof(name), "04_page_%s", pages[p]);
@@ -113,7 +155,7 @@ int main(int argc, char **argv)
     }
 
     // change biome to blackwater from the biome page (thumbnail #2)
-    tap(260, 21 + 4 + 0 * 24 + 8);
+    tap_tile(0);
     tap(330, 50);
     frames(40); // fade out/in
     check(strcmp(app_cfg()->theme_id, "blackwater") == 0, "theme switch from menu (blackwater)");
@@ -126,7 +168,7 @@ int main(int argc, char **argv)
     frames(40);
     up();
     frames(3);
-    tap(260, 21 + 4 + 3 * 24 + 8); // "Piante e decor"
+    tap_tile(3);                   // "Piante e decor"
     tap(300, 33);                  // "Modalita' modifica"
     int16_t before = app_cfg()->plants[1].x;
     int fy = 150;
@@ -141,9 +183,61 @@ int main(int argc, char **argv)
     up();
     frames(3);
     check(before == 246 && app_cfg()->plants[1].x < 215, "edit mode drag moves plant");
+    check(app_cfg()->plants[1].dy == 0, "horizontal drag keeps the plant on the substrate");
+
+    // vertical placement + rotation of the same plant
+    int qx, qy;
+    bool found = pick_point(SEL_PLANT, 1, &qx, &qy);
+    check(found, "plant pickable");
+    if (found) drag_v(qx, qy, -40);
+    check(app_cfg()->plants[1].dy <= -30, "edit mode drag lifts plant");
+    tap(202, 226); // "+15"
+    tap(202, 226);
+    check(app_cfg()->plants[1].rot == 30, "plant rotated by +30");
+    {
+        int x0, y0, x1, y1;
+        plants_bounds(1, &x0, &y0, &x1, &y1);
+        int h0 = y1 - y0;
+        tap(315, 226); // "+" x3 -> 130 %
+        tap(315, 226);
+        tap(315, 226);
+        frames(5);
+        plants_bounds(1, &x0, &y0, &x1, &y1);
+        check(app_cfg()->plants[1].scale == 130 && y1 - y0 > h0, "plant scaled to 130 % (bigger bounds)");
+    }
+    // a decoration: lift a little and rotate the other way
+    found = pick_point(SEL_DECOR, 0, &qx, &qy);
+    check(found, "decor pickable");
+    if (found) drag_v(qx, qy, -20);
+    check(app_cfg()->decor[0].dy <= -12, "edit mode drag lifts decor");
+    tap(176, 226); // "-15"
+    tap(176, 226);
+    tap(176, 226);
+    frames(5);
+    check(app_cfg()->decor[0].rot == -45, "decor rotated by -45");
+    // size: two steps up, one down -> 110 %
+    {
+        int x0, y0, x1, y1;
+        decor_bounds(&app_cfg()->decor[0], &x0, &y0, &x1, &y1);
+        int w0 = x1 - x0;
+        tap(315, 226); // "+"
+        tap(315, 226);
+        tap(264, 226); // "-"
+        frames(5);
+        decor_bounds(&app_cfg()->decor[0], &x0, &y0, &x1, &y1);
+        check(app_cfg()->decor[0].scale == 110 && x1 - x0 > w0, "decor scaled to 110 % (bigger bounds)");
+    }
+    shot("06b_edit_rotate");
+    // small drag back towards the substrate snaps onto it
+    {
+        int16_t d0 = app_cfg()->decor[0].dy;
+        if (pick_point(SEL_DECOR, 0, &qx, &qy)) drag_v(qx, qy, -d0 - 2);
+        check(app_cfg()->decor[0].dy == 0, "decor snaps back onto the substrate");
+    }
     tap(30, 226); // "Fatto"
     frames(5);
     int16_t moved = app_cfg()->plants[1].x;
+    int16_t moved_dy = app_cfg()->plants[1].dy, moved_rot = app_cfg()->plants[1].rot;
 
     // double tap overlay
     down(150, 120); frames(1); up(); frames(2);
@@ -155,7 +249,11 @@ int main(int argc, char **argv)
     // persistence: wait for the debounced save, then "reboot"
     frames(90);
     check(app_init(), "re-init (reboot)");
-    check(strcmp(app_cfg()->theme_id, "blackwater") == 0 && app_cfg()->plants[1].x == moved, "config restored after reboot");
+    check(strcmp(app_cfg()->theme_id, "blackwater") == 0 && app_cfg()->plants[1].x == moved &&
+              app_cfg()->plants[1].dy == moved_dy && app_cfg()->plants[1].rot == moved_rot &&
+              app_cfg()->plants[1].scale == 130 &&
+              app_cfg()->decor[0].rot == -45 && app_cfg()->decor[0].scale == 110,
+          "config restored after reboot (incl. offset, rotation, scale)");
 
     // two-finger swipe -> next biome (seasia)
     g_sim_touch.n = 2;

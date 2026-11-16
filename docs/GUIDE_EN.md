@@ -158,7 +158,7 @@ With `BRINGUP_TEST 0`, upload the sketch and go through the checklist:
 | 7 | Menu → **Bioma** (Biome) | 6 previews; tap one to switch biome |
 | 8 | Menu → **Acqua / Fondale** (Water / Substrate) | Changes (colours, rays, height, "Rigenera" = regenerate) show immediately |
 | 9 | Menu → **Creature** | `+`/`−` adds or removes fish; "Colore" changes the colour variant; total limit 60 |
-| 10 | Menu → **Piante e decor → Modalita' modifica** (edit mode) | Tap and drag a plant or decoration; try Dietro/Davanti (back/front), Colore, Elimina (delete), then **Fatto** (done) |
+| 10 | Menu → **Piante e decor → Modalita' modifica** (edit mode) | Tap and drag a plant or decoration sideways and up/down (it snaps back onto the bottom when close to it); try Dietro/Davanti (back/front), Colore (tap the swatch), **-15/+15** (rotate), **- / +** (size, 50-200%), **Fondo** (back on the bottom, upright), Elimina (delete), then **Fatto** (done) |
 | 11 | Menu → **Ambiente** (Environment) | Day/night, speed, brightness, 20/30 FPS, screen-off timer |
 | 12 | Menu → **Preset → Salva** (save), change biome, then **Carica** (load) | The saved scene comes back |
 | 13 | Make a change, **close the menu**, wait **3 s**, press **RESET** on the board | The aquarium restarts exactly as you left it (nothing is saved while the menu is open) |

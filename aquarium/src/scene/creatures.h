@@ -22,7 +22,8 @@ typedef enum {
     PAT_PATCHES   // large blotches (koi)
 } FishPattern;
 typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE, BODY_DISCUS, BODY_ANGEL,
-               BODY_CORY, BODY_GOURAMI, BODY_KRIB, BODY_MBUNA, BODY_KUHLI } BodyType;
+               BODY_CORY, BODY_GOURAMI, BODY_KRIB, BODY_MBUNA, BODY_KUHLI, BODY_CARDINAL, BODY_EMBER,
+               BODY_HARLEQUIN, BODY_CONGO, BODY_PEACOCK, BODY_GOLDFISH, BODY_KOI, BODY_MEDAKA } BodyType;
 // BODY_SHRIMP/RAMSHORN/CONE: invertebrates; BODY_DISCUS and later: dedicated per-species generators
 enum { FIN_FEELERS = 1, FIN_SWEPT = 2 }; // FishShape.flags
 
@@ -61,7 +62,21 @@ typedef struct {
     // Gourami: 1 dark edge, 2 back, 3 flank, 4 chest, 5 lateral line, 6 pearls, 7 fins, 8 pupil, 9 eye ring,
     //   10 anal fin edge, 11 feelers.
     // Kribensis: 1 dark edge, 2 back, 3 flank, 4 belly, 5 stripes, 6 belly patch, 7 fins, 8 pupil, 9 cheek,
-    //   10 fin edge (blue), 11 fin edge (red), 12 fin ocelli, 13 pelvic/lower tail, 14 iris.
+    //   10 fin edge (blue), 11 fin edge (red), 12 fin ocelli, 13 pelvic fins, 14 iris, 15 lower tail lobe.
+    // Cardinal: 1 dark edge, 2 back, 3 blue line, 4 line highlight, 5 red, 6 red belly edge, 7 fins, 8 pupil,
+    //   9 white belly, 10 iris, 11 red tail base, 12 fin rays.
+    // Ember: 1 dark edge, 2 back, 3 body, 4 belly, 5 spine, 7 fins, 8 pupil, 9 iris, 10 dorsal edge, 11 anal edge.
+    // Harlequin: 1 dark edge, 2 back, 3 flank, 4 belly, 5 wedge, 6 gold line, 7 fins, 8 pupil, 9 iris, 10 fin edge.
+    // Congo: 1 dark edge, 2 back, 3 flank, 4 belly, 5 orange band, 6 band edge, 7 fins, 8 pupil, 9 iris,
+    //   10 fin edge, 11 scale glitter, 12 peduncle.
+    // Peacock: 1 dark edge, 2 back, 3 flank, 4 belly, 5 bars, 6 shimmer, 7 fins, 8 pupil, 9 head, 10 fin edge,
+    //   11 iris, 12 dark fins/rays, 13 anal edge, 14 lips/opercle.
+    // Goldfish: 1 dark edge, 2 back, 3 body, 4 belly, 5 scale sparkle, 6 fin rays, 7 fins, 8 pupil, 9 iris,
+    //   10 fin tips, 12 patch, 13 patch sparkle, 14 patch back.
+    // Koi: 1 dark edge, 2 back, 3 body, 4 belly, 5 red patches, 6 black spots, 7 fins, 8 pupil, 9 scale net,
+    //   10 fin rays, 11 barbels/lips, 12 scale net on patches.
+    // Medaka: 1 dark edge, 2 back, 3 body, 4 belly, 5 scale net, 6 lateral line, 7 fins, 8 pupil, 9 iris,
+    //   10 fin rays, 11 gill shine.
     // Mbuna: 1 dark edge, 2 back, 3 flank, 4 belly, 5 bars, 6 opercle, 7 fins, 8 pupil, 9 iris, 10 fin edge,
     //   12 egg spots, 13 pelvic fins, 14 pectoral/fin rays.
     // Kuhli: 1 dark edge, 2 back, 3 flank, 4 belly, 5 saddles, 7 fins, 8 eye.

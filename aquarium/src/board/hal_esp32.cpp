@@ -148,10 +148,13 @@ static void render_task(void *)
         if (now - t_stat >= 5000) {
             float fps = (float)frames * 1000.0f / (float)(now - t_stat);
             app_report_stats(fps, acc_render / (float)frames);
-            Serial.printf("[perf] mode %s  fps=%.1f  render=%.2fms  present-wait=%.2fms  heap int=%u psram=%u\n",
+            char lcd[160];
+            display_stats(lcd, sizeof(lcd));
+            Serial.printf("[perf] mode %s  fps=%.1f  render=%.2fms  present-wait=%.2fms  heap int=%u psram=%u\n"
+                          "[perf] %s\n",
                           display_mode_name(), fps, acc_render / frames, acc_present / frames,
                           (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
-                          (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+                          (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM), lcd);
             frames = 0;
             acc_render = acc_present = 0;
             t_stat = now;

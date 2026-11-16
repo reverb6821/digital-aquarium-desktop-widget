@@ -20,6 +20,9 @@ void config_sanitize(AquariumConfig *c)
         p->x = (int16_t)clampi(p->x, 0, 399);
         p->layer = p->layer ? LAYER_FRONT : LAYER_BACK;
         p->height = (uint8_t)clampi(p->height, 6, 200);
+        p->dy = (int16_t)clampi(p->dy, CFG_DY_MIN, CFG_DY_MAX);
+        p->rot = cfg_norm_rot(p->rot);
+        p->scale = (uint8_t)(p->scale ? clampi(p->scale, CFG_SCALE_MIN, CFG_SCALE_MAX) : 100);
     }
     c->decor_count = (uint8_t)clampi(c->decor_count, 0, CFG_MAX_DECOR);
     for (int i = 0; i < c->decor_count; i++) {
@@ -27,6 +30,9 @@ void config_sanitize(AquariumConfig *c)
         d->type = (uint8_t)clampi(d->type, 0, DECOR_COUNT - 1);
         d->x = (int16_t)clampi(d->x, 0, 399);
         d->layer = d->layer ? LAYER_FRONT : LAYER_BACK;
+        d->dy = (int16_t)clampi(d->dy, CFG_DY_MIN, CFG_DY_MAX);
+        d->rot = cfg_norm_rot(d->rot);
+        d->scale = (uint8_t)(d->scale ? clampi(d->scale, CFG_SCALE_MIN, CFG_SCALE_MAX) : 100);
     }
     c->bubble_sources = (uint8_t)clampi(c->bubble_sources, 0, CFG_MAX_BUBBLES);
     for (int i = 0; i < c->bubble_sources; i++) {
@@ -77,7 +83,11 @@ size_t config_to_json(const AquariumConfig *c, const char *name, char *buf, size
         jw_printf(&w, "%s\n    {\"type\": %d, \"x\": %d, \"layer\": %d, \"height\": %d, \"color\": ", i ? "," : "",
                   p->type, p->x, p->layer, p->height);
         color_hex(&w, p->color);
-        jw_printf(&w, ", \"seed\": %lu}", (unsigned long)p->seed);
+        jw_printf(&w, ", \"seed\": %lu", (unsigned long)p->seed);
+        if (p->dy) jw_printf(&w, ", \"dy\": %d", p->dy); // placement offsets only when used
+        if (p->rot) jw_printf(&w, ", \"rot\": %d", p->rot);
+        if (p->scale && p->scale != 100) jw_printf(&w, ", \"scale\": %d", p->scale);
+        jw_raw(&w, "}");
     }
     jw_raw(&w, "],\n  \"decor\": [");
     for (int i = 0; i < c->decor_count; i++) {
@@ -85,6 +95,9 @@ size_t config_to_json(const AquariumConfig *c, const char *name, char *buf, size
         jw_printf(&w, "%s\n    {\"type\": %d, \"x\": %d, \"layer\": %d, \"color\": ", i ? "," : "", d->type, d->x,
                   d->layer);
         color_hex(&w, d->color);
+        if (d->dy) jw_printf(&w, ", \"dy\": %d", d->dy);
+        if (d->rot) jw_printf(&w, ", \"rot\": %d", d->rot);
+        if (d->scale && d->scale != 100) jw_printf(&w, ", \"scale\": %d", d->scale);
         jw_raw(&w, "}");
     }
     jw_raw(&w, "],\n  \"bubbles\": [");
@@ -104,7 +117,7 @@ size_t config_to_json(const AquariumConfig *c, const char *name, char *buf, size
     return w.overflow ? 0 : w.len;
 }
 
-#define MAX_TOKENS 640
+#define MAX_TOKENS 1024
 
 bool config_from_json(AquariumConfig *c, const char *js, char *name, size_t name_cap)
 {
@@ -150,6 +163,9 @@ bool config_from_json(AquariumConfig *c, const char *js, char *name, size_t name
             p->height = (uint8_t)json_int(js, t, json_get(js, t, o, "height"), 60);
             p->color = (uint16_t)json_int(js, t, json_get(js, t, o, "color"), 0x2C67);
             p->seed = (uint32_t)json_int(js, t, json_get(js, t, o, "seed"), 1);
+            p->dy = (int16_t)json_int(js, t, json_get(js, t, o, "dy"), 0);
+            p->rot = (int16_t)json_int(js, t, json_get(js, t, o, "rot"), 0);
+            p->scale = (uint8_t)json_int(js, t, json_get(js, t, o, "scale"), 100);
         }
     }
     arr = json_get(js, t, 0, "decor");
@@ -162,6 +178,9 @@ bool config_from_json(AquariumConfig *c, const char *js, char *name, size_t name
             d->x = (int16_t)json_int(js, t, json_get(js, t, o, "x"), 200);
             d->layer = (uint8_t)json_int(js, t, json_get(js, t, o, "layer"), 0);
             d->color = (uint16_t)json_int(js, t, json_get(js, t, o, "color"), 0x8410);
+            d->dy = (int16_t)json_int(js, t, json_get(js, t, o, "dy"), 0);
+            d->rot = (int16_t)json_int(js, t, json_get(js, t, o, "rot"), 0);
+            d->scale = (uint8_t)json_int(js, t, json_get(js, t, o, "scale"), 100);
         }
     }
     arr = json_get(js, t, 0, "bubbles");

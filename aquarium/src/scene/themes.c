@@ -26,13 +26,13 @@ const uint16_t SWATCHES[SWATCH_COUNT] = {
 static void add_plant(AquariumConfig *c, PlantType type, int x, int layer, int h, uint16_t col, uint32_t seed)
 {
     if (c->plant_count >= CFG_MAX_PLANTS) return;
-    c->plants[c->plant_count++] = (PlantCfg){(uint8_t)type, (int16_t)x, (uint8_t)layer, (uint8_t)h, col, seed};
+    c->plants[c->plant_count++] = (PlantCfg){(uint8_t)type, (int16_t)x, (uint8_t)layer, (uint8_t)h, col, seed, 0, 0, 100};
 }
 
 static void add_decor(AquariumConfig *c, DecorType type, int x, int layer, uint16_t col)
 {
     if (c->decor_count >= CFG_MAX_DECOR) return;
-    c->decor[c->decor_count++] = (DecorCfg){(uint8_t)type, (int16_t)x, (uint8_t)layer, col};
+    c->decor[c->decor_count++] = (DecorCfg){(uint8_t)type, (int16_t)x, (uint8_t)layer, col, 0, 0, 100};
 }
 
 static void add_species(AquariumConfig *c, const char *id, int count, int variant)
@@ -78,7 +78,7 @@ static void substrate(AquariumConfig *c, SubstrateType type, uint16_t col, int h
 #define G_BRIGHT RGB565(70, 165, 80)   // Echinodorus, stem plants
 #define G_MID RGB565(50, 140, 75)
 #define G_DARK RGB565(35, 105, 60)     // Microsorum, Anubias
-#define G_BOLB RGB565(40, 110, 70)     // Bolbitis (translucent dark green)
+#define G_BOLB RGB565(70, 145, 75)     // Bolbitis (translucent light green)
 #define G_CRYPT RGB565(95, 115, 60)    // Cryptocoryne wendtii (olive/bronze)
 #define G_CRYPT_R RGB565(130, 80, 60)  // Cryptocoryne "brown/red"
 #define G_BUCE RGB565(60, 100, 95)     // Bucephalandra (blue-green)
@@ -94,6 +94,7 @@ static void substrate(AquariumConfig *c, SubstrateType type, uint16_t col, int h
 #define STONE RGB565(70, 72, 78)
 #define STONE_SEIRYU RGB565(95, 98, 102)
 #define STONE_WARM RGB565(120, 105, 90)
+#define STONE_DRAGON RGB565(150, 108, 68)
 #define LEAF_BROWN RGB565(120, 70, 35)
 
 void theme_apply(AquariumConfig *c, ThemeId id)
@@ -153,7 +154,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         water(c, RGB565(28, 66, 58), RGB565(6, 18, 16), 3, 35);
         substrate(c, SUB_GRAVEL, RGB565(80, 74, 66), 50, 55, 99);
         add_decor(c, DECOR_ROCK_BIG, 70, LAYER_BACK, STONE);
-        add_decor(c, DECOR_ROCK_FLAT, 290, LAYER_BACK, STONE);
+        add_decor(c, DECOR_DRAGON_STONE, 290, LAYER_BACK, STONE_DRAGON);
         add_decor(c, DECOR_DRIFTWOOD, 190, LAYER_BACK, WOOD);
         add_decor(c, DECOR_SPIDERWOOD, 350, LAYER_BACK, WOOD_PALE);
         add_decor(c, DECOR_ROCK_CLUSTER, 140, LAYER_FRONT, STONE);
@@ -205,15 +206,15 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         water(c, RGB565(30, 80, 120), RGB565(6, 20, 44), 5, 25);
         substrate(c, SUB_SAND, RGB565(200, 185, 150), 44, 30, 2024);
         add_decor(c, DECOR_ROCK_BIG, 50, LAYER_BACK, STONE);
-        add_decor(c, DECOR_ROCK_TALL, 105, LAYER_BACK, STONE_SEIRYU);
+        add_decor(c, DECOR_SEIRYU_STONE, 105, LAYER_BACK, STONE_SEIRYU);
         add_decor(c, DECOR_ROCK_SLATE, 160, LAYER_BACK, RGB565(90, 88, 84));
         add_decor(c, DECOR_ROCK_BIG, 230, LAYER_BACK, STONE_WARM);
-        add_decor(c, DECOR_ROCK_TALL, 285, LAYER_BACK, STONE);
+        add_decor(c, DECOR_SEIRYU_STONE, 285, LAYER_BACK, STONE);
         add_decor(c, DECOR_ROCK_BIG, 350, LAYER_BACK, STONE_SEIRYU);
-        add_decor(c, DECOR_ROCK_FLAT, 200, LAYER_FRONT, STONE);
+        add_decor(c, DECOR_DRAGON_STONE, 200, LAYER_FRONT, STONE_DRAGON);
         add_decor(c, DECOR_ROCK_CLUSTER, 70, LAYER_FRONT, STONE_WARM);
         add_decor(c, DECOR_ROCK_CLUSTER, 320, LAYER_FRONT, STONE);
-        add_decor(c, DECOR_ROCK_TALL, 375, LAYER_FRONT, STONE_SEIRYU);
+        add_decor(c, DECOR_SEIRYU_STONE, 375, LAYER_FRONT, STONE_SEIRYU);
         add_plant(c, PLANT_VALLIS, 20, LAYER_BACK, 120, G_VALLIS, 1);
         add_plant(c, PLANT_VALLIS, 246, LAYER_BACK, 100, G_VALLIS, 23);
         add_plant(c, PLANT_ANUBIAS, 160, LAYER_FRONT, 16, G_DARK, 2);
@@ -227,7 +228,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         water(c, RGB565(40, 70, 40), RGB565(9, 20, 10), 3, 75);
         substrate(c, SUB_PEBBLES, RGB565(90, 84, 72), 40, 50, 5150);
         add_decor(c, DECOR_ROCK_BIG, 40, LAYER_BACK, STONE_WARM);
-        add_decor(c, DECOR_ROCK_FLAT, 330, LAYER_BACK, STONE);
+        add_decor(c, DECOR_DRAGON_STONE, 330, LAYER_BACK, STONE_DRAGON);
         add_decor(c, DECOR_ROOTS, 370, LAYER_BACK, WOOD_DARK);
         add_decor(c, DECOR_ROCK_CLUSTER, 150, LAYER_FRONT, STONE_WARM);
         add_decor(c, DECOR_ROCK_CLUSTER, 280, LAYER_FRONT, STONE);

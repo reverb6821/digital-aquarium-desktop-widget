@@ -20,12 +20,12 @@ const SpeciesDef SPECIES[] = {
      {{0, C(48,58,70), C(90,110,125), C(150,170,185), C(200,210,215), C(40,190,255), C(235,40,55), C(150,170,185), C(10,10,14), 0},
       {0, C(48,70,60), C(90,125,110), C(150,185,170), C(200,215,210), C(80,255,170), C(255,120,40), C(150,185,170), C(10,10,14), 0}}},
     {"cardinal_tetra", "Cardinale", "blackwater", BEH_SCHOOL, 14, 14, 30, 40, 150, 14, 30, 1,
-     {11, 4, 3, 4, TAIL_FORK, 1, PAT_CARDINAL, BODY_SLIM, 0, 0},
-     {{0, C(50,58,72), C(95,110,128), C(150,165,180), C(200,205,212), C(30,200,255), C(230,30,45), C(160,170,185), C(10,10,14), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CARDINAL, 0, 0},
+     {{0, C(40,46,62), C(92,92,116), C(40,190,250), C(170,240,255), C(220,30,42), C(170,22,36), C(132,148,158), C(10,10,14), C(232,226,232), C(110,210,250), C(205,45,45), C(170,182,190)}}},
     {"ember_tetra", "Pesce brace", "amazon", BEH_SCHOOL, 10, 12, 26, 30, 130, 7, 20, 2,
-     {7, 4, 3, 4, TAIL_FORK, 1, PAT_NONE, BODY_SLIM, 0, 0},
-     {{0, C(170,60,25), C(220,95,35), C(245,120,45), C(255,175,110), 0, 0, C(255,140,70), C(20,10,10), 0},
-      {0, C(170,130,25), C(225,175,40), C(245,200,60), C(255,230,140), 0, 0, C(255,215,90), C(20,10,10), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_EMBER, 0, 0},
+     {{0, C(150,40,20), C(210,70,35), C(240,98,45), C(250,150,100), C(185,55,32), 0, C(240,115,65), C(20,10,10), C(225,40,35), C(70,28,22), C(252,195,165)},   // rosso
+      {0, C(160,120,25), C(220,165,40), C(240,192,58), C(250,222,135), C(195,140,35), 0, C(245,202,95), C(20,10,10), C(230,150,40), C(95,62,22), C(255,236,185)}}}, // oro
     {"angelfish", "Scalare", "amazon", BEH_WANDER, 30, 6, 14, 40, 170, 3, 6, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_ANGEL, 0, 0},
      {{0, C(95,100,108), C(160,165,172), C(200,204,210), C(232,234,238), C(24,24,30), C(80,82,90), C(185,192,200), C(10,10,14), C(205,45,35)},   // selvatico argento
@@ -44,8 +44,8 @@ const SpeciesDef SPECIES[] = {
       {0, C(140,136,130), C(222,218,210), C(238,234,226), C(248,246,240), C(236,232,224), C(28,28,32), C(220,214,204), C(10,10,14), C(28,28,32), C(150,150,150), C(220,214,204), C(28,28,32), C(214,210,202), C(180,176,168)}}}, // panda
     // ---------------- Sud-Est asiatico
     {"harlequin", "Rasbora arlecchino", "seasia", BEH_SCHOOL, 12, 12, 28, 40, 150, 10, 24, 1,
-     {9, 5, 3, 4, TAIL_FORK, 1, PAT_WEDGE, BODY_SLIM, 0, 0},
-     {{0, C(170,90,60), C(210,120,80), C(232,150,110), C(242,200,170), C(22,16,26), 0, C(230,120,80), C(10,10,14), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_HARLEQUIN, 0, 0},
+     {{0, C(125,62,42), C(198,108,66), C(238,148,98), C(232,196,190), C(22,16,26), C(250,192,92), C(236,132,82), C(10,10,14), C(242,172,62), C(218,62,42)}}},
     {"gourami", "Gourami", "seasia", BEH_WANDER, 26, 6, 14, 40, 160, 2, 5, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_GOURAMI, 0, 0},
      {{0, C(70,60,66), C(128,114,106), C(150,150,168), C(222,112,56), C(34,32,48), C(236,236,242), C(104,108,132), C(10,10,14), C(200,205,215), C(226,122,62), C(220,200,180)},   // perlato
@@ -57,12 +57,12 @@ const SpeciesDef SPECIES[] = {
       {0, C(20,14,12), C(58,40,32), C(74,54,42), C(122,92,72), C(46,30,24), 0, C(96,76,64), C(10,10,10)}}},        // nero (oblonga)
     // ---------------- Africa occidentale (Congo)
     {"congo_tetra", "Tetra del Congo", "africa", BEH_SCHOOL, 16, 12, 26, 40, 160, 7, 16, 1,
-     {11, 6, 5, 6, TAIL_FORK, 3, PAT_LATERAL, BODY_SLIM, 2, 0},
-     {{0, C(70,90,140), C(110,140,190), C(170,180,195), C(230,165,95), C(240,205,95), 0, C(205,205,215), C(150,30,30), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CONGO, 0, 0},
+     {{0, C(40,60,112), C(72,132,202), C(165,202,212), C(222,228,236), C(236,142,62), C(246,206,92), C(122,138,165), C(15,15,20), C(206,212,222), C(236,242,252), C(122,232,232), C(122,102,192)}}},
     {"kribensis", "Pelvicachromis", "africa", BEH_WANDER, 34, 6, 14, 150, 240, 2, 4, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_KRIB, 0, 0},
-     {{0, C(70,60,40), C(150,130,72), C(216,202,162), C(202,192,172), C(46,36,30), C(236,72,112), C(118,100,72), C(10,10,10), C(242,216,42), C(92,152,236), C(236,92,82), C(30,26,26), C(112,82,192), C(222,182,62)},   // femmina
-      {0, C(70,62,44), C(160,140,80), C(222,208,172), C(208,198,180), C(52,42,34), C(214,112,122), C(128,112,82), C(10,10,10), C(226,202,82), C(92,152,236), C(242,122,62), C(30,26,26), C(92,92,172), C(222,182,62)}}},  // maschio
+     {{0, C(60,52,40), C(150,135,95), C(212,204,178), C(232,226,200), C(48,40,34), C(232,70,100), C(214,198,96), C(10,10,10), C(238,214,44), C(80,130,230), C(232,70,50), C(24,20,20), C(170,90,190), C(232,180,60), C(214,196,92)},     // femmina
+      {0, C(62,56,44), C(160,145,100), C(218,210,186), C(236,230,206), C(52,44,36), C(214,112,122), C(220,200,110), C(10,10,10), C(226,202,82), C(90,140,230), C(236,110,60), C(24,20,20), C(120,100,190), C(222,182,62), C(210,180,90)}}}, // maschio
     {"shrimp", "Caridina", "seasia", BEH_SHRIMP, 12, 3, 8, 255, 255, 8, 30, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_SHRIMP, 0, 0},
      {{0, C(120,20,20), C(200,40,35), C(235,90,80), 0, C(200,40,35), C(170,30,30), C(220,80,70), C(10,10,10), 0},    // red cherry
@@ -80,24 +80,24 @@ const SpeciesDef SPECIES[] = {
       {0, C(182,72,22), C(236,116,42), C(246,142,56), C(250,186,122), C(226,112,42), C(232,122,46), C(242,132,56), C(12,12,12), C(30,30,30), C(252,182,92), 0, C(252,222,82), C(242,132,56), C(246,152,82)},       // red zebra
       {0, C(36,56,120), C(90,140,216), C(130,176,236), C(186,210,246), C(26,36,82), C(70,110,200), C(100,150,226), C(12,12,12), C(30,30,30), C(200,226,250), 0, C(252,202,62), C(30,40,92), C(160,196,242)}}}, // blue zebra
     {"aulonocara", "Ciclide pavone", "malawi", BEH_WANDER, 27, 6, 14, 40, 200, 3, 6, 2,
-     {20, 9, 7, 8, TAIL_ROUND, 4, PAT_NONE, BODY_SLIM, 2, 0},
-     {{0, C(35,60,160), C(60,100,215), C(80,125,230), C(150,180,240), 0, 0, C(240,185,50), C(15,15,15), 0},
-      {0, C(170,50,30), C(215,75,40), C(235,100,55), C(90,130,220), 0, 0, C(80,120,210), C(15,15,15), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_PEACOCK, 0, 0},
+     {{0, C(20,30,82), C(40,70,180), C(60,100,222), C(110,150,236), C(42,64,162), C(150,192,255), C(60,96,212), C(10,10,14), C(72,102,232), C(220,236,255), C(232,132,42), C(25,35,110), C(242,192,62), C(30,40,110)},   // blu
+      {0, C(110,30,20), C(190,55,30), C(226,82,42), C(242,132,82), C(186,50,30), C(252,162,112), C(212,72,42), C(10,10,14), C(72,102,222), C(202,222,255), C(242,152,52), C(62,72,172), C(242,192,62), C(40,50,140)}}}, // rosso
     // ---------------- Laghetto
     {"koi", "Carpa koi", "pond", BEH_WANDER, 34, 6, 14, 40, 200, 3, 6, 3,
-     {26, 10, 8, 8, TAIL_FORK, 2, PAT_PATCHES, BODY_SLIM, 1, 0},
-     {{0, C(185,185,182), C(222,222,220), C(240,240,236), C(250,250,248), C(220,50,30), C(240,240,236), C(235,235,230), C(20,20,20), 0},
-      {0, C(185,185,182), C(222,222,220), C(240,240,236), C(250,250,248), C(220,50,30), C(25,25,28), C(235,235,230), C(20,20,20), 0},
-      {0, C(200,150,40), C(235,185,60), C(245,205,80), C(250,225,140), C(250,215,100), C(225,170,50), C(245,210,110), C(20,20,20), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_KOI, 0, 0},
+     {{0, C(170,170,168), C(228,228,226), C(244,244,240), C(252,252,250), C(225,60,30), C(244,244,240), C(192,200,208), C(20,20,22), C(212,212,210), C(168,178,190), C(212,142,132), C(195,45,25)},  // kohaku
+      {0, C(170,170,168), C(228,228,226), C(244,244,240), C(252,252,250), C(225,60,30), C(25,25,30), C(192,200,208), C(20,20,22), C(212,212,210), C(168,178,190), C(212,142,132), C(195,45,25)},    // sanke
+      {0, C(180,130,30), C(230,180,60), C(245,205,80), C(250,225,140), C(245,205,80), C(245,205,80), C(232,186,86), C(20,20,22), C(225,175,55), C(212,160,58), C(220,170,80), C(225,175,55)}}}, // ogon
     {"goldfish", "Pesce rosso", "pond", BEH_WANDER, 21, 8, 18, 50, 170, 2, 6, 2,
-     {14, 9, 7, 10, TAIL_FAN, 3, PAT_NONE, BODY_SLIM, 1, 0},
-     {{0, C(200,100,10), C(240,140,20), C(250,170,40), C(255,210,110), 0, 0, C(250,180,70), C(25,15,10), 0},
-      {0, C(200,50,35), C(230,75,50), C(240,120,90), C(250,235,225), 0, 0, C(245,215,200), C(25,15,10), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_GOLDFISH, 0, 0},
+     {{0, C(170,60,10), C(225,100,20), C(245,135,30), C(252,185,90), C(255,200,110), C(215,85,20), C(245,125,40), C(25,15,10), C(250,190,60), C(255,190,130), 0, C(245,135,30), C(255,200,110), C(225,100,20)}, // arancio
+      {0, C(150,140,140), C(225,222,220), C(245,242,240), C(252,250,248), C(255,255,255), C(215,200,195), C(240,232,228), C(25,15,10), C(205,195,185), C(255,240,235), 0, C(225,60,40), C(245,110,80), C(190,40,30)}}}, // rosso e bianco
     {"medaka", "Medaka", "pond", BEH_SCHOOL, 11, 12, 28, 20, 120, 8, 20, 3,
-     {8, 3, 3, 3, TAIL_ROUND, 1, PAT_NONE, BODY_SLIM, 1, 0},
-     {{0, C(210,110,40), C(240,150,60), C(248,175,90), C(252,215,160), 0, 0, C(245,170,90), C(10,10,14), 0},
-      {0, C(200,200,195), C(228,228,222), C(238,238,232), C(248,248,244), 0, 0, C(235,235,228), C(10,10,14), 0},
-      {0, C(110,135,165), C(150,175,200), C(180,200,220), C(220,230,240), 0, 0, C(170,190,215), C(10,10,14), 0}}},
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_MEDAKA, 0, 0},
+     {{0, C(190,95,35), C(235,140,55), C(248,172,90), C(252,214,160), C(215,115,45), C(255,225,180), C(245,180,110), C(10,10,14), C(250,212,150), C(230,140,70), C(255,235,200)},  // arancio (himedaka)
+      {0, C(170,170,168), C(220,220,215), C(236,236,230), C(248,248,244), C(200,200,196), C(255,255,255), C(225,228,228), C(10,10,14), C(235,235,235), C(195,200,205), C(255,255,255)}, // bianco
+      {0, C(120,140,165), C(185,200,220), C(215,225,238), C(240,244,250), C(160,180,205), C(250,252,255), C(175,205,225), C(10,10,14), C(230,235,240), C(120,170,210), C(245,250,255)}}}, // argento-blu
     {"ramshorn", "Planorbarius", "pond", BEH_SNAIL, 14, 0.6f, 1.6f, 255, 255, 4, 12, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_RAMSHORN, 0, 0},
      {{0, C(60,38,22), C(115,75,42), C(160,115,70), C(65,50,42), 0, 0, 0, C(10,10,10), 0},       // bruna
@@ -337,56 +337,6 @@ static void dline(const SpriteSheet *ss, int fr, float xa, float ya, float xb, f
         const float t = (float)i / (float)n;
         sheet_put(ss, fr, ox(xa + (xb - xa) * t), ox(ya + (yb - ya) * t), v);
     }
-}
-
-// Shrimp in side view, facing right: arched segmented body, tail fan, rostrum,
-// antennae, walking legs that alternate between frames.
-static void shrimp_generate(SpriteSheet *ss)
-{
-    const int W = 16, H = 9;
-    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
-#define SHR_CY(u) (5.2f - 1.6f * fm_sin((u) * FM_PI))
-#define SHR_HB(u) ((u) < 0.6f ? 0.9f + 1.0f * (u) / 0.6f : 1.9f - 0.6f * ((u) - 0.6f) / 0.4f)
-    for (int fr = 0; fr < FISH_FRAMES; fr++) {
-        for (int x = 0; x < ss->w; x++) {
-            const float xc = ((float)x + 0.5f) / s_k - 0.5f; // continuous design column
-            if (xc < 1.5f || xc > 12.5f) continue;
-            const int xi = (int)(xc + 0.5f);
-            const float u = fm_clamp((xc - 2.0f) / 10.0f, 0.0f, 1.0f);
-            const float cy = SHR_CY(u), hb = SHR_HB(u);
-            for (int y = 0; y < ss->h; y++) {
-                float dy = ((float)y + 0.5f) / s_k - cy;
-                if (fm_abs(dy) > hb) continue;
-                uint8_t v = dy < -hb * 0.35f ? 3 : 2;
-                if (dy > hb - 0.8f) v = 1;
-                if (xi == 3 || xi == 4 || xi == 7 || xi == 8 || xi == 11) v = 5;     // bands (crystal red)
-                else if (dy > 0 && dy <= hb - 0.8f && (xi & 1) && xi < 10) v = 6;    // side dots (amano)
-                sheet_put(ss, fr, x, y, v);
-            }
-        }
-        // short walking legs under the carapace, alternating stride
-        for (int lx = 8; lx <= 12; lx += 2) {
-            const float u = (float)(lx - 2) / 10.0f;
-            const float base = SHR_CY(u) + SHR_HB(u);
-            const int k = (lx / 2 + fr) & 1;
-            dline(ss, fr, (float)lx + 0.5f, base + 0.5f, (float)lx + 0.5f, (float)H - 1.2f, 7);
-            sheet_put(ss, fr, ox((float)lx + 0.5f + (k ? 0.8f : 0.0f)), ss->h - 1, 7); // foot
-        }
-        // tail fan
-        for (int y = 4; y <= 6; y++) dput(ss, fr, 1, (float)y, 3);
-        for (int y = 3; y <= 7; y += 2) dput(ss, fr, 0, (float)y, 3);
-        dput(ss, fr, 0, 5, 1);
-        // rostrum, eye, antennae
-        const float hy = (float)(int)SHR_CY(1.0f);
-        dput(ss, fr, 13, hy - 1, 2);
-        dput(ss, fr, 14, hy - 1, 1);
-        sheet_put(ss, fr, ox(12.5f), ox(hy - 0.5f), 8);
-        const float wave = (fr == 1) ? -1.0f : (fr == 3 ? 1.0f : 0.0f);
-        dline(ss, fr, 13.5f, hy - 1.5f, 14.5f, hy - 2.5f + wave, 7);
-        dline(ss, fr, 14.5f, hy - 2.5f + wave, 15.5f, hy - 3.5f + wave, 7);
-    }
-#undef SHR_CY
-#undef SHR_HB
 }
 
 // Snails, facing right. Frames 0-2 crawling (foot ripple, tentacles), frame 3
@@ -679,7 +629,8 @@ static const float FLAP4[FISH_FRAMES] = {0.0f, 1.0f, 0.0f, -1.0f};
 typedef struct {
     uint8_t v, ray;
     int8_t rx, ry, rmod;
-    uint8_t ev, emask;
+    uint8_t ev;
+    uint16_t emask;
 } FinStyle;
 
 static void poly_fill(const SpriteSheet *ss, int fr, const float *pd, int n, FinStyle st)
@@ -740,6 +691,45 @@ static void prof_at(const Knot *k, int n, float u, float *top, float *bot)
 #define XU(u) (x0 + (u) * (x1 - x0))
 #define NK(k) ((int)(sizeof(k) / sizeof((k)[0])))
 #define NP(p) ((int)(sizeof(p) / sizeof((p)[0]) / 2))
+
+// One body pixel handed to a species' colouring function: u = 0 (peduncle) .. 1
+// (snout), tt = 0 (back edge) .. 1 (belly edge), py = design row, x/y = output px.
+typedef struct {
+    float u, tt, py;
+    int x, y;
+} BodyPx;
+typedef uint8_t (*BodyPat)(const BodyPx *b);
+
+// Fill the knot profile around the centre line cy between x0 (peduncle) and x1
+// (snout); `pat` returns the palette index of each pixel (0 = leave empty).
+static void body_fill(const SpriteSheet *ss, int fr, const Knot *k, int nk, float cy, float x0, float x1, BodyPat pat)
+{
+    for (int x = 0; x < ss->w; x++) {
+        const float u = (((float)x + 0.5f) / s_k - x0) / (x1 - x0);
+        if (u < 0.0f || u > 1.0f) continue;
+        float top, bot;
+        prof_at(k, nk, u, &top, &bot);
+        for (int y = 0; y < ss->h; y++) {
+            const float py = ((float)y + 0.5f) / s_k;
+            if (py < cy - top || py > cy + bot) continue;
+            const BodyPx b = {u, (py - (cy - top)) / (top + bot), py, x, y};
+            const uint8_t v = pat(&b);
+            if (v) sheet_put(ss, fr, x, y, v);
+        }
+    }
+}
+
+// Eye at design point (x, y): pupil, iris ring (4 neighbours, or the full 3x3
+// block when `big`), optional catch-light up-right.
+static void fish_eye(const SpriteSheet *ss, int fr, float x, float y, uint8_t pupil, uint8_t ring, bool big)
+{
+    const int ex = ox(x), ey = ox(y);
+    if (ring)
+        for (int dy = -1; dy <= 1; dy++)
+            for (int dx = -1; dx <= 1; dx++)
+                if (big || dx == 0 || dy == 0) sheet_put(ss, fr, ex + dx, ey + dy, ring);
+    sheet_put(ss, fr, ex, ey, pupil);
+}
 
 // Corydoras: arched back over a flat belly, tall triangular dorsal with a dark
 // spine, adipose fin, forked tail, sloping snout with barbels, eye high in a
@@ -842,63 +832,56 @@ static void gourami_generate(SpriteSheet *ss)
     }
 }
 
-// Kribensis (Pelvicachromis pulcher): slender cichlid with a pointed head, dark
-// stripe from the snout through the eye to the tail plus a thin one along the
-// back, pink belly patch, yellow cheeks, long dorsal edged blue then red with an
-// ocellus, two-tone tail (red-edged top with spots, violet bottom), long pointed
-// violet pelvic fins.
+// Kribensis (Pelvicachromis pulcher, female): slender cichlid with a pointed
+// head; broad dark stripe from the snout through the eye to the tail base and a
+// thin one under the dorsal; cherry belly patch, yellow cheeks and throat; long
+// dorsal edged red with black ocelli at the rear and a trailing tip; upper tail
+// lobe spotted and red-edged, lower lobe plain; violet pelvic fins edged blue.
+static uint8_t krib_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.3f ? 2 : (tt < 0.72f ? 3 : 4));
+    const float ls = 0.5f - (u > 0.62f ? (u - 0.62f) * 0.6f : 0.0f); // main stripe, rising to the eye
+    const float lw = 0.12f - (u > 0.85f ? (u - 0.85f) * 0.3f : 0.0f);
+    const float du = (u - 0.55f) / 0.17f, dt = (tt - 0.84f) / 0.3f;
+    if (du * du + dt * dt < 1.0f && tt > 0.6f) v = 6;            // cherry belly
+    if (u > 0.74f && tt > ls + lw) v = 9;                        // yellow cheek and throat
+    if (u > 0.84f && tt < ls - lw && v != 1) v = 2;              // dark crown
+    if (fm_abs(tt - ls) < lw && u < 0.98f) v = 5;
+    if (fm_abs(tt - 0.21f) < 0.06f && u > 0.04f && u < 0.8f) v = 5; // thin back stripe
+    return v;
+}
+
 static void krib_generate(SpriteSheet *ss)
 {
     const int W = 34, H = 19;
-    const float cy = 8.5f, x0 = 8.0f, x1 = 33.6f;
-    static const Knot K[] = {{0, 2.2f, 2.2f}, {0.2f, 3.4f, 3.3f}, {0.5f, 4.3f, 4.3f},
-                             {0.75f, 4.0f, 3.8f}, {0.9f, 2.6f, 2.4f}, {1.0f, 0.6f, 0.9f}};
+    const float cy = 9.2f, x0 = 8.0f, x1 = 33.6f;
+    static const Knot K[] = {{0, 1.6f, 1.6f}, {0.2f, 2.9f, 2.8f}, {0.5f, 3.8f, 4.1f},
+                             {0.75f, 3.5f, 3.6f}, {0.9f, 2.4f, 2.3f}, {1.0f, 0.6f, 0.9f}};
     if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
     for (int fr = 0; fr < FISH_FRAMES; fr++) {
         const float fl = FLAP4[fr], o = fl * 1.0f;
-        const float tup[] = {x0 + 0.5f, cy - 2.2f, 3.0f, cy - 5.0f + o, 0.5f, cy - 2.6f + o, 0.5f, cy + o, x0 + 0.5f, cy};
-        poly_fill(ss, fr, tup, NP(tup), (FinStyle){7, 0, 0, 0, 0, 11, (1 << 0) | (1 << 1)});
-        const float tlo[] = {x0 + 0.5f, cy, 0.5f, cy + o, 0.5f, cy + 2.6f + o, 3.0f, cy + 5.0f + o, x0 + 0.5f, cy + 2.2f};
-        poly_fill(ss, fr, tlo, NP(tlo), (FinStyle){13, 0, 0, 0, 0, 10, (1 << 2) | (1 << 3)});
-        dput(ss, fr, 3, cy - 2.4f + o, 12); // tail ocelli
-        dput(ss, fr, 5, cy - 3.2f + o * 0.7f, 12);
-        const float dfront[] = {XU(0.82f), cy - 3.8f, XU(0.66f), cy - 6.4f, XU(0.35f), cy - 7.0f, XU(0.35f), cy - 3.5f};
-        poly_fill(ss, fr, dfront, NP(dfront), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 0) | (1 << 1)});
-        const float drear[] = {XU(0.36f), cy - 3.5f, XU(0.36f), cy - 7.0f, XU(0.25f), cy - 7.2f,
-                               XU(-0.14f), cy - 6.0f + fl * 0.4f, XU(0.02f), cy - 2.0f};
-        poly_fill(ss, fr, drear, NP(drear), (FinStyle){7, 0, 0, 0, 0, 11, (1 << 1) | (1 << 2)});
-        dput(ss, fr, XU(0.1f), cy - 4.6f, 12); // dorsal ocellus
-        const float anal[] = {XU(0.34f), cy + 3.9f, XU(0.12f), cy + 6.6f, XU(-0.1f), cy + 6.0f - fl * 0.4f, XU(0.02f), cy + 2.0f};
-        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 1) | (1 << 2)});
-        for (int x = 0; x < ss->w; x++) {
-            const float u = (((float)x + 0.5f) / s_k - x0) / (x1 - x0);
-            if (u < 0.0f || u > 1.0f) continue;
-            float top, bot;
-            prof_at(K, NK(K), u, &top, &bot);
-            const float ls = cy - 0.2f - (u > 0.6f ? (u - 0.6f) * 4.0f : 0.0f); // main stripe, rising to the eye
-            const float bs = cy - top + 0.24f * (top + bot);                    // thin back stripe
-            for (int y = 0; y < ss->h; y++) {
-                const float py = ((float)y + 0.5f) / s_k;
-                if (py < cy - top || py > cy + bot) continue;
-                const float tt = (py - (cy - top)) / (top + bot);
-                uint8_t v = tt < 0.1f ? 1 : (tt < 0.32f ? 2 : (tt < 0.78f ? 3 : 4));
-                const float du = (u - 0.55f) / 0.19f, dt = (tt - 0.76f) / 0.2f;
-                if (du * du + dt * dt < 1.0f) v = 6;                           // belly patch
-                if (u > 0.78f && tt > 0.55f) v = 9;                            // cheek / throat
-                if (fm_abs(py - bs) < 0.5f && u > 0.05f && u < 0.85f) v = 5;
-                if (fm_abs(py - ls) < 0.62f && u < 0.97f) v = 5;
-                sheet_put(ss, fr, x, y, v);
-            }
-        }
-        const int ex = ox(XU(0.87f)), ey = ox(cy - 0.2f - 0.27f * 4.0f);
-        sheet_put(ss, fr, ex, ey, 8);
-        sheet_put(ss, fr, ex, ey - 1, 14);
-        sheet_put(ss, fr, ex + 1, ey, 14);
-        dput(ss, fr, W - 1, cy + 0.2f, 1); // mouth
-        const float pect[] = {XU(0.74f), cy + 0.6f, XU(0.6f), cy + 2.4f + fl * 0.3f, XU(0.64f), cy + 0.8f};
+        const float tup[] = {x0 + 0.5f, cy - 1.9f, 3.2f, cy - 4.4f + o, 0.6f, cy - 2.6f + o, 0.0f, cy + o, x0 + 0.5f, cy};
+        poly_fill(ss, fr, tup, NP(tup), (FinStyle){7, 0, 0, 0, 0, 11, 1 << 1});
+        const float tlo[] = {x0 + 0.5f, cy, 0.0f, cy + o, 0.6f, cy + 2.6f + o, 3.2f, cy + 4.2f + o, x0 + 0.5f, cy + 1.9f};
+        poly_fill(ss, fr, tlo, NP(tlo), (FinStyle){15, 0, 0, 0, 0, 0, 0});
+        dput(ss, fr, 3.2f, cy - 2.8f + o * 0.8f, 12); // tail spots, upper lobe
+        dput(ss, fr, 5.4f, cy - 2.4f + o * 0.6f, 12);
+        const float dors[] = {XU(0.8f), cy - 3.6f, XU(0.7f), cy - 5.4f, XU(0.22f), cy - 6.4f,
+                              XU(-0.1f), cy - 7.0f + fl * 0.4f, XU(-0.02f), cy - 3.4f, XU(0.04f), cy - 1.9f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 14, 1, 0, 3, 11, (1 << 0) | (1 << 1) | (1 << 2)});
+        dput(ss, fr, XU(0.22f), cy - 5.0f, 12); // dorsal ocelli
+        dput(ss, fr, XU(0.1f), cy - 5.4f, 12);
+        dput(ss, fr, XU(-0.02f), cy - 5.8f, 12);
+        const float anal[] = {XU(0.32f), cy + 4.0f, XU(0.12f), cy + 6.6f, XU(-0.12f), cy + 6.0f - fl * 0.4f, XU(0.0f), cy + 1.9f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 10, 1 << 1});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, krib_px);
+        const float pect[] = {XU(0.72f), cy + 0.8f, XU(0.58f), cy + 2.6f + fl * 0.3f, XU(0.62f), cy + 0.8f};
         poly_fill(ss, fr, pect, NP(pect), (FinStyle){7, 0, 0, 0, 0, 0, 0});
-        const float pelv[] = {XU(0.72f), cy + 3.3f, XU(0.64f), cy + 3.8f, XU(0.46f), cy + 9.0f + fl * 0.3f};
-        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){13, 0, 0, 0, 0, 10, 1 << 2});
+        const float pelv[] = {XU(0.74f), cy + 3.4f, XU(0.66f), cy + 3.9f, XU(0.48f), cy + 8.9f + fl * 0.3f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){13, 0, 0, 0, 0, 10, 1 << 1});
+        fish_eye(ss, fr, XU(0.88f), cy - 1.2f, 8, 14, true);
+        dput(ss, fr, XU(1.0f) - 0.4f, cy + 0.2f, 1); // mouth
     }
 }
 
@@ -1004,6 +987,396 @@ static void kuhli_generate(SpriteSheet *ss)
 #undef KW
     }
 }
+// Cardinal tetra (Paracheirodon axelrodi): slim torpedo, iridescent blue line
+// from the eye to the adipose fin, red along the whole lower half up to the tail
+// base, small white belly behind the head, glassy fins, big eye ringed blue.
+static uint8_t cardinal_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    if (tt < 0.12f) return 1;
+    const float line = 0.36f - (u > 0.75f ? (u - 0.75f) * 0.5f : 0.0f); // rises slightly to the eye
+    if (u > 0.1f && u < 0.9f && fm_abs(tt - line) < 0.13f) return tt < line - 0.04f ? 4 : 3;
+    if (tt < line) return 2;
+    if ((u > 0.5f && u < 0.84f && tt > 0.8f) || u > 0.93f) return 9; // white belly, silver chin
+    return tt > 0.86f ? 6 : 5;
+}
+
+static void cardinal_generate(SpriteSheet *ss)
+{
+    const int W = 15, H = 9;
+    const float cy = 4.4f, x0 = 4.0f, x1 = 14.7f;
+    static const Knot K[] = {{0, 0.7f, 0.7f}, {0.15f, 1.1f, 1.1f}, {0.45f, 1.9f, 2.1f},
+                             {0.7f, 1.9f, 2.0f}, {0.88f, 1.4f, 1.5f}, {1.0f, 0.4f, 0.5f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.6f, 1.0f, cy - 3.0f + o, 2.4f, cy + o * 0.5f, 1.0f, cy + 3.0f + o, x0 + 0.5f, cy + 0.6f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 12, 0, 1, 2, 0, 0});
+        const float base[] = {x0 + 0.6f, cy - 0.8f, x0 - 1.4f, cy - 0.9f + o * 0.3f, x0 - 1.4f, cy + 0.9f + o * 0.3f, x0 + 0.6f, cy + 0.8f};
+        poly_fill(ss, fr, base, NP(base), (FinStyle){11, 0, 0, 0, 0, 0, 0}); // red tail base
+        const float dors[] = {XU(0.56f), cy - 1.6f, XU(0.46f), cy - 4.1f, XU(0.34f), cy - 3.6f + fl * 0.2f, XU(0.4f), cy - 1.5f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 12, 1});
+        dput(ss, fr, XU(0.1f), cy - 1.6f, 7); // adipose fin
+        const float anal[] = {XU(0.46f), cy + 1.9f, XU(0.32f), cy + 3.7f, XU(0.06f), cy + 3.1f - fl * 0.2f, XU(0.1f), cy + 1.0f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 12, 1, 0, 2, 0, 0});
+        const float pelv[] = {XU(0.66f), cy + 1.6f, XU(0.52f), cy + 3.0f + fl * 0.3f, XU(0.6f), cy + 1.7f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, cardinal_px);
+        fish_eye(ss, fr, XU(0.86f), cy - 0.5f, 8, 10, false);
+    }
+}
+
+// Ember tetra (Hyphessobrycon amandae): small, fairly deep glassy orange-red body
+// with the spine showing through, tall dorsal with a dark leading edge, long
+// anal fin with a pale leading edge, forked tail, big red-ringed eye.
+static uint8_t ember_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.36f ? 2 : (tt < 0.74f ? 3 : 4));
+    if (u > 0.06f && u < 0.78f && fm_abs(tt - 0.42f) < 0.07f) v = 5; // spine through the glassy body
+    return v;
+}
+
+static void ember_generate(SpriteSheet *ss)
+{
+    const int W = 12, H = 10;
+    const float cy = 5.0f, x0 = 3.4f, x1 = 11.7f;
+    static const Knot K[] = {{0, 0.7f, 0.7f}, {0.2f, 1.4f, 1.5f}, {0.5f, 2.3f, 2.5f},
+                             {0.72f, 2.2f, 2.2f}, {0.88f, 1.6f, 1.5f}, {1.0f, 0.5f, 0.6f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.6f, 0.8f, cy - 3.1f + o, 2.0f, cy + o * 0.5f, 0.8f, cy + 3.1f + o, x0 + 0.5f, cy + 0.6f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float dors[] = {XU(0.58f), cy - 2.2f, XU(0.5f), cy - 4.6f, XU(0.36f), cy - 4.0f + fl * 0.2f, XU(0.4f), cy - 2.1f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 10, 1});
+        dput(ss, fr, XU(0.1f), cy - 1.4f, 7); // adipose fin
+        const float anal[] = {XU(0.5f), cy + 2.4f, XU(0.34f), cy + 4.7f, XU(0.02f), cy + 3.4f - fl * 0.2f, XU(0.06f), cy + 1.2f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 11, 1});
+        const float pelv[] = {XU(0.66f), cy + 2.2f, XU(0.54f), cy + 3.8f + fl * 0.3f, XU(0.6f), cy + 2.2f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, ember_px);
+        fish_eye(ss, fr, XU(0.85f), cy - 0.6f, 8, 9, false);
+    }
+}
+
+// Harlequin rasbora (Trigonostigma heteromorpha): deep copper-orange body, black
+// wedge with a vertical front edge under the dorsal tapering to a point at the
+// tail base, a gold line along its top edge, dark mark behind the gill, red-edged
+// forked tail, pelvic fins with a black leading edge.
+static uint8_t harlequin_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.34f ? 2 : (tt < 0.72f ? 3 : 4));
+    if (u > 0.02f && u < 0.57f) {
+        const float k = fm_clamp((u - 0.02f) / 0.54f, 0.0f, 1.0f);
+        const float half = 0.04f + 0.3f * k, wc = 0.52f + 0.02f * k;
+        if (fm_abs(tt - wc) < half) return 5;
+        if (u > 0.12f && tt < wc - half && tt > wc - half - 0.14f) return 6; // gold line above the wedge
+    }
+    if (u > 0.75f && u < 0.8f && tt > 0.3f && tt < 0.7f) return 5; // gill mark
+    return v;
+}
+
+static void harlequin_generate(SpriteSheet *ss)
+{
+    const int W = 13, H = 10;
+    const float cy = 4.9f, x0 = 3.6f, x1 = 12.7f;
+    static const Knot K[] = {{0, 0.8f, 0.8f}, {0.15f, 1.3f, 1.2f}, {0.45f, 2.5f, 2.6f},
+                             {0.7f, 2.4f, 2.3f}, {0.88f, 1.7f, 1.5f}, {1.0f, 0.5f, 0.5f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.7f, 0.8f, cy - 3.3f + o, 2.2f, cy + o * 0.5f, 0.8f, cy + 3.3f + o, x0 + 0.5f, cy + 0.7f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 0) | (1 << 3)});
+        const float dors[] = {XU(0.6f), cy - 2.5f, XU(0.52f), cy - 4.8f, XU(0.38f), cy - 4.2f + fl * 0.2f, XU(0.42f), cy - 2.3f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 10, 1 << 1});
+        const float anal[] = {XU(0.5f), cy + 2.5f, XU(0.38f), cy + 4.4f, XU(0.2f), cy + 3.8f - fl * 0.2f, XU(0.24f), cy + 1.9f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float pelv[] = {XU(0.66f), cy + 2.2f, XU(0.56f), cy + 4.1f + fl * 0.3f, XU(0.62f), cy + 2.2f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 5, 1});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, harlequin_px);
+        fish_eye(ss, fr, XU(0.86f), cy - 0.5f, 8, 9, false);
+    }
+}
+
+// Congo tetra (Phenacogrammus interruptus, male): long deep body, blue back, a
+// broad orange band edged gold from the head to the rear body, silver-turquoise
+// scales below, violet peduncle; tail with a feathery middle filament, long
+// trailing dorsal and anal fins with white edges.
+static uint8_t congo_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    if (tt < 0.08f) return 1;
+    if (u < 0.12f) return tt > 0.85f ? 4 : 12;                       // violet peduncle
+    if (u > 0.86f) return tt < 0.42f ? 5 : (tt < 0.8f ? 3 : 4);      // orange forehead, silver cheek
+    if (tt < 0.28f) return 2;                                        // blue back
+    if (u > 0.2f && tt < 0.34f) return 6;                            // gold edge of the band
+    if (u > 0.2f && tt < 0.5f) return 5;                             // orange band
+    if (tt < 0.84f) return PEARL(b->x, b->y) ? 11 : 3;               // glittering scales
+    return 4;
+}
+
+static void congo_generate(SpriteSheet *ss)
+{
+    const int W = 18, H = 13;
+    const float cy = 6.4f, x0 = 5.0f, x1 = 17.7f;
+    static const Knot K[] = {{0, 0.9f, 0.9f}, {0.15f, 1.6f, 1.6f}, {0.45f, 2.7f, 2.8f},
+                             {0.72f, 2.6f, 2.5f}, {0.9f, 1.9f, 1.7f}, {1.0f, 0.6f, 0.6f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.8f;
+        const float tail[] = {x0 + 0.5f, cy - 0.9f, 1.8f, cy - 4.4f + o, 0.3f, cy - 3.8f + o, 1.8f, cy - 0.8f + o * 0.6f,
+                              0.0f, cy + o * 0.6f, 1.8f, cy + 0.8f + o * 0.6f, 0.3f, cy + 3.8f + o, 1.8f, cy + 4.4f + o,
+                              x0 + 0.5f, cy + 0.9f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 0) | (1 << 3) | (1 << 4) | (1 << 7)});
+        const float dors[] = {XU(0.58f), cy - 2.7f, XU(0.5f), cy - 5.0f, XU(0.22f), cy - 5.4f + fl * 0.3f, XU(0.38f), cy - 2.6f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 0) | (1 << 1)});
+        const float anal[] = {XU(0.54f), cy + 2.6f, XU(0.4f), cy + 4.6f, XU(0.0f), cy + 5.0f - fl * 0.3f, XU(0.08f), cy + 1.5f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 10, 1 << 1});
+        const float pelv[] = {XU(0.66f), cy + 2.4f, XU(0.54f), cy + 4.4f + fl * 0.3f, XU(0.6f), cy + 2.4f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, congo_px);
+        fish_eye(ss, fr, XU(0.87f), cy - 0.6f, 8, 9, false);
+    }
+}
+
+// Peacock cichlid (Aulonocara): robust Malawi cichlid with a sloping forehead,
+// shimmering scales and faint dark bars, a differently coloured head with a dark
+// opercle line, long dorsal edged pale, dark anal fin edged yellow, long pelvic
+// fins, rounded tail, large amber eye.
+static uint8_t peacock_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.08f ? 1 : (tt < 0.3f ? 2 : (tt < 0.74f ? 3 : 4));
+    if (v == 1) return v;
+    if (u > 0.74f) { // head
+        const float oc = 0.76f - 0.32f * (tt - 0.55f) * (tt - 0.55f); // opercle arc
+        if (fm_abs(u - oc) < 0.02f && tt > 0.3f && tt < 0.9f) return 14;
+        return (u > 0.96f && tt > 0.45f) ? 14 : 9;                   // lips
+    }
+    const float bu = u + (tt - 0.5f) * 0.03f;
+    for (int k = 0; k < 7; k++)
+        if (fm_abs(bu - (0.1f + 0.09f * (float)k)) < 0.022f && tt > 0.12f && tt < 0.86f) return 5;
+    if (tt > 0.15f && tt < 0.85f && ((b->x + 2 * b->y) % 5) == 0) v = 6; // scale shimmer
+    return v;
+}
+
+static void peacock_generate(SpriteSheet *ss)
+{
+    const int W = 27, H = 18;
+    const float cy = 8.2f, x0 = 6.0f, x1 = 26.6f;
+    static const Knot K[] = {{0, 1.9f, 1.9f}, {0.2f, 3.1f, 3.0f}, {0.5f, 4.3f, 3.9f},
+                             {0.74f, 4.1f, 3.6f}, {0.9f, 3.0f, 2.5f}, {1.0f, 1.0f, 0.9f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 1.0f;
+        const float tail[] = {x0 + 0.5f, cy - 1.9f, 1.4f, cy - 4.7f + o, 0.2f, cy - 3.8f + o, 0.5f, cy + o,
+                              0.2f, cy + 3.8f + o, 1.4f, cy + 4.7f + o, x0 + 0.5f, cy + 1.9f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 12, 0, 1, 3, 10, 1 << 0});
+        const float dors[] = {XU(0.78f), cy - 4.1f, XU(0.64f), cy - 7.3f, XU(0.2f), cy - 7.7f,
+                              XU(-0.14f), cy - 6.2f + fl * 0.4f, XU(0.0f), cy - 1.9f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 12, 1, 0, 3, 10, (1 << 0) | (1 << 1) | (1 << 2)});
+        const float anal[] = {XU(0.36f), cy + 3.7f, XU(0.14f), cy + 7.0f, XU(-0.1f), cy + 6.4f - fl * 0.4f, XU(0.0f), cy + 1.9f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){12, 0, 0, 0, 0, 13, (1 << 1) | (1 << 2)});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, peacock_px);
+        const float pect[] = {XU(0.72f), cy + 0.8f, XU(0.56f), cy + 3.0f + fl * 0.3f, XU(0.6f), cy + 0.8f};
+        poly_fill(ss, fr, pect, NP(pect), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float pelv[] = {XU(0.68f), cy + 3.4f, XU(0.6f), cy + 3.7f, XU(0.44f), cy + 8.6f + fl * 0.3f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){12, 0, 0, 0, 0, 10, 1 << 2});
+        fish_eye(ss, fr, XU(0.85f), cy - 1.5f, 8, 11, true);
+    }
+}
+
+// Goldfish (Carassius auratus, veiltail): deep egg-shaped body with a blunt
+// head, scale sparkle, tall dorsal, long flowing double tail that waves between
+// frames, long pelvic fins, gold-ringed eye. Index 12-14 = colour patches (red
+// on the red & white variant, same as the body on the plain orange one).
+static uint8_t goldfish_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.08f ? 1 : (tt < 0.3f ? 2 : (tt < 0.75f ? 3 : 4));
+    if (v == 1) return v;
+    const bool patch = (u > 0.78f && tt < 0.62f) ||                                       // red cap
+                       (u > 0.28f && u < 0.62f && tt < 0.5f + 0.12f * fm_sin(u * 19.0f)); // saddle
+    const bool sparkle = (v == 2 || v == 3) && u < 0.82f && PEARL(b->x, b->y);
+    if (patch) return sparkle ? 13 : (v == 2 ? 14 : 12);
+    return sparkle ? 5 : v;
+}
+
+static void goldfish_generate(SpriteSheet *ss)
+{
+    const int W = 26, H = 21;
+    const float cy = 9.8f, x0 = 10.0f, x1 = 25.6f;
+    static const Knot K[] = {{0, 1.6f, 1.6f}, {0.2f, 3.4f, 3.6f}, {0.45f, 4.8f, 5.0f},
+                             {0.7f, 4.5f, 4.4f}, {0.88f, 3.3f, 3.0f}, {1.0f, 1.4f, 1.0f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 1.0f;
+        const float tail[] = {x0 + 0.5f, cy - 1.5f, 5.6f, cy - 4.6f + o * 0.5f, 1.0f, cy - 8.4f + o * 1.2f,
+                              0.2f, cy - 6.6f + o * 1.4f, 2.4f, cy - 3.6f + o * 1.1f, 3.6f, cy + o * 0.8f,
+                              2.4f, cy + 3.6f + o * 1.1f, 0.2f, cy + 6.6f + o * 1.4f, 1.0f, cy + 8.4f + o * 1.2f,
+                              5.6f, cy + 4.6f + o * 0.5f, x0 + 0.5f, cy + 1.5f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 6, 1, 1, 3, 10, (1 << 1) | (1 << 2) | (1 << 7) | (1 << 8)});
+        const float dors[] = {XU(0.66f), cy - 4.6f, XU(0.54f), cy - 9.4f, XU(0.3f), cy - 9.0f + fl * 0.3f, XU(0.06f), cy - 3.0f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 6, 1, 0, 3, 10, 1 << 1});
+        const float anal[] = {XU(0.26f), cy + 4.2f, XU(0.08f), cy + 7.8f, XU(-0.12f), cy + 7.4f - fl * 0.4f, XU(0.0f), cy + 2.4f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 6, 1, 0, 3, 0, 0});
+        const float pelv[] = {XU(0.66f), cy + 4.4f, XU(0.58f), cy + 4.8f, XU(0.48f), cy + 10.4f + fl * 0.3f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 10, 1 << 1});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, goldfish_px);
+        const float pect[] = {XU(0.8f), cy + 1.2f, XU(0.62f), cy + 4.0f + fl * 0.3f, XU(0.68f), cy + 1.2f};
+        poly_fill(ss, fr, pect, NP(pect), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        fish_eye(ss, fr, XU(0.86f), cy - 1.0f, 8, 9, true);
+        dput(ss, fr, XU(1.0f) - 0.4f, cy + 0.2f, 1); // mouth
+    }
+}
+
+// Koi (Cyprinus rubrofuscus): long heavy torpedo, scale net, big red patches on
+// the back plus a red head cap (kohaku), black sumi spots (sanke), large forked
+// tail and long dorsal with fine rays, big pectoral fins, barbels.
+static uint8_t koi_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    const uint8_t v = tt < 0.08f ? 1 : (tt < 0.3f ? 2 : (tt < 0.78f ? 3 : 4));
+    if (v == 1) return v;
+    const bool scale = PEARL(b->x, b->y) && tt < 0.8f && u < 0.86f;
+    const float edge = 0.6f + 0.14f * fm_sin(u * 13.0f + 1.0f);
+    const bool patch = (u > 0.87f && tt < 0.5f) ||
+                       (u > 0.1f && u < 0.83f && tt < edge && fm_sin(u * 17.0f - 1.2f) + 0.4f * fm_sin(u * 29.0f + tt * 5.0f) > 0.1f);
+    if (patch) return scale ? 12 : 5;
+    if (u > 0.2f && u < 0.8f && tt > 0.15f && tt < 0.55f && fm_sin(u * 41.0f + 0.5f) > 0.7f && fm_sin(tt * 15.0f + u * 9.0f) > 0.3f)
+        return 6; // sumi
+    return scale ? 9 : v;
+}
+
+static void koi_generate(SpriteSheet *ss)
+{
+    const int W = 34, H = 16;
+    const float cy = 7.4f, x0 = 10.0f, x1 = 33.6f;
+    static const Knot K[] = {{0, 1.3f, 1.3f}, {0.2f, 2.6f, 2.4f}, {0.5f, 3.6f, 3.3f},
+                             {0.75f, 3.4f, 3.0f}, {0.9f, 2.6f, 2.3f}, {1.0f, 1.3f, 1.2f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.8f;
+        const float tail[] = {x0 + 0.5f, cy - 1.3f, 5.0f, cy - 3.2f + o * 0.5f, 0.6f, cy - 5.2f + o * 1.2f, 3.0f, cy + o * 0.8f,
+                              0.6f, cy + 5.2f + o * 1.2f, 5.0f, cy + 3.2f + o * 0.5f, x0 + 0.5f, cy + 1.3f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 10, 1, 2, 4, 0, 0});
+        const float dors[] = {XU(0.62f), cy - 3.5f, XU(0.54f), cy - 6.4f, XU(0.2f), cy - 5.2f + fl * 0.3f, XU(0.1f), cy - 2.2f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 10, 1, 0, 3, 0, 0});
+        const float anal[] = {XU(0.22f), cy + 2.3f, XU(0.12f), cy + 4.8f - fl * 0.3f, XU(0.04f), cy + 1.6f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float pelv[] = {XU(0.5f), cy + 3.0f, XU(0.38f), cy + 5.8f + fl * 0.3f, XU(0.46f), cy + 3.0f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, koi_px);
+        const float pect[] = {XU(0.8f), cy + 1.4f, XU(0.62f), cy + 4.6f + fl * 0.4f, XU(0.72f), cy + 5.2f + fl * 0.4f, XU(0.78f), cy + 2.6f};
+        poly_fill(ss, fr, pect, NP(pect), (FinStyle){7, 10, 1, 0, 3, 0, 0});
+        dline(ss, fr, XU(0.99f), cy + 0.9f, XU(1.0f) + 0.2f, cy + 2.6f, 11); // barbels
+        dline(ss, fr, XU(0.95f), cy + 1.4f, XU(0.93f), cy + 2.8f, 11);
+        dput(ss, fr, XU(1.0f) - 0.3f, cy + 0.6f, 11); // lips
+        fish_eye(ss, fr, XU(0.88f), cy - 0.4f, 8, 0, false);
+    }
+}
+
+// Medaka (Oryzias latipes): small, straight flat back, upturned mouth, big
+// silver-ringed eye, scale net on the back, silver lateral line, small dorsal
+// set far back, long rayed anal fin, broad truncate rayed tail.
+static uint8_t medaka_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.4f ? 2 : (tt < 0.74f ? 3 : 4));
+    if (v == 2 && u < 0.85f && PEARL(b->x, b->y)) v = 5;                 // scale net
+    if (u > 0.08f && u < 0.7f && fm_abs(tt - 0.5f) < 0.07f) v = 6;         // lateral line
+    if (u > 0.7f && u < 0.78f && tt > 0.4f && tt < 0.85f) v = 11;          // gill shine
+    return v;
+}
+
+static void medaka_generate(SpriteSheet *ss)
+{
+    const int W = 12, H = 8;
+    const float cy = 3.8f, x0 = 3.2f, x1 = 11.8f;
+    static const Knot K[] = {{0, 0.8f, 0.8f}, {0.2f, 1.3f, 1.2f}, {0.5f, 1.5f, 1.9f},
+                             {0.75f, 1.5f, 1.8f}, {0.9f, 1.3f, 1.3f}, {1.0f, 0.9f, 0.3f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.7f, 0.4f, cy - 2.6f + o, 0.1f, cy + o * 0.5f, 0.4f, cy + 2.6f + o, x0 + 0.5f, cy + 0.7f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 10, 0, 1, 2, 0, 0});
+        const float dors[] = {XU(0.26f), cy - 1.2f, XU(0.2f), cy - 3.2f, XU(0.06f), cy - 2.6f + fl * 0.2f, XU(0.08f), cy - 0.9f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 10, 1, 0, 2, 0, 0});
+        const float anal[] = {XU(0.56f), cy + 1.7f, XU(0.46f), cy + 3.7f, XU(0.04f), cy + 3.0f - fl * 0.2f, XU(0.04f), cy + 0.9f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 10, 1, 0, 2, 0, 0});
+        const float pelv[] = {XU(0.7f), cy + 1.6f, XU(0.62f), cy + 3.4f + fl * 0.3f, XU(0.66f), cy + 1.6f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, medaka_px);
+        fish_eye(ss, fr, XU(0.86f), cy - 0.3f, 8, 9, true);
+    }
+}
+// Caridina shrimp in side view, facing right: bulky carapace with a forward
+// rostrum and stalked eye, six abdominal segments tapering to a tail fan, long
+// antennae sweeping forward, thin walking legs under the carapace (alternating
+// stride, feet on the last row), swimmerets paddling under the abdomen.
+// Bands (index 5) sit behind the eye, on the first abdominal segments and near
+// the tail, like a crystal / bee shrimp.
+static void shrimp_generate(SpriteSheet *ss)
+{
+    const int W = 18, H = 9;
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+#define SHR_CY(x) (4.9f - 0.6f * fm_sin(fm_clamp(((x) - 2.0f) / 12.5f, 0.0f, 1.0f) * FM_PI))
+#define SHR_HB(x) ((x) < 9.0f ? 0.9f + 1.2f * fm_clamp(((x) - 2.4f) / 6.6f, 0.0f, 1.0f) \
+                              : ((x) < 13.4f ? 2.3f : 2.3f - 1.0f * ((x) - 13.4f)))
+    static const float SEG[5] = {3.5f, 4.7f, 5.9f, 7.1f, 9.4f}; // segment joints, last = carapace edge
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        // tail fan (uropods + telson), fanned slightly upwards
+        const float fan[] = {2.9f, SHR_CY(2.6f) - 0.7f, 0.6f, SHR_CY(2.6f) - 2.0f, 0.0f, SHR_CY(2.6f) - 0.6f,
+                             0.6f, SHR_CY(2.6f) + 0.9f, 2.9f, SHR_CY(2.6f) + 0.7f};
+        poly_fill(ss, fr, fan, NP(fan), (FinStyle){3, 0, 0, 0, 0, 2, (1 << 3) | (1 << 4)});
+        // body
+        for (int x = 0; x < ss->w; x++) {
+            const float xc = ((float)x + 0.5f) / s_k;
+            if (xc < 2.4f || xc > 14.6f) continue;
+            const float cy = SHR_CY(xc), hb = SHR_HB(xc);
+            bool joint = false;
+            for (int s = 0; s < 5; s++) joint |= ox(SEG[s]) == x;
+            for (int y = 0; y < ss->h; y++) {
+                const float dy = ((float)y + 0.5f) / s_k - cy;
+                if (fm_abs(dy) > hb) continue;
+                uint8_t v = dy < -hb * 0.35f ? 3 : 2;
+                if (dy > hb - 0.5f) v = 1;                                                   // belly edge
+                if ((xc > 3.6f && xc < 4.6f) || (xc > 7.0f && xc < 9.3f) || (xc > 12.0f && xc < 13.0f)) v = 5; // bands
+                else if (dy > 0.2f && dy < hb - 0.5f && ((int)xc & 1) && xc < 12.0f) v = 6;  // side dots
+                if (joint && dy < -hb * 0.2f && v != 5) v = 1;                               // segment joints
+                sheet_put(ss, fr, x, y, v);
+            }
+        }
+        // walking legs under the carapace: thigh down-forward, shin down, alternating stride
+        for (int i = 0; i < 5; i++) {
+            const float lx = 9.6f + (float)i * 0.95f, base = SHR_CY(lx) + SHR_HB(lx) - 0.1f;
+            const float st = ((i + fr) & 1) ? 0.7f : -0.2f;
+            dline(ss, fr, lx, base, lx + 0.5f, base + 0.6f, 7);
+            dline(ss, fr, lx + 0.5f, base + 0.6f, lx + st, (float)H - 0.5f, 7);
+            sheet_put(ss, fr, ox(lx + st), ss->h - 1, 7); // foot
+        }
+        // swimmerets: short paddles under the abdomen, beating in a wave
+        for (int i = 0; i < 5; i++) {
+            const float sx = 3.9f + (float)i * 1.15f, base = SHR_CY(sx) + SHR_HB(sx) - 0.2f;
+            const float sw = ((i + fr) & 1) ? 0.5f : -0.3f;
+            dline(ss, fr, sx, base, sx + sw, base + 0.9f, 7);
+        }
+        // rostrum, stalked eye, antennae
+        const float hy = SHR_CY(14.0f);
+        dline(ss, fr, 14.2f, hy - 0.9f, 16.4f, hy - 1.5f, 2);
+        dput(ss, fr, 14.0f, hy - 1.0f, 1);
+        sheet_put(ss, fr, ox(14.0f) + 1, ox(hy - 1.0f), 8);
+        const float wave = (fr == 1) ? -0.6f : (fr == 3 ? 0.6f : 0.0f);
+        dline(ss, fr, 14.6f, hy - 0.4f, 16.2f, hy - 2.6f + wave, 7); // long antennae, forward and up
+        dline(ss, fr, 16.2f, hy - 2.6f + wave, 17.9f, hy - 4.0f + wave * 1.5f, 7);
+        dline(ss, fr, 14.6f, hy + 0.2f, 17.9f, hy - 0.2f - wave, 7); // second pair, straight ahead
+    }
+#undef SHR_CY
+#undef SHR_HB
+}
+
 #undef XU
 #undef NK
 #undef NP
@@ -1076,6 +1449,14 @@ void creatures_init(void)
                 else if (f->body == BODY_KRIB) krib_generate(&s_sprites[ns]);
                 else if (f->body == BODY_MBUNA) mbuna_generate(&s_sprites[ns]);
                 else if (f->body == BODY_KUHLI) kuhli_generate(&s_sprites[ns]);
+                else if (f->body == BODY_CARDINAL) cardinal_generate(&s_sprites[ns]);
+                else if (f->body == BODY_EMBER) ember_generate(&s_sprites[ns]);
+                else if (f->body == BODY_HARLEQUIN) harlequin_generate(&s_sprites[ns]);
+                else if (f->body == BODY_CONGO) congo_generate(&s_sprites[ns]);
+                else if (f->body == BODY_PEACOCK) peacock_generate(&s_sprites[ns]);
+                else if (f->body == BODY_GOLDFISH) goldfish_generate(&s_sprites[ns]);
+                else if (f->body == BODY_KOI) koi_generate(&s_sprites[ns]);
+                else if (f->body == BODY_MEDAKA) medaka_generate(&s_sprites[ns]);
                 else if (f->body == BODY_RAMSHORN || f->body == BODY_CONE) snail_generate(&s_sprites[ns], f->body);
                 else {
                     FishShape sf = *f; // generic generator: scale the shape parameters

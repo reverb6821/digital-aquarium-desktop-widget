@@ -312,7 +312,7 @@ typedef struct {
 ### Catalogo elementi selezionabili (minimo)
 
 - **Piante:** pianta a stelo (Rotala/Egeria), vallisneria, Cryptocoryne, Microsorum, Bolbitis heudelotii, Anubias, Bucephalandra, Echinodorus, muschio di Java, ninfea.
-- **Decorazioni:** roccia grande, roccia piatta, roccia alta (Seiryu), gruppo di sassi, ardesia impilata, tronco, spiderwood, ramo alto, radici ad arco, foglie di catappa.
+- **Decorazioni:** roccia grande, dragon stone, Seiryu stone, gruppo di sassi, ardesia impilata, tronco, spiderwood, ramo alto, radici ad arco, foglie di catappa.
 - **Fondali:** sabbia, ghiaia, roccia scura con pattern, ciottoli, nessuno.
 - **Sfondi acqua:** palette per bioma (amazzonico, acque nere, Sud-Est asiatico, Congo, blu Malawi, verde laghetto) + colori custom.
 - **Creature (solo acqua dolce):** neon, cardinale, pesce brace, scalare, discus, corydoras, rasbora arlecchino, gourami, Pangio kuhlii, tetra del Congo, Pelvicachromis, ciclide mbuna, ciclide pavone, carpa koi, pesce rosso, medaka; invertebrati: caridina (red cherry, crystal red, amano, blue dream), Planorbarius (bruna, rossa, blu), lumaca killer (Clea helena).
@@ -345,7 +345,7 @@ Pannello laterale semitrasparente (l'acquario continua ad animarsi dietro, event
 ### Modalità modifica
 
 - Il menu si chiude, compare una barra in basso con "Fatto" / "Annulla".
-- Le piante/decorazioni diventano **trascinabili** orizzontalmente (snap al profilo del fondale); tap per selezionare, pulsanti per layer davanti/dietro, ruota colore, elimina.
+- Le piante/decorazioni diventano **trascinabili** in orizzontale e in verticale (offset `dy` sopra il fondale; entro 3 px si riaggancia al profilo del fondale) e **ruotabili** a passi di 15° attorno al punto di base (`rot`); tap per selezionare, pulsanti per layer davanti/dietro, ruota colore, -15/+15, "Fondo" (azzera offset e rotazione), -/+ dimensione di piante e arredi (`scale` 50-200%, passi del 10%; la ninfea si allarga solo in orizzontale), elimina.
 - Le creature vengono nascoste o rallentate durante l'editing.
 
 Le modifiche si applicano **in anteprima live**; il salvataggio su storage avviene con debounce.

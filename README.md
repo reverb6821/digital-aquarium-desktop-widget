@@ -33,7 +33,8 @@ Linux.
   - hold for 1 s to open the menu.
 - **Full customisation from the screen**:
   - biome, water colours, light, substrate;
-  - add, remove, move and recolour plants and decorations (edit mode with drag);
+  - add, remove, move (horizontally and vertically), rotate, resize and recolour plants and
+    decorations (edit mode with drag);
   - species, count and colour variants;
   - day/night, speed, brightness, FPS cap, screen-off timer;
   - 8 user presets.
@@ -67,7 +68,7 @@ You can add any species, plant or decoration to any biome from the menu.
   - assassin snail (*Clea helena*).
 - **Plants (10)**: stem plant (Rotala/Egeria), vallisneria, Cryptocoryne, Microsorum,
   Bolbitis heudelotii, Anubias, Bucephalandra, Echinodorus, Java moss, water lily.
-- **Decorations (10)**: big rock, flat rock, tall stone, pebble cluster, stacked slate,
+- **Decorations (10)**: big rock, dragon stone, Seiryu stone, pebble cluster, stacked slate,
   driftwood log, spiderwood, tall branch, arching roots, catappa leaves.
 - **Substrates**: sand, gravel, dark rock, pebbles, none.
 

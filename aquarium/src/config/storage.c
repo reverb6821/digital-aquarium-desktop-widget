@@ -22,8 +22,8 @@ static struct {
     char names[CFG_MAX_USER_PRESETS][PRESET_NAME_LEN];
 } st;
 
-static char json_buf[6144]; // used only by the writer (storage task)
-static char load_buf[6144]; // used only by readers (boot / render task)
+static char json_buf[8192]; // used only by the writer (storage task)
+static char load_buf[8192]; // used only by readers (boot / render task)
 
 static void preset_path(int slot, char *out, size_t cap) { snprintf(out, cap, "/preset%d.json", slot); }
 
