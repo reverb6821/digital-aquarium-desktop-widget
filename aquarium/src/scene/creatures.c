@@ -15,90 +15,106 @@
 // Freshwater only. Shape: {len, h, tail_len, tail_h, tail, dorsal, pattern, body, anal, flags}
 const SpeciesDef SPECIES[] = {
     // ---------------- Amazzonia / acque nere
-    {"neon_tetra", "Neon", "amazon", BEH_SCHOOL, 13, 14, 30, 40, 150, 12, 30, 2,
+    {"neon_tetra", S_SP_NEON, "amazon", BEH_SCHOOL, 13, 14, 30, 40, 150, 12, 30, 2,
      {10, 4, 3, 4, TAIL_FORK, 1, PAT_NEON, BODY_SLIM, 0, 0},
      {{0, C(48,58,70), C(90,110,125), C(150,170,185), C(200,210,215), C(40,190,255), C(235,40,55), C(150,170,185), C(10,10,14), 0},
       {0, C(48,70,60), C(90,125,110), C(150,185,170), C(200,215,210), C(80,255,170), C(255,120,40), C(150,185,170), C(10,10,14), 0}}},
-    {"cardinal_tetra", "Cardinale", "blackwater", BEH_SCHOOL, 14, 14, 30, 40, 150, 14, 30, 1,
+    {"cardinal_tetra", S_SP_CARDINAL, "blackwater", BEH_SCHOOL, 14, 14, 30, 40, 150, 14, 30, 1,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CARDINAL, 0, 0},
      {{0, C(40,46,62), C(92,92,116), C(40,190,250), C(170,240,255), C(220,30,42), C(170,22,36), C(132,148,158), C(10,10,14), C(232,226,232), C(110,210,250), C(205,45,45), C(170,182,190)}}},
-    {"ember_tetra", "Pesce brace", "amazon", BEH_SCHOOL, 10, 12, 26, 30, 130, 7, 20, 2,
+    {"ember_tetra", S_SP_EMBER, "amazon", BEH_SCHOOL, 10, 12, 26, 30, 130, 7, 20, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_EMBER, 0, 0},
      {{0, C(150,40,20), C(210,70,35), C(240,98,45), C(250,150,100), C(185,55,32), 0, C(240,115,65), C(20,10,10), C(225,40,35), C(70,28,22), C(252,195,165)},   // rosso
       {0, C(160,120,25), C(220,165,40), C(240,192,58), C(250,222,135), C(195,140,35), 0, C(245,202,95), C(20,10,10), C(230,150,40), C(95,62,22), C(255,236,185)}}}, // oro
-    {"angelfish", "Scalare", "amazon", BEH_WANDER, 30, 6, 14, 40, 170, 3, 6, 4,
+    {"rummy_nose", S_SP_RUMMY, "amazon", BEH_SCHOOL, 13, 14, 30, 50, 160, 10, 24, 1,
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_RUMMY, 0, 0},
+     {{0, C(112,122,122), C(168,184,180), C(198,210,206), C(224,230,228), C(228,238,234), C(222,32,32), C(186,198,194), C(10,10,14), C(244,64,52), C(18,18,22), C(246,246,246), C(168,20,26)}}},
+    {"angelfish", S_SP_ANGELFISH, "amazon", BEH_WANDER, 30, 6, 14, 40, 170, 3, 6, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_ANGEL, 0, 0},
      {{0, C(95,100,108), C(160,165,172), C(200,204,210), C(232,234,238), C(24,24,30), C(80,82,90), C(185,192,200), C(10,10,14), C(205,45,35)},   // selvatico argento
       {0, C(20,50,82), C(45,98,145), C(80,148,192), C(155,205,228), C(14,22,36), C(38,66,98), C(105,165,198), C(10,10,14), C(240,115,30)},     // blu (pinoy)
       {0, C(185,125,45), C(230,175,75), C(245,205,115), C(252,232,185), C(232,160,70), C(240,190,110), C(245,215,150), C(20,12,10), C(200,40,35)}, // oro
       {0, C(8,8,10), C(24,24,28), C(38,38,46), C(62,62,74), C(12,12,16), C(28,28,34), C(44,44,54), C(4,4,6), C(215,50,45)}}},                    // nero
-    {"discus", "Discus", "blackwater", BEH_WANDER, 30, 5, 12, 50, 180, 3, 6, 3,
+    {"discus", S_SP_DISCUS, "blackwater", BEH_WANDER, 30, 5, 12, 50, 180, 3, 6, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_DISCUS, 0, 0},
      {{0, C(85,14,14), C(160,30,25), C(200,48,32), C(225,100,50), C(115,205,235), C(80,150,195), C(150,40,35), C(15,5,5), C(240,45,40)},   // turchese rosso
       {0, C(18,32,85), C(40,80,170), C(62,118,212), C(115,168,232), C(170,235,252), C(115,195,235), C(50,92,175), C(15,5,5), C(225,55,45)}, // blue diamond
       {0, C(140,55,20), C(215,115,40), C(240,150,60), C(250,200,130), C(175,40,30), C(205,75,45), C(210,110,50), C(15,5,5), C(230,40,30)}}},  // pigeon blood
-    {"corydoras", "Corydoras", "amazon", BEH_BOTTOM, 18, 6, 12, 220, 255, 6, 12, 3,
+    {"corydoras", S_SP_CORYDORAS, "amazon", BEH_BOTTOM, 18, 6, 12, 220, 255, 6, 12, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CORY, 0, 0},
      {{0, C(28,40,32), C(32,74,58), C(48,110,84), C(226,124,58), C(242,128,52), C(32,74,58), C(226,112,72), C(10,10,14), C(62,36,26), C(130,180,210), C(232,176,128), C(48,110,84), C(38,90,68), C(190,90,60)},   // arancio/verde
       {0, C(52,46,32), C(96,92,58), C(112,132,88), C(216,192,152), C(152,124,78), C(96,92,58), C(182,162,122), C(10,10,14), C(72,56,36), C(150,162,150), C(202,182,142), C(112,132,88), C(92,112,72), C(150,130,96)},     // bronzo (aeneus)
       {0, C(140,136,130), C(222,218,210), C(238,234,226), C(248,246,240), C(236,232,224), C(28,28,32), C(220,214,204), C(10,10,14), C(28,28,32), C(150,150,150), C(220,214,204), C(28,28,32), C(214,210,202), C(180,176,168)}}}, // panda
     // ---------------- Sud-Est asiatico
-    {"harlequin", "Rasbora arlecchino", "seasia", BEH_SCHOOL, 12, 12, 28, 40, 150, 10, 24, 1,
+    {"harlequin", S_SP_HARLEQUIN, "seasia", BEH_SCHOOL, 12, 12, 28, 40, 150, 10, 24, 1,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_HARLEQUIN, 0, 0},
      {{0, C(125,62,42), C(198,108,66), C(238,148,98), C(232,196,190), C(22,16,26), C(250,192,92), C(236,132,82), C(10,10,14), C(242,172,62), C(218,62,42)}}},
-    {"gourami", "Gourami", "seasia", BEH_WANDER, 26, 6, 14, 40, 160, 2, 5, 3,
+    {"gourami", S_SP_GOURAMI, "seasia", BEH_WANDER, 26, 6, 14, 40, 160, 2, 5, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_GOURAMI, 0, 0},
      {{0, C(70,60,66), C(128,114,106), C(150,150,168), C(222,112,56), C(34,32,48), C(236,236,242), C(104,108,132), C(10,10,14), C(200,205,215), C(226,122,62), C(220,200,180)},   // perlato
       {0, C(120,40,28), C(182,62,36), C(222,92,52), C(242,142,92), C(140,40,26), C(110,165,240), C(160,62,40), C(10,10,14), C(200,205,215), C(96,145,232), C(240,190,150)},    // rosso
       {0, C(28,46,92), C(52,88,152), C(86,132,202), C(150,186,232), C(24,38,80), C(170,212,248), C(58,94,160), C(10,10,14), C(200,205,215), C(200,222,246), C(170,200,240)}}}, // blu
-    {"kuhli_loach", "Pangio kuhlii", "seasia", BEH_BOTTOM, 24, 5, 12, 230, 255, 5, 12, 2,
+    {"kuhli_loach", S_SP_KUHLI, "seasia", BEH_BOTTOM, 24, 5, 12, 230, 255, 5, 12, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_KUHLI, 0, 0},
      {{0, C(62,34,22), C(236,128,40), C(248,164,48), C(252,208,96), C(54,32,24), 0, C(226,196,156), C(10,10,10)},  // kuhlii
       {0, C(20,14,12), C(58,40,32), C(74,54,42), C(122,92,72), C(46,30,24), 0, C(96,76,64), C(10,10,10)}}},        // nero (oblonga)
+    {"betta", S_SP_BETTA, "seasia", BEH_WANDER, 24, 4, 10, 20, 150, 1, 1, 4,
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_BETTA, 0, 0},
+     {{0, C(70,50,70), C(200,212,236), C(238,238,244), C(242,206,186), C(110,170,250), C(238,112,62), C(236,104,52), C(10,10,14), C(250,170,90), C(46,22,26), C(252,158,96), C(42,92,206), C(84,140,232), C(196,78,40), C(156,52,34)},  // koi
+      {0, C(6,6,10), C(30,34,46), C(42,46,60), C(52,52,64), C(96,108,136), C(36,36,46), C(22,18,26), C(4,4,6), C(150,70,60), C(70,28,34), C(98,64,84), C(40,44,60), C(34,34,46), C(150,46,52), C(14,14,20)}, // crowntail nero
+      {0, C(90,10,14), C(170,24,30), C(204,34,38), C(222,70,64), C(240,98,96), C(196,30,34), C(200,26,32), C(10,6,8), C(210,64,52), C(110,10,18), C(234,74,72), C(190,28,34), C(180,26,32), C(150,16,24), C(120,16,22)},          // rosso
+      {0, C(14,24,70), C(28,60,160), C(40,90,210), C(70,110,200), C(112,180,255), C(30,56,150), C(36,80,200), C(6,8,14), C(80,130,230), C(16,24,80), C(92,152,250), C(34,76,190), C(30,64,170), C(26,44,140), C(18,30,90)}}},    // blu
+    {"snakehead", S_SP_SNAKEHEAD, "seasia", BEH_WANDER, 40, 3, 9, 150, 235, 1, 1, 1,
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_SNAKEHEAD, 0, 0},
+     {{0, C(38,30,22), C(78,64,44), C(120,100,68), C(176,156,116), C(48,36,26), C(184,164,110), C(100,88,66), C(10,8,6), C(204,152,62), C(64,54,40), C(132,80,56), C(38,28,20), C(192,182,162)}}},
     // ---------------- Africa occidentale (Congo)
-    {"congo_tetra", "Tetra del Congo", "africa", BEH_SCHOOL, 16, 12, 26, 40, 160, 7, 16, 1,
+    {"congo_tetra", S_SP_CONGO_TETRA, "africa", BEH_SCHOOL, 16, 12, 26, 40, 160, 7, 16, 1,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CONGO, 0, 0},
      {{0, C(40,60,112), C(72,132,202), C(165,202,212), C(222,228,236), C(236,142,62), C(246,206,92), C(122,138,165), C(15,15,20), C(206,212,222), C(236,242,252), C(122,232,232), C(122,102,192)}}},
-    {"kribensis", "Pelvicachromis", "africa", BEH_WANDER, 34, 6, 14, 150, 240, 2, 4, 2,
+    {"kribensis", S_SP_KRIBENSIS, "africa", BEH_WANDER, 34, 6, 14, 150, 240, 2, 4, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_KRIB, 0, 0},
      {{0, C(60,52,40), C(150,135,95), C(212,204,178), C(232,226,200), C(48,40,34), C(232,70,100), C(214,198,96), C(10,10,10), C(238,214,44), C(80,130,230), C(232,70,50), C(24,20,20), C(170,90,190), C(232,180,60), C(214,196,92)},     // femmina
       {0, C(62,56,44), C(160,145,100), C(218,210,186), C(236,230,206), C(52,44,36), C(214,112,122), C(220,200,110), C(10,10,10), C(226,202,82), C(90,140,230), C(236,110,60), C(24,20,20), C(120,100,190), C(222,182,62), C(210,180,90)}}}, // maschio
-    {"shrimp", "Caridina", "seasia", BEH_SHRIMP, 12, 3, 8, 255, 255, 8, 30, 4,
+    {"shrimp", S_SP_SHRIMP, "seasia", BEH_SHRIMP, 12, 3, 8, 255, 255, 8, 30, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_SHRIMP, 0, 0},
      {{0, C(120,20,20), C(200,40,35), C(235,90,80), 0, C(200,40,35), C(170,30,30), C(220,80,70), C(10,10,10), 0},    // red cherry
       {0, C(150,150,155), C(235,235,235), C(255,255,255), 0, C(210,30,40), C(235,235,235), C(230,220,220), C(10,10,10), 0}, // crystal red
       {0, C(80,90,85), C(150,160,150), C(190,200,190), 0, C(150,160,150), C(90,70,60), C(160,170,160), C(10,10,10), 0},  // amano
       {0, C(20,40,110), C(40,80,190), C(90,130,230), 0, C(40,80,190), C(30,60,160), C(60,100,200), C(10,10,10), 0}}},    // blue dream
-    {"assassin_snail", "Lumaca killer", "seasia", BEH_SNAIL, 13, 0.8f, 2.0f, 255, 255, 2, 8, 1,
+    {"assassin_snail", S_SP_ASSASSIN_SNAIL, "seasia", BEH_SNAIL, 13, 0.8f, 2.0f, 255, 255, 2, 8, 1,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_CONE, 0, 0},
      {{0, C(30,20,15), C(75,48,26), C(120,85,50), C(170,160,130), C(232,192,64), 0, 0, C(15,15,15), 0}}},
     // ---------------- Lago Malawi
-    {"mbuna", "Ciclide mbuna", "malawi", BEH_WANDER, 30, 8, 18, 60, 230, 6, 12, 4,
+    {"mbuna", S_SP_MBUNA, "malawi", BEH_WANDER, 30, 8, 18, 60, 230, 6, 12, 4,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_MBUNA, 0, 0},
      {{0, C(172,140,12), C(236,200,36), C(250,220,56), C(252,236,132), C(244,210,46), C(226,190,36), C(250,214,52), C(12,12,12), C(30,30,30), C(20,20,24), 0, C(252,232,92), C(20,20,24), C(250,226,92)},       // yellow lab
       {0, C(46,40,92), C(106,96,192), C(150,140,222), C(192,182,236), C(52,42,92), C(92,112,204), C(242,202,42), C(12,12,12), C(232,142,42), C(252,222,62), 0, C(252,232,92), C(242,202,42), C(182,172,232)}, // viola, pinne gialle
       {0, C(182,72,22), C(236,116,42), C(246,142,56), C(250,186,122), C(226,112,42), C(232,122,46), C(242,132,56), C(12,12,12), C(30,30,30), C(252,182,92), 0, C(252,222,82), C(242,132,56), C(246,152,82)},       // red zebra
       {0, C(36,56,120), C(90,140,216), C(130,176,236), C(186,210,246), C(26,36,82), C(70,110,200), C(100,150,226), C(12,12,12), C(30,30,30), C(200,226,250), 0, C(252,202,62), C(30,40,92), C(160,196,242)}}}, // blue zebra
-    {"aulonocara", "Ciclide pavone", "malawi", BEH_WANDER, 27, 6, 14, 40, 200, 3, 6, 2,
+    {"aulonocara", S_SP_AULONOCARA, "malawi", BEH_WANDER, 27, 6, 14, 40, 200, 3, 6, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_PEACOCK, 0, 0},
      {{0, C(20,30,82), C(40,70,180), C(60,100,222), C(110,150,236), C(42,64,162), C(150,192,255), C(60,96,212), C(10,10,14), C(72,102,232), C(220,236,255), C(232,132,42), C(25,35,110), C(242,192,62), C(30,40,110)},   // blu
       {0, C(110,30,20), C(190,55,30), C(226,82,42), C(242,132,82), C(186,50,30), C(252,162,112), C(212,72,42), C(10,10,14), C(72,102,222), C(202,222,255), C(242,152,52), C(62,72,172), C(242,192,62), C(40,50,140)}}}, // rosso
     // ---------------- Laghetto
-    {"koi", "Carpa koi", "pond", BEH_WANDER, 34, 6, 14, 40, 200, 3, 6, 3,
+    {"koi", S_SP_KOI, "pond", BEH_WANDER, 34, 6, 14, 40, 200, 3, 6, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_KOI, 0, 0},
      {{0, C(170,170,168), C(228,228,226), C(244,244,240), C(252,252,250), C(225,60,30), C(244,244,240), C(192,200,208), C(20,20,22), C(212,212,210), C(168,178,190), C(212,142,132), C(195,45,25)},  // kohaku
       {0, C(170,170,168), C(228,228,226), C(244,244,240), C(252,252,250), C(225,60,30), C(25,25,30), C(192,200,208), C(20,20,22), C(212,212,210), C(168,178,190), C(212,142,132), C(195,45,25)},    // sanke
       {0, C(180,130,30), C(230,180,60), C(245,205,80), C(250,225,140), C(245,205,80), C(245,205,80), C(232,186,86), C(20,20,22), C(225,175,55), C(212,160,58), C(220,170,80), C(225,175,55)}}}, // ogon
-    {"goldfish", "Pesce rosso", "pond", BEH_WANDER, 21, 8, 18, 50, 170, 2, 6, 2,
+    {"goldfish", S_SP_GOLDFISH, "pond", BEH_WANDER, 21, 8, 18, 50, 170, 2, 6, 2,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_GOLDFISH, 0, 0},
      {{0, C(170,60,10), C(225,100,20), C(245,135,30), C(252,185,90), C(255,200,110), C(215,85,20), C(245,125,40), C(25,15,10), C(250,190,60), C(255,190,130), 0, C(245,135,30), C(255,200,110), C(225,100,20)}, // arancio
       {0, C(150,140,140), C(225,222,220), C(245,242,240), C(252,250,248), C(255,255,255), C(215,200,195), C(240,232,228), C(25,15,10), C(205,195,185), C(255,240,235), 0, C(225,60,40), C(245,110,80), C(190,40,30)}}}, // rosso e bianco
-    {"medaka", "Medaka", "pond", BEH_SCHOOL, 11, 12, 28, 20, 120, 8, 20, 3,
+    {"medaka", S_SP_MEDAKA, "pond", BEH_SCHOOL, 11, 12, 28, 20, 120, 8, 20, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_MEDAKA, 0, 0},
      {{0, C(190,95,35), C(235,140,55), C(248,172,90), C(252,214,160), C(215,115,45), C(255,225,180), C(245,180,110), C(10,10,14), C(250,212,150), C(230,140,70), C(255,235,200)},  // arancio (himedaka)
       {0, C(170,170,168), C(220,220,215), C(236,236,230), C(248,248,244), C(200,200,196), C(255,255,255), C(225,228,228), C(10,10,14), C(235,235,235), C(195,200,205), C(255,255,255)}, // bianco
       {0, C(120,140,165), C(185,200,220), C(215,225,238), C(240,244,250), C(160,180,205), C(250,252,255), C(175,205,225), C(10,10,14), C(230,235,240), C(120,170,210), C(245,250,255)}}}, // argento-blu
-    {"ramshorn", "Planorbarius", "pond", BEH_SNAIL, 14, 0.6f, 1.6f, 255, 255, 4, 12, 3,
+    {"white_cloud", S_SP_WHITE_CLOUD, "pond", BEH_SCHOOL, 12, 12, 28, 20, 130, 8, 20, 2,
+     {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_TANICHTHYS, 0, 0},
+     {{0, C(40,40,72), C(82,82,146), C(132,112,156), C(212,202,214), C(236,226,206), C(184,72,62), C(222,190,92), C(10,10,14), C(222,222,232), C(226,52,42), C(222,52,42), C(20,16,22), C(242,242,242)},       // classico
+      {0, C(150,92,52), C(226,162,102), C(240,182,122), C(250,216,176), C(255,232,192), C(242,172,112), C(222,162,112), C(10,10,14), C(232,232,236), C(242,242,242), C(222,62,42), C(204,92,62), C(250,250,250)}}}, // gold
+    {"ramshorn", S_SP_RAMSHORN, "pond", BEH_SNAIL, 14, 0.6f, 1.6f, 255, 255, 4, 12, 3,
      {0, 0, 0, 0, 0, 0, PAT_NONE, BODY_RAMSHORN, 0, 0},
      {{0, C(60,38,22), C(115,75,42), C(160,115,70), C(65,50,42), 0, 0, 0, C(10,10,10), 0},       // bruna
       {0, C(130,40,30), C(195,75,55), C(235,125,100), C(200,70,60), 0, 0, 0, C(10,10,10), 0},    // rossa
@@ -117,10 +133,10 @@ int species_find(const char *id)
 // ------------------------------------------------------------ sprite generator
 
 #define FISH_FRAMES 4
-#define SPRITE_POOL 32768 // ~25 KB used at the current scales (logged at init)
+#define SPRITE_POOL 36864 // ~34 KB used at the current scales (logged at init)
 static uint8_t s_sprite_mem[SPRITE_POOL];
 static int s_sprite_used;
-static SpriteSheet s_sprites[24];
+static SpriteSheet s_sprites[32];
 
 static void fish_generate(SpriteSheet *ss, const FishShape *f)
 {
@@ -1312,6 +1328,224 @@ static void medaka_generate(SpriteSheet *ss)
         fish_eye(ss, fr, XU(0.86f), cy - 0.3f, 8, 9, true);
     }
 }
+// Betta splendens (male): slender body with an upturned mouth, huge flowing
+// fins - a round fan tail, a long dorsal set back over the peduncle and a deep
+// anal fin running from the belly to the tail - all with rays radiating from the
+// base and short spikes past the membrane (crowntail; on the koi variant the
+// spikes share the dark fin edge colour, so they read as a ragged margin).
+// Long thin pelvic streamers. Body: scale sparkle everywhere, a colour patch on
+// the rear half (blue on the koi), a distinct head colour and a dark opercle.
+static uint8_t betta_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.08f ? 1 : (tt < 0.35f ? 2 : (tt < 0.78f ? 3 : 4));
+    if (v == 1) return v;
+    if (u > 0.76f && u < 0.8f && tt > 0.25f && tt < 0.92f) return 15;              // opercle
+    if (u > 0.78f) return v == 4 ? 15 : 6;                                          // head, throat
+    const bool patch = u < 0.42f + 0.1f * fm_sin(tt * 7.0f + 1.0f) && tt < 0.86f; // rear patch
+    if (u < 0.74f && PEARL(b->x, b->y)) return 5;                                  // scales
+    return patch ? 12 : v;
+}
+
+// Fan of rays from (bx, by) to each point of pts, then a spike continuing each
+// ray `spike` design px past the edge.
+static void betta_rays(const SpriteSheet *ss, int fr, float bx, float by, const float *pts, int n, float spike)
+{
+    for (int i = 0; i < n; i++) {
+        const float px = pts[2 * i], py = pts[2 * i + 1];
+        const float dx = px - bx, dy = py - by, l = sqrtf(dx * dx + dy * dy);
+        if (l < 0.5f) continue;
+        dline(ss, fr, bx + dx * 0.25f, by + dy * 0.25f, px - dx / l * 0.6f, py - dy / l * 0.6f, 11);
+        dline(ss, fr, px, py, px + dx / l * spike, py + dy / l * spike, 14);
+    }
+}
+
+static void betta_generate(SpriteSheet *ss)
+{
+    const int W = 31, H = 25;
+    const float cy = 10.6f, x0 = 11.5f, x1 = 30.6f;
+    static const Knot K[] = {{0, 1.6f, 1.6f}, {0.25f, 2.9f, 2.9f}, {0.5f, 3.6f, 3.5f},
+                             {0.72f, 3.6f, 3.2f}, {0.88f, 2.8f, 2.4f}, {1.0f, 1.3f, 0.6f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr];
+        // round fan tail: arc around the peduncle, drooping a little, tips wave most
+        float tail[2 * 13], arc[2 * 11];
+        const float tx = x0 + 0.4f, ty = cy + 0.8f;
+        tail[0] = x0 + 0.5f, tail[1] = cy - 1.2f;
+        for (int i = 0; i < 11; i++) {
+            const float a = FM_PI * (0.58f + 0.84f * (float)i / 10.0f); // upper-left .. lower-left
+            const float r = 10.2f + 0.6f * fm_sin((float)i * 1.7f);
+            const float px = tx + r * fm_cos(a), py = ty - r * fm_sin(a) + fl * 1.3f * (1.0f - fm_abs((float)i - 5.0f) / 8.0f);
+            arc[2 * i] = px, arc[2 * i + 1] = py;
+            tail[2 + 2 * i] = px, tail[3 + 2 * i] = py;
+        }
+        tail[24] = x0 + 0.5f, tail[25] = cy + 1.2f;
+        poly_fill(ss, fr, tail, 13, (FinStyle){7, 0, 0, 0, 0, 10, 0x7FE}); // edge along the arc
+        betta_rays(ss, fr, tx, ty, arc, 11, 1.4f);
+        // long dorsal swept back over the tail
+        const float dors[] = {XU(0.58f), cy - 2.9f, XU(0.42f), cy - 7.6f, XU(0.12f), cy - 9.4f + fl * 0.5f,
+                              x0 - 3.6f, cy - 8.0f + fl * 0.8f, x0 - 2.0f, cy - 4.2f + fl * 0.6f, XU(0.04f), cy - 1.3f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4)});
+        const float dtip[] = {XU(0.42f), cy - 7.6f, XU(0.26f), cy - 8.8f + fl * 0.3f, XU(0.12f), cy - 9.4f + fl * 0.5f,
+                              x0 - 1.0f, cy - 9.0f + fl * 0.7f, x0 - 3.6f, cy - 8.0f + fl * 0.8f};
+        betta_rays(ss, fr, XU(0.36f), cy - 2.2f, dtip, NP(dtip), 1.2f);
+        // deep anal fin from the belly to under the tail
+        const float anal[] = {XU(0.74f), cy + 2.5f, XU(0.56f), cy + 8.0f, XU(0.26f), cy + 11.6f - fl * 0.5f,
+                              x0 - 2.4f, cy + 12.2f - fl * 0.8f, x0 - 1.4f, cy + 6.0f - fl * 0.6f, XU(0.04f), cy + 1.3f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4)});
+        const float atip[] = {XU(0.56f), cy + 8.0f, XU(0.42f), cy + 10.2f - fl * 0.3f, XU(0.26f), cy + 11.6f - fl * 0.5f,
+                              XU(0.08f), cy + 12.2f - fl * 0.7f, x0 - 2.4f, cy + 12.2f - fl * 0.8f};
+        betta_rays(ss, fr, XU(0.48f), cy + 2.4f, atip, NP(atip), 1.2f);
+        // fin bases blend into the body colour
+        const float abase[] = {XU(0.7f), cy + 2.4f, XU(0.5f), cy + 4.4f, XU(0.1f), cy + 4.2f, XU(0.04f), cy + 1.3f};
+        poly_fill(ss, fr, abase, NP(abase), (FinStyle){13, 0, 0, 0, 0, 0, 0});
+        const float tbase[] = {x0 + 0.5f, cy - 1.4f, x0 - 2.0f, cy - 2.4f, x0 - 3.0f, cy + 0.8f, x0 - 2.0f, cy + 3.8f, x0 + 0.5f, cy + 1.4f};
+        poly_fill(ss, fr, tbase, NP(tbase), (FinStyle){13, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, betta_px);
+        // small clear pectoral fin, long pelvic streamers
+        const float pect[] = {XU(0.74f), cy + 0.4f, XU(0.6f), cy + 2.4f + fl * 0.3f, XU(0.66f), cy + 0.6f};
+        poly_fill(ss, fr, pect, NP(pect), (FinStyle){13, 0, 0, 0, 0, 0, 0});
+        const float vx = XU(0.72f), vy = cy + 2.4f;
+        dline(ss, fr, vx, vy, vx - 3.0f, vy + 5.6f + fl * 0.3f, 7);
+        dline(ss, fr, vx + 0.6f, vy, vx - 2.2f, vy + 5.8f + fl * 0.3f, 7);
+        dput(ss, fr, vx - 3.0f, vy + 5.6f + fl * 0.3f, 14);
+        fish_eye(ss, fr, XU(0.88f), cy - 0.6f, 8, 9, false);
+        dput(ss, fr, x1 - 0.4f, cy - 0.8f, 15); // upturned mouth
+    }
+}
+
+// White cloud minnow (Tanichthys albonubes): slim, straight back, iridescent
+// lateral line from the gill to the tail with a warm band under its rear half,
+// black spot on the peduncle, red forked tail, dorsal set far back and a long
+// anal fin, both edged (red on the classic, white on the gold variant).
+static uint8_t tanichthys_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.38f ? 2 : (tt < 0.74f ? 3 : 4));
+    if (v == 1) return v;
+    if (u < 0.07f && fm_abs(tt - 0.5f) < 0.2f) return 12;               // peduncle spot
+    if (fm_abs(tt - 0.42f) < 0.08f && u > 0.06f && u < 0.84f) return 5;  // iridescent line
+    if (tt > 0.5f && tt < 0.68f && u < 0.62f) return 6;                  // warm band
+    return v;
+}
+
+static void tanichthys_generate(SpriteSheet *ss)
+{
+    const int W = 16, H = 10;
+    const float cy = 4.8f, x0 = 4.2f, x1 = 15.8f;
+    static const Knot K[] = {{0, 0.8f, 0.8f}, {0.2f, 1.2f, 1.2f}, {0.5f, 1.6f, 1.7f},
+                             {0.75f, 1.5f, 1.6f}, {0.9f, 1.2f, 1.1f}, {1.0f, 0.6f, 0.4f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.7f, 0.6f, cy - 3.2f + o, 2.0f, cy + o * 0.5f, 0.6f, cy + 3.2f + o, x0 + 0.5f, cy + 0.7f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){11, 0, 0, 0, 0, 0, 0});
+        const float dors[] = {XU(0.42f), cy - 1.5f, XU(0.36f), cy - 3.3f, XU(0.2f), cy - 3.1f + fl * 0.2f, XU(0.2f), cy - 1.3f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 1) | (1 << 2)});
+        dput(ss, fr, XU(0.35f), cy - 3.2f, 13); // pale fin tip
+        const float anal[] = {XU(0.52f), cy + 1.6f, XU(0.44f), cy + 3.2f, XU(0.14f), cy + 2.9f - fl * 0.2f, XU(0.12f), cy + 1.2f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 10, (1 << 1) | (1 << 2)});
+        dput(ss, fr, XU(0.43f), cy + 3.1f, 13);
+        const float pelv[] = {XU(0.7f), cy + 1.5f, XU(0.62f), cy + 3.2f + fl * 0.3f, XU(0.66f), cy + 1.5f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, tanichthys_px);
+        fish_eye(ss, fr, XU(0.86f), cy - 0.4f, 8, 9, true);
+        dput(ss, fr, x1 - 0.3f, cy - 0.5f, 1); // upturned mouth
+    }
+}
+
+// Rummy-nose tetra (Hemigrammus bleheri): slim, translucent silver body, blood
+// red head and eye, black bar on the peduncle running into the tail, a black
+// patch on each tail lobe with white between them, small clear fins, adipose.
+static uint8_t rummy_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    uint8_t v = tt < 0.1f ? 1 : (tt < 0.38f ? 2 : (tt < 0.75f ? 3 : 4));
+    if (u > 0.76f || (u > 0.64f && tt < 0.62f - (0.76f - u) * 3.0f)) return v == 1 || tt < 0.25f ? 12 : 6; // red head
+    if (v == 1) return v;
+    if (u < 0.1f && fm_abs(tt - 0.5f) < 0.2f) return 10;                 // peduncle bar
+    if (v == 2 && u < 0.7f && PEARL(b->x, b->y)) return 5;               // scale sheen
+    return v;
+}
+
+static void rummy_generate(SpriteSheet *ss)
+{
+    const int W = 15, H = 9;
+    const float cy = 4.4f, x0 = 4.0f, x1 = 14.8f;
+    static const Knot K[] = {{0, 0.7f, 0.7f}, {0.2f, 1.1f, 1.1f}, {0.5f, 1.5f, 1.6f},
+                             {0.75f, 1.5f, 1.5f}, {0.9f, 1.2f, 1.0f}, {1.0f, 0.6f, 0.4f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.6f;
+        const float tail[] = {x0 + 0.5f, cy - 0.6f, 0.4f, cy - 3.1f + o, 2.0f, cy + o * 0.4f, 0.4f, cy + 3.1f + o, x0 + 0.5f, cy + 0.6f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float white[] = {x0 + 0.5f, cy - 0.7f, 1.4f, cy - 2.2f + o * 0.7f, 1.8f, cy + o * 0.4f, 1.4f, cy + 2.2f + o * 0.7f, x0 + 0.5f, cy + 0.7f};
+        poly_fill(ss, fr, white, NP(white), (FinStyle){11, 0, 0, 0, 0, 0, 0});
+        const float up[] = {2.9f, cy - 1.0f + o * 0.3f, 1.0f, cy - 2.5f + o * 0.8f, 0.8f, cy - 1.9f + o * 0.8f, 2.4f, cy - 0.7f + o * 0.3f};
+        poly_fill(ss, fr, up, NP(up), (FinStyle){10, 0, 0, 0, 0, 0, 0});
+        const float lo[] = {2.9f, cy + 1.0f + o * 0.3f, 1.0f, cy + 2.5f + o * 0.8f, 0.8f, cy + 1.9f + o * 0.8f, 2.4f, cy + 0.7f + o * 0.3f};
+        poly_fill(ss, fr, lo, NP(lo), (FinStyle){10, 0, 0, 0, 0, 0, 0});
+        dline(ss, fr, x0 + 0.5f, cy, 1.9f, cy + o * 0.4f, 10); // centre bar
+        const float dors[] = {XU(0.52f), cy - 1.4f, XU(0.44f), cy - 3.4f + fl * 0.1f, XU(0.34f), cy - 1.3f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        const float anal[] = {XU(0.42f), cy + 1.5f, XU(0.32f), cy + 2.9f - fl * 0.1f, XU(0.08f), cy + 2.2f, XU(0.1f), cy + 1.0f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 0, 0, 0, 0, 0, 0});
+        dput(ss, fr, XU(0.14f), cy - 1.4f, 7); // adipose fin
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, rummy_px);
+        fish_eye(ss, fr, XU(0.88f), cy - 0.3f, 8, 9, true);
+    }
+}
+
+// Snakehead (Channa argus): long cylindrical body, flat pointed head with a wide
+// mouth, a dorsal running along almost the whole back and a long anal fin, round
+// rayed tail; brown with dark blotches outlined in tan, dark streaks behind the
+// eye, rusty pectoral fins, pale pelvic fins.
+static uint8_t snakehead_px(const BodyPx *b)
+{
+    const float u = b->u, tt = b->tt;
+    const uint8_t v = tt < 0.08f ? 1 : (tt < 0.35f ? 2 : (tt < 0.76f ? 3 : 4));
+    if (v == 1) return v;
+    if (u > 0.82f) {
+        if (fm_abs(tt - 0.46f) < 0.07f || fm_abs(tt - 0.7f) < 0.06f) return 12; // head streaks
+        return v;
+    }
+    if (tt > 0.16f && tt < 0.86f) {
+        const float n = fm_sin(u * 26.0f + tt * 3.0f) + 0.8f * fm_sin(u * 15.0f - tt * 7.0f + 1.3f);
+        if (n > 0.55f) return 5;  // dark blotch
+        if (n > 0.25f) return 6;  // tan outline
+    }
+    return v;
+}
+
+static void snakehead_generate(SpriteSheet *ss)
+{
+    const int W = 42, H = 13;
+    const float cy = 6.2f, x0 = 7.0f, x1 = 41.6f;
+    static const Knot K[] = {{0, 1.4f, 1.4f}, {0.1f, 2.0f, 1.9f}, {0.3f, 2.5f, 2.4f}, {0.6f, 2.7f, 2.6f},
+                             {0.8f, 2.5f, 2.4f}, {0.92f, 1.9f, 1.8f}, {1.0f, 0.9f, 0.8f}};
+    if (!sheet_alloc(ss, SKI(W), SKI(H))) return;
+    for (int fr = 0; fr < FISH_FRAMES; fr++) {
+        const float fl = FLAP4[fr], o = fl * 0.7f;
+        const float tail[] = {x0 + 0.5f, cy - 1.3f, 5.0f, cy - 2.6f + o * 0.4f, 3.2f, cy - 3.4f + o * 0.7f, 1.4f, cy - 3.0f + o,
+                              0.4f, cy - 1.6f + o, 0.2f, cy + o, 0.4f, cy + 1.6f + o, 1.4f, cy + 3.0f + o,
+                              3.2f, cy + 3.4f + o * 0.7f, 5.0f, cy + 2.6f + o * 0.4f, x0 + 0.5f, cy + 1.3f};
+        poly_fill(ss, fr, tail, NP(tail), (FinStyle){7, 10, 0, 1, 2, 0, 0});
+        const float dors[] = {XU(0.72f), cy - 2.4f, XU(0.66f), cy - 4.3f, XU(0.1f), cy - 4.9f + fl * 0.3f,
+                              XU(0.02f), cy - 3.4f + fl * 0.3f, XU(0.02f), cy - 1.3f};
+        poly_fill(ss, fr, dors, NP(dors), (FinStyle){7, 10, 1, 0, 2, 0, 0});
+        const float anal[] = {XU(0.45f), cy + 2.4f, XU(0.4f), cy + 4.4f, XU(0.06f), cy + 4.6f - fl * 0.3f, XU(0.02f), cy + 1.3f};
+        poly_fill(ss, fr, anal, NP(anal), (FinStyle){7, 10, 1, 0, 2, 0, 0});
+        const float pelv[] = {XU(0.7f), cy + 2.3f, XU(0.65f), cy + 4.6f + fl * 0.2f, XU(0.61f), cy + 2.4f};
+        poly_fill(ss, fr, pelv, NP(pelv), (FinStyle){13, 0, 0, 0, 0, 0, 0});
+        body_fill(ss, fr, K, NK(K), cy, x0, x1, snakehead_px);
+        const float pect[] = {XU(0.79f), cy - 0.2f, XU(0.68f), cy + 0.6f + fl * 0.3f, XU(0.68f), cy + 1.8f + fl * 0.3f, XU(0.78f), cy + 1.4f};
+        poly_fill(ss, fr, pect, NP(pect), (FinStyle){11, 0, 0, 0, 0, 0, 0});
+        fish_eye(ss, fr, XU(0.93f), cy - 0.9f, 8, 9, false);
+        dline(ss, fr, XU(0.94f), cy + 0.5f, x1, cy + 0.3f, 1); // wide mouth
+    }
+}
+
 // Caridina shrimp in side view, facing right: bulky carapace with a forward
 // rostrum and stalked eye, six abdominal segments tapering to a tail fan, long
 // antennae sweeping forward, thin walking legs under the carapace (alternating
@@ -1457,6 +1691,10 @@ void creatures_init(void)
                 else if (f->body == BODY_GOLDFISH) goldfish_generate(&s_sprites[ns]);
                 else if (f->body == BODY_KOI) koi_generate(&s_sprites[ns]);
                 else if (f->body == BODY_MEDAKA) medaka_generate(&s_sprites[ns]);
+                else if (f->body == BODY_BETTA) betta_generate(&s_sprites[ns]);
+                else if (f->body == BODY_TANICHTHYS) tanichthys_generate(&s_sprites[ns]);
+                else if (f->body == BODY_RUMMY) rummy_generate(&s_sprites[ns]);
+                else if (f->body == BODY_SNAKEHEAD) snakehead_generate(&s_sprites[ns]);
                 else if (f->body == BODY_RAMSHORN || f->body == BODY_CONE) snail_generate(&s_sprites[ns], f->body);
                 else {
                     FishShape sf = *f; // generic generator: scale the shape parameters

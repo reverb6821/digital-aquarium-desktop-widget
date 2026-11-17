@@ -28,7 +28,6 @@ void scene_tap(int x, int y);
 void scene_set_edit(bool on, int sel_kind, int sel_index);
 // Pick an editable object at canvas point; returns SEL_* and fills *index.
 int scene_pick(int x, int y, int *index);
-float scene_daylight(void);
 int scene_creature_count(void);
 // Render a 1/4-scale preview (100x60) of a config's static scene into thumb.
 void scene_render_thumbnail(const AquariumConfig *c, Canvas *thumb);

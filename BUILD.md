@@ -182,8 +182,8 @@ The on-screen UI labels are in Italian.
   freshwater biomes (Amazzonico, Acque nere, Sud-Est Asia, Africa Congo, Lago Malawi,
   Laghetto).
 - **Phase 6**:
-  - done: scheduled screen-off (EXIO2) with wake on touch, and the day/night cycle (real time
-    if set, otherwise simulated: 1 real minute = 1 hour);
+  - done: scheduled screen-off (EXIO2) with wake on touch;
+  - removed: the day/night cycle (the light level is fixed, set by the brightness slider);
   - **not done**: Wi-Fi/NTP, web page, assets from microSD, OTA.
 - The "Pokémon" theme in the reference screenshot was not implemented (protected characters).
 

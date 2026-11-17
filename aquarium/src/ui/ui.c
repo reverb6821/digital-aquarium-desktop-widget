@@ -17,6 +17,7 @@
 #include "../engine/hal.h"
 #include "../engine/rng.h"
 #include "../engine/sprite.h"
+#include "../i18n/i18n.h"
 #include "../scene/creatures.h"
 #include "../scene/scene.h"
 #include "../scene/themes.h"
@@ -58,16 +59,16 @@
 
 typedef enum { P_MAIN = 0, P_THEME, P_WATER, P_SUBSTRATE, P_PLANTS, P_CREATURES, P_ENV, P_PRESETS, P_COUNT } Page;
 
-static const char *const PAGE_TITLES[P_COUNT] = {"Impostazioni", "Bioma", "Acqua", "Fondale", "Piante e decor",
-                                                 "Creature", "Ambiente", "Preset"};
-static const char *const PLANT_NAMES[PLANT_COUNT] = {"Pianta a stelo", "Vallisneria", "Cryptocoryne",
-                                                     "Microsorum",     "Bolbitis",    "Anubias",
-                                                     "Bucephalandra",  "Echinodorus", "Muschio di Java",
-                                                     "Ninfea"};
-static const char *const DECOR_NAMES[DECOR_COUNT] = {"Roccia grande", "Dragon stone", "Seiryu stone", "Sassi",
-                                                     "Ardesia",       "Tronco",        "Spiderwood",  "Ramo alto",
-                                                     "Radici",        "Foglie catappa"};
-static const char *const SUB_NAMES[SUB_COUNT] = {"Sabbia", "Ghiaia", "Roccia scura", "Ciottoli", "Nessuno"};
+_Static_assert(S_PAGE_PRESETS - S_PAGE_SETTINGS + 1 == P_COUNT, "page title strings out of sync");
+_Static_assert(S_PLANT_LAST - S_PLANT_FIRST + 1 == PLANT_COUNT, "plant name strings out of sync");
+_Static_assert(S_DECOR_LAST - S_DECOR_FIRST + 1 == DECOR_COUNT, "decor name strings out of sync");
+_Static_assert(S_SUB_LAST - S_SUB_FIRST + 1 == SUB_COUNT, "substrate name strings out of sync");
+_Static_assert(S_BG_LAST - S_BG_FIRST + 1 == BACKDROP_COUNT, "backdrop name strings out of sync");
+
+static const char *page_title(Page p) { return tr((StrId)(S_PAGE_SETTINGS + p)); }
+static const char *plant_name(int t) { return tr((StrId)(S_PLANT_FIRST + t)); }
+static const char *decor_name(int t) { return tr((StrId)(S_DECOR_FIRST + t)); }
+static const char *sub_name(int t) { return tr((StrId)(S_SUB_FIRST + t)); }
 
 // ------------------------------------------------------------------ state
 
@@ -445,8 +446,8 @@ static const char *water_palette_name(const AquariumConfig *c)
 {
     for (int i = 0; i < WATER_PALETTE_COUNT; i++)
         if (c->water_top == WATER_PALETTES[i].top && c->water_bottom == WATER_PALETTES[i].bottom)
-            return WATER_PALETTES[i].name;
-    return "Personalizzata";
+            return tr(WATER_PALETTES[i].name);
+    return tr(S_CUSTOM_PALETTE);
 }
 
 // Dashboard: 2x4 grid of tiles with icon, title and the current state.
@@ -455,20 +456,18 @@ static int page_main(int x, int y, int w)
     const AquariumConfig *c = app_cfg();
     char sub[8][28];
     int ti = theme_index(c->theme_id);
-    snprintf(sub[0], sizeof(sub[0]), "%s", ti >= 0 ? THEME_NAMES[ti] : "Personale");
+    snprintf(sub[0], sizeof(sub[0]), "%s", ti >= 0 ? theme_name(ti) : tr(S_CUSTOM_THEME));
     snprintf(sub[1], sizeof(sub[1]), "%.15s", water_palette_name(c));
-    snprintf(sub[2], sizeof(sub[2]), "%s", SUB_NAMES[c->substrate_type]);
-    snprintf(sub[3], sizeof(sub[3]), "%d + %d decor", c->plant_count, c->decor_count);
+    snprintf(sub[2], sizeof(sub[2]), "%s", sub_name(c->substrate_type));
+    snprintf(sub[3], sizeof(sub[3]), tr(S_FMT_PLANTS_DECOR), c->plant_count, c->decor_count);
     int fish = 0;
     for (int i = 0; i < c->species_count; i++) fish += c->species[i].count;
-    snprintf(sub[4], sizeof(sub[4]), "%d animali", fish);
-    snprintf(sub[5], sizeof(sub[5]), "%s", c->day_night_cycle ? "Giorno/notte" : "Luce fissa");
+    snprintf(sub[4], sizeof(sub[4]), tr(S_FMT_ANIMALS), fish);
+    snprintf(sub[5], sizeof(sub[5]), tr(S_FMT_LIGHT), c->brightness);
     int saved = 0;
     for (int s = 0; s < CFG_MAX_USER_PRESETS; s++) saved += storage_preset_name(s)[0] != 0;
-    snprintf(sub[6], sizeof(sub[6]), "%d salvati", saved);
-    snprintf(sub[7], sizeof(sub[7]), "Sposta e ruota");
-    static const char *const TITLES[8] = {"Bioma", "Acqua", "Fondale", "Piante", "Creature", "Ambiente", "Preset",
-                                          "Modifica"};
+    snprintf(sub[6], sizeof(sub[6]), tr(S_FMT_SAVED), saved);
+    snprintf(sub[7], sizeof(sub[7]), "%s", tr(S_MOVE_ROTATE));
     int tw = (w - TILE_GAP) / 2;
     for (int i = 0; i < 8; i++) {
         int tx = x + (i % 2) * (tw + TILE_GAP), ty = y + (i / 2) * (TILE_H + TILE_GAP);
@@ -480,7 +479,7 @@ static int page_main(int x, int y, int w)
         // icon in a soft circle
         canvas_fill_circle(g_cv, tx + 13, ty + 13, 9, hover ? COL_ACCENT_DK : RGB565(10, 34, 46));
         icon(tx + 7, ty + 7, i);
-        text_bold(tx + 6, ty + 25, TITLES[i], COL_TEXT);
+        text_bold(tx + 6, ty + 25, tr((StrId)(S_TILE_BIOME + i)), COL_TEXT);
         // subtitle, clipped to the tile
         char s[16];
         snprintf(s, sizeof(s), "%.14s", sub[i]);
@@ -527,7 +526,7 @@ static int page_theme(int x, int y, int w, uint32_t now)
                 int in = e == 0 ? 2 : (e == 1 ? 1 : 0);
                 for (int c = in; c < THUMB_W - in; c++) canvas_pset(g_cv, px + c, py + r, U.thumb_px[i][r * THUMB_W + c]);
             }
-        font_draw(g_cv, tx + 6, ty + THUMB_H + 7, THEME_NAMES[i], sel ? COL_ACCENT : COL_TEXT);
+        font_draw(g_cv, tx + 6, ty + THUMB_H + 7, theme_name(i), sel ? COL_ACCENT : COL_TEXT);
         if (sel) { // check badge
             canvas_fill_circle(g_cv, px + THUMB_W - 6, py + 6, 5, COL_ACCENT);
             canvas_line(g_cv, px + THUMB_W - 9, py + 6, px + THUMB_W - 7, py + 8, COL_ON_ACCENT);
@@ -535,7 +534,7 @@ static int page_theme(int x, int y, int w, uint32_t now)
         }
     }
     y += ((THEME_COUNT + 1) / 2) * (ch + TILE_GAP) + 2;
-    y = section(x, y, w, "PRESET UTENTE");
+    y = section(x, y, w, tr(S_USER_PRESETS));
     bool any = false;
     for (int s = 0; s < CFG_MAX_USER_PRESETS; s++) {
         const char *n = storage_preset_name(s);
@@ -544,12 +543,12 @@ static int page_theme(int x, int y, int w, uint32_t now)
         if (button(x, y, w, ROW - 4, n, false)) {
             AquariumConfig c = *app_cfg();
             if (storage_preset_load(s, &c)) app_load_config(&c);
-            toast("Preset caricato", now);
+            toast(tr(S_PRESET_LOADED), now);
         }
         y += ROW;
     }
     if (!any) {
-        font_draw(g_cv, x, y, "Nessun preset salvato", COL_DIM);
+        font_draw(g_cv, x, y, tr(S_NO_PRESETS), COL_DIM);
         y += 12;
     }
     return y;
@@ -563,7 +562,7 @@ static bool palette_row(int x, int y, int w, const WaterPalette *p, bool sel)
     card(x, y, w, 18, hover ? COL_PRESS : COL_CARD, sel ? COL_ACCENT : (hover ? COL_ACCENT_DK : COL_CARD_EDGE));
     for (int r = 0; r < 12; r++) canvas_hline(g_cv, x + 4, x + 21, y + 3 + r, c565_lerp(p->top, p->bottom, (uint8_t)(r * 21)));
     canvas_rect(g_cv, x + 4, y + 3, 18, 12, COL_CARD_EDGE);
-    font_draw(g_cv, x + 28, y + 6, p->name, sel ? COL_ACCENT : COL_TEXT);
+    font_draw(g_cv, x + 28, y + 6, tr(p->name), sel ? COL_ACCENT : COL_TEXT);
     if (sel) canvas_fill_circle(g_cv, x + w - 9, y + 9, 3, COL_ACCENT);
     return click;
 }
@@ -571,7 +570,17 @@ static bool palette_row(int x, int y, int w, const WaterPalette *p, bool sel)
 static int page_water(int x, int y, int w)
 {
     AquariumConfig *c = app_cfg();
-    y = section(x, y, w, "PALETTE");
+    y = section(x, y, w, tr(S_BACKDROP));
+    int bw = (w - 4) / 2;
+    for (int i = 0; i < BACKDROP_COUNT; i++) {
+        int bx = x + (i % 2) * (bw + 4), by = y + (i / 2) * (ROW - 2);
+        if (button(bx, by, bw, ROW - 6, tr((StrId)(S_BG_FIRST + i)), c->backdrop == i) && c->backdrop != i) {
+            c->backdrop = (uint8_t)i;
+            app_config_changed(SC_STATIC);
+        }
+    }
+    y += ((BACKDROP_COUNT + 1) / 2) * (ROW - 2) + 2;
+    y = section(x, y, w, tr(S_PALETTE));
     for (int i = 0; i < WATER_PALETTE_COUNT; i++, y += 21) {
         bool sel = c->water_top == WATER_PALETTES[i].top && c->water_bottom == WATER_PALETTES[i].bottom;
         if (palette_row(x, y, w, &WATER_PALETTES[i], sel)) {
@@ -581,67 +590,67 @@ static int page_water(int x, int y, int w)
             app_config_changed(SC_STATIC);
         }
     }
-    y = section(x, y + 3, w, "SUPERFICIE");
+    y = section(x, y + 3, w, tr(S_SURFACE));
     if (swatches(x, y, &c->water_top)) app_config_changed(SC_STATIC);
     y += 38;
-    y = section(x, y, w, "PROFONDITA'");
+    y = section(x, y, w, tr(S_DEPTH));
     uint16_t dark = c->water_bottom;
     if (swatches(x, y, &dark)) {
         c->water_bottom = c565_scale(dark, 70); // bottom stays dark
         app_config_changed(SC_STATIC);
     }
     y += 38;
-    y = section(x, y, w, "EFFETTI");
+    y = section(x, y, w, tr(S_EFFECTS));
     int v = c->light_rays;
-    if (slider(x, y + 2, w, "Raggi di luce", &v, 0, 5)) {
+    if (slider(x, y + 2, w, tr(S_LIGHT_RAYS), &v, 0, 5)) {
         c->light_rays = (uint8_t)v;
         app_config_changed(0);
     }
     y += 30;
     v = c->particles;
-    if (slider(x, y + 2, w, "Particelle", &v, 0, 100)) {
+    if (slider(x, y + 2, w, tr(S_PARTICLES), &v, 0, 100)) {
         c->particles = (uint8_t)v;
         app_config_changed(SC_PARTICLES);
     }
     y += 30;
-    if (toggle(x, y, w, "Superficie animata", &c->show_surface)) app_config_changed(0);
+    if (toggle(x, y, w, tr(S_ANIMATED_SURFACE), &c->show_surface)) app_config_changed(0);
     return y + 22;
 }
 
 static int page_substrate(int x, int y, int w)
 {
     AquariumConfig *c = app_cfg();
-    y = section(x, y, w, "MATERIALE");
+    y = section(x, y, w, tr(S_MATERIAL));
     int bw = (w - 4) / 2;
     for (int i = 0; i < SUB_COUNT; i++) {
         int bx = x + (i % 2) * (bw + 4), by = y + (i / 2) * (ROW - 2);
-        if (button(bx, by, bw, ROW - 6, SUB_NAMES[i], c->substrate_type == i)) {
+        if (button(bx, by, bw, ROW - 6, sub_name(i), c->substrate_type == i)) {
             c->substrate_type = (uint8_t)i;
             app_config_changed(SC_STATIC);
         }
     }
     y += 3 * (ROW - 2) + 2;
-    y = section(x, y, w, "COLORE");
+    y = section(x, y, w, tr(S_COLOR));
     uint16_t col = c->substrate_color;
     if (swatches(x, y, &col)) {
         c->substrate_color = c565_scale(col, 120);
         app_config_changed(SC_STATIC);
     }
     y += 38;
-    y = section(x, y, w, "FORMA");
+    y = section(x, y, w, tr(S_SHAPE));
     int v = c->substrate_height;
-    if (slider(x, y + 2, w, "Altezza", &v, 10, 60)) {
+    if (slider(x, y + 2, w, tr(S_HEIGHT), &v, 10, 60)) {
         c->substrate_height = (uint8_t)v;
         app_config_changed(SC_STATIC);
     }
     y += 30;
     v = c->substrate_roughness;
-    if (slider(x, y + 2, w, "Rugosita'", &v, 0, 100)) {
+    if (slider(x, y + 2, w, tr(S_ROUGHNESS), &v, 0, 100)) {
         c->substrate_roughness = (uint8_t)v;
         app_config_changed(SC_STATIC);
     }
     y += 30;
-    if (button(x, y, w, ROW - 4, "Rigenera profilo", false)) {
+    if (button(x, y, w, ROW - 4, tr(S_REGEN_PROFILE), false)) {
         c->substrate_seed = hash32(c->substrate_seed + hal_millis());
         app_config_changed(SC_STATIC);
     }
@@ -659,11 +668,11 @@ static void enter_edit(void)
 }
 
 // "<  + name  >" picker row; returns 1 on add, and steps *type with the arrows.
-static bool add_picker(int x, int y, int w, int *type, int count, const char *const *names)
+static bool add_picker(int x, int y, int w, int *type, int count, const char *(*name)(int))
 {
     char buf[40];
     if (button(x, y, 22, ROW - 6, "<", false)) *type = (*type + count - 1) % count;
-    snprintf(buf, sizeof(buf), "+ %s", names[*type]);
+    snprintf(buf, sizeof(buf), "+ %s", name(*type));
     bool add = button(x + 25, y, w - 50, ROW - 6, buf, false);
     if (button(x + w - 22, y, 22, ROW - 6, ">", false)) *type = (*type + 1) % count;
     return add;
@@ -677,7 +686,7 @@ static bool item_row(int x, int y, int w, const char *name, bool front, int stri
     if (front) {
         int cx = x + w - 52;
         rrect(cx, y + 3, 30, 11, COL_ACCENT_DK);
-        font_draw(g_cv, cx + 4, y + 5, "av.", COL_TEXT);
+        font_draw(g_cv, cx + 4, y + 5, tr(S_FRONT_CHIP), COL_TEXT);
     }
     return round_button(x + w - 19, y, 18, 17, 'x');
 }
@@ -685,13 +694,13 @@ static bool item_row(int x, int y, int w, const char *name, bool front, int stri
 static int page_plants(int x, int y, int w, uint32_t now)
 {
     AquariumConfig *c = app_cfg();
-    if (button(x, y, w, ROW - 4, "Modalita' modifica", true)) {
+    if (button(x, y, w, ROW - 4, tr(S_EDIT_MODE), true)) {
         enter_edit();
         return y;
     }
     y += ROW + 2;
-    y = section(x, y, w, "AGGIUNGI");
-    if (add_picker(x, y, w, &U.add_plant_type, PLANT_COUNT, PLANT_NAMES)) {
+    y = section(x, y, w, tr(S_ADD));
+    if (add_picker(x, y, w, &U.add_plant_type, PLANT_COUNT, plant_name)) {
         if (c->plant_count < CFG_MAX_PLANTS) {
             static const uint8_t H[PLANT_COUNT] = {70, 100, 26, 50, 55, 22, 10, 60, 7, 200};
             static const uint16_t COLS[PLANT_COUNT] = {
@@ -709,11 +718,11 @@ static int page_plants(int x, int y, int w, uint32_t now)
             p->rot = 0;
             p->scale = 100;
             app_config_changed(SC_PLANTS);
-            toast("Pianta aggiunta", now);
-        } else toast("Massimo raggiunto", now);
+            toast(tr(S_PLANT_ADDED), now);
+        } else toast(tr(S_LIMIT_REACHED), now);
     }
     y += ROW;
-    if (add_picker(x, y, w, &U.add_decor_type, DECOR_COUNT, DECOR_NAMES)) {
+    if (add_picker(x, y, w, &U.add_decor_type, DECOR_COUNT, decor_name)) {
         if (c->decor_count < CFG_MAX_DECOR) {
             static const uint16_t COLS[DECOR_COUNT] = {
                 RGB565(70, 72, 78),  RGB565(150, 108, 68), RGB565(95, 98, 102), RGB565(120, 105, 90),
@@ -728,13 +737,13 @@ static int page_plants(int x, int y, int w, uint32_t now)
             d->rot = 0;
             d->scale = 100;
             app_config_changed(SC_STATIC);
-            toast("Decorazione aggiunta", now);
-        } else toast("Massimo raggiunto", now);
+            toast(tr(S_DECOR_ADDED), now);
+        } else toast(tr(S_LIMIT_REACHED), now);
     }
     y += ROW + 2;
-    y = section(x, y, w, "BOLLE");
+    y = section(x, y, w, tr(S_BUBBLES));
     int v = c->bubble_sources;
-    if (slider(x, y + 2, w, "Sorgenti", &v, 0, CFG_MAX_BUBBLES)) {
+    if (slider(x, y + 2, w, tr(S_SOURCES), &v, 0, CFG_MAX_BUBBLES)) {
         while (c->bubble_sources < v) {
             BubbleCfg *b = &c->bubbles[c->bubble_sources++];
             b->x = (int16_t)(30 + (hash32(now + (uint32_t)v) % 340));
@@ -745,18 +754,18 @@ static int page_plants(int x, int y, int w, uint32_t now)
     }
     y += 32;
     char title[32];
-    snprintf(title, sizeof(title), "ELEMENTI (%d)", c->plant_count + c->decor_count);
+    snprintf(title, sizeof(title), tr(S_FMT_ITEMS), c->plant_count + c->decor_count);
     y = section(x, y, w, title);
     int k = 0;
     for (int i = 0; i < c->plant_count; i++, y += 18, k++)
-        if (item_row(x, y, w, PLANT_NAMES[c->plants[i].type], c->plants[i].layer, k & 1)) {
+        if (item_row(x, y, w, plant_name(c->plants[i].type), c->plants[i].layer, k & 1)) {
             memmove(&c->plants[i], &c->plants[i + 1], sizeof(PlantCfg) * (size_t)(c->plant_count - i - 1));
             c->plant_count--;
             app_config_changed(SC_PLANTS);
             break;
         }
     for (int i = 0; i < c->decor_count; i++, y += 18, k++)
-        if (item_row(x, y, w, DECOR_NAMES[c->decor[i].type], c->decor[i].layer, k & 1)) {
+        if (item_row(x, y, w, decor_name(c->decor[i].type), c->decor[i].layer, k & 1)) {
             memmove(&c->decor[i], &c->decor[i + 1], sizeof(DecorCfg) * (size_t)(c->decor_count - i - 1));
             c->decor_count--;
             app_config_changed(SC_STATIC);
@@ -788,7 +797,7 @@ static int page_creatures(int x, int y, int w, uint32_t now)
     // population gauge
     bool over = total > c->creature_limit;
     snprintf(buf, sizeof(buf), "%d / %d", total, c->creature_limit);
-    font_draw(g_cv, x, y, "Popolazione", COL_TEXT);
+    font_draw(g_cv, x, y, tr(S_POPULATION), COL_TEXT);
     text_right(x + w, y, buf, over ? COL_CORAL : COL_ACCENT);
     rrect(x, y + 11, w, 6, COL_TRACK);
     int fw = c->creature_limit ? (total > c->creature_limit ? w : total * w / c->creature_limit) : 0;
@@ -801,19 +810,19 @@ static int page_creatures(int x, int y, int w, uint32_t now)
         int variant = slot >= 0 ? c->species[slot].variant : 0;
         card(x, y, w, 33, COL_CARD, n ? COL_ACCENT_DK : COL_CARD_EDGE);
         sprite_fit(species_sprite(s), d->pal[variant], x + 3, y + 3, 30, 27);
-        font_draw(g_cv, x + 36, y + 4, d->name, n ? COL_TEXT : COL_DIM);
+        font_draw(g_cv, x + 36, y + 4, tr(d->name), n ? COL_TEXT : COL_DIM);
         int by = y + 15;
         bool minus = button(x + 36, by, 18, 15, "-", false);
         snprintf(buf, sizeof(buf), "%d", n);
         font_draw_centered(g_cv, x + 66, by + 4, buf, n ? COL_ACCENT : COL_DIM);
         bool plus = button(x + 78, by, 18, 15, "+", false);
-        snprintf(buf, sizeof(buf), "Colore %d/%d", variant + 1, d->variants);
+        snprintf(buf, sizeof(buf), tr(S_FMT_COLOR), variant + 1, d->variants);
         bool var = d->variants > 1 && button(x + 100, by, w - 104, 15, buf, false);
-        if (d->variants <= 1) font_draw(g_cv, x + 104, by + 4, "1 colore", COL_DIM);
+        if (d->variants <= 1) font_draw(g_cv, x + 104, by + 4, tr(S_ONE_COLOR), COL_DIM);
         if (!(minus || plus || var)) continue;
         if (slot < 0) {
             if (minus || c->species_count >= CFG_MAX_SPECIES) {
-                if (!minus) toast("Troppe specie", now);
+                if (!minus) toast(tr(S_TOO_MANY_SPECIES), now);
                 continue;
             }
             slot = c->species_count++;
@@ -825,7 +834,7 @@ static int page_creatures(int x, int y, int w, uint32_t now)
         if (minus && sc->count > 0) sc->count--;
         if (plus && sc->count < d->max_count) {
             if (total < c->creature_limit) sc->count++;
-            else toast("Limite creature", now);
+            else toast(tr(S_CREATURE_LIMIT), now);
         }
         if (var) sc->variant = (uint8_t)((sc->variant + 1) % d->variants);
         if (sc->count == 0 && !var) { // drop empty entries
@@ -840,30 +849,28 @@ static int page_creatures(int x, int y, int w, uint32_t now)
 static int page_env(int x, int y, int w)
 {
     AquariumConfig *c = app_cfg();
-    y = section(x, y, w, "LUCE");
-    if (toggle(x, y, w, "Ciclo giorno/notte", &c->day_night_cycle)) app_config_changed(0);
-    y += 24;
+    y = section(x, y, w, tr(S_LIGHT));
     int v = c->brightness;
-    if (slider(x, y + 2, w, "Luminosita' %", &v, 10, 100)) {
+    if (slider(x, y + 2, w, tr(S_BRIGHTNESS), &v, 10, 100)) {
         c->brightness = (uint8_t)v;
         app_config_changed(0);
     }
     y += 32;
-    y = section(x, y, w, "SIMULAZIONE");
+    y = section(x, y, w, tr(S_SIMULATION));
     v = c->sim_speed;
-    if (slider(x, y + 2, w, "Velocita' %", &v, 50, 200)) {
+    if (slider(x, y + 2, w, tr(S_SPEED), &v, 50, 200)) {
         c->sim_speed = (uint8_t)v;
         app_config_changed(0);
     }
     y += 30;
     v = c->creature_limit;
-    if (slider(x, y + 2, w, "Limite creature", &v, 10, 120)) {
+    if (slider(x, y + 2, w, tr(S_CREATURE_LIMIT), &v, 10, 120)) {
         c->creature_limit = (uint16_t)v;
         app_config_changed(SC_CREATURES);
     }
     y += 32;
-    y = section(x, y, w, "SCHERMO");
-    font_draw(g_cv, x, y + 5, "FPS massimi", COL_TEXT);
+    y = section(x, y, w, tr(S_SCREEN));
+    font_draw(g_cv, x, y + 5, tr(S_MAX_FPS), COL_TEXT);
     // segmented control
     if (button(x + w - 58, y, 29, 17, "20", c->fps_cap == 20)) {
         c->fps_cap = 20;
@@ -879,15 +886,24 @@ static int page_env(int x, int y, int w)
     for (int i = 0; i < 6; i++)
         if (OFF[i] == c->screen_off_minutes) idx = i;
     char buf[40];
-    if (c->screen_off_minutes) snprintf(buf, sizeof(buf), "Spegni dopo %d min", c->screen_off_minutes);
-    else snprintf(buf, sizeof(buf), "Spegnimento: mai");
+    if (c->screen_off_minutes) snprintf(buf, sizeof(buf), tr(S_FMT_SCREEN_OFF), c->screen_off_minutes);
+    else snprintf(buf, sizeof(buf), "%s", tr(S_SCREEN_OFF_NEVER));
     if (button(x, y, w, ROW - 6, buf, false)) {
         c->screen_off_minutes = OFF[(idx + 1) % 6];
         app_config_changed(0);
     }
     y += ROW + 2;
-    y = section(x, y, w, "RETE");
-    font_draw(g_cv, x, y, "Wi-Fi/NTP: non configurato", COL_DIM);
+    y = section(x, y, w, tr(S_LANGUAGE));
+    // one segment per language, each labelled with its own code
+    int lw = (w - 4 * (LANG_COUNT - 1)) / LANG_COUNT;
+    for (int l = 0; l < LANG_COUNT; l++)
+        if (button(x + l * (lw + 4), y, lw, 17, lang_code((Lang)l), c->language == l) && c->language != l) {
+            c->language = (uint8_t)l;
+            app_config_changed(0);
+        }
+    y += 24;
+    y = section(x, y, w, tr(S_NETWORK));
+    font_draw(g_cv, x, y, tr(S_WIFI_NOT_SET), COL_DIM);
     return y + 14;
 }
 
@@ -900,23 +916,23 @@ static int page_presets(int x, int y, int w, uint32_t now)
         snprintf(num, sizeof(num), "%d", s + 1);
         canvas_fill_circle(g_cv, x + 10, y + 9, 6, n[0] ? COL_ACCENT : COL_TRACK);
         font_draw_centered(g_cv, x + 10, y + 6, num, n[0] ? COL_ON_ACCENT : COL_DIM);
-        font_draw(g_cv, x + 21, y + 6, n[0] ? n : "Slot libero", n[0] ? COL_TEXT : COL_DIM);
+        font_draw(g_cv, x + 21, y + 6, n[0] ? n : tr(S_EMPTY_SLOT), n[0] ? COL_TEXT : COL_DIM);
         int bw = (w - 16) / 3, by = y + 18;
-        if (button(x + 4, by, bw, 16, "Salva", !n[0])) {
+        if (button(x + 4, by, bw, 16, tr(S_SAVE), !n[0])) {
             char name[PRESET_NAME_LEN];
             int ti = theme_index(app_cfg()->theme_id);
-            snprintf(name, sizeof(name), "%s %d", ti >= 0 ? THEME_NAMES[ti] : "Custom", s + 1);
+            snprintf(name, sizeof(name), "%s %d", ti >= 0 ? theme_name(ti) : tr(S_CUSTOM_PRESET), s + 1);
             storage_request_preset_save(s, app_cfg(), name);
-            toast("Preset salvato", now);
+            toast(tr(S_PRESET_SAVED), now);
         }
-        if (n[0] && button(x + 8 + bw, by, bw, 16, "Carica", false)) {
+        if (n[0] && button(x + 8 + bw, by, bw, 16, tr(S_LOAD), false)) {
             AquariumConfig c = *app_cfg();
             if (storage_preset_load(s, &c)) app_load_config(&c);
-            toast("Preset caricato", now);
+            toast(tr(S_PRESET_LOADED), now);
         }
-        if (n[0] && button(x + 12 + 2 * bw, by, bw, 16, "Elimina", false)) {
+        if (n[0] && button(x + 12 + 2 * bw, by, bw, 16, tr(S_DELETE), false)) {
             storage_request_preset_delete(s);
-            toast("Preset eliminato", now);
+            toast(tr(S_PRESET_DELETED), now);
         }
     }
     return y;
@@ -1005,12 +1021,12 @@ static void edit_draw(uint32_t now)
         canvas_hline(g_cv, 0, CANVAS_W - 1, y, c565_lerp(COL_HEADER, COL_BG_BOT, (uint8_t)((y - BAR_Y) * 255 / 24)));
     canvas_hline(g_cv, 0, CANVAS_W - 1, BAR_Y, COL_ACCENT_DK);
     int y = BAR_Y + 3, h = 18;
-    if (button(4, y, 36, h, "Fatto", true)) {
+    if (button(4, y, 36, h, tr(S_DONE), true)) {
         U.editing = false;
         scene_set_edit(false, SEL_NONE, -1);
         app_config_changed(0);
     }
-    if (button(43, y, 46, h, "Annulla", false)) {
+    if (button(43, y, 46, h, tr(S_CANCEL), false)) {
         *c = U.backup;
         U.editing = false;
         scene_set_edit(false, SEL_NONE, -1);
@@ -1019,14 +1035,14 @@ static void edit_draw(uint32_t now)
     Placement pl = sel_place();
     if (!pl.x) {
         icon(102, y + 3, IC_EDIT);
-        font_draw(g_cv, 118, y + 5, "Tocca e trascina piante/decor", COL_DIM);
+        font_draw(g_cv, 118, y + 5, tr(S_EDIT_HINT), COL_DIM);
         return;
     }
     bool decor = U.sel_kind == SEL_DECOR;
     uint8_t *layer = decor ? &c->decor[U.sel_index].layer : &c->plants[U.sel_index].layer;
     uint16_t *color = decor ? &c->decor[U.sel_index].color : &c->plants[U.sel_index].color;
     unsigned flag = decor ? SC_STATIC : SC_PLANTS;
-    if (button(93, y, 46, h, *layer ? "Davanti" : "Dietro", false)) {
+    if (button(93, y, 46, h, tr(*layer ? S_FRONT : S_BACK), false)) {
         *layer = !*layer;
         app_config_changed(SC_STATIC | SC_PLANTS);
     }
@@ -1054,7 +1070,7 @@ static void edit_draw(uint32_t now)
         app_config_changed(flag);
     }
     // back onto the substrate, upright
-    if (button(218, y, 34, h, "Fondo", false) && (*pl.dy || *pl.rot)) {
+    if (button(218, y, 34, h, tr(S_TO_FLOOR), false) && (*pl.dy || *pl.rot)) {
         *pl.dy = 0;
         *pl.rot = 0;
         app_config_changed(flag);
@@ -1076,7 +1092,7 @@ static void edit_draw(uint32_t now)
     snprintf(info, sizeof(info), "%d", *pl.rot);
     rrect(327, y + 3, 18, 12, COL_TRACK);
     font_draw_centered(g_cv, 336, y + 5, info, *pl.rot ? COL_ACCENT : COL_DIM);
-    if (button(348, y, 48, h, "Elimina", false)) {
+    if (button(348, y, 48, h, tr(S_DELETE), false)) {
         if (U.sel_kind == SEL_PLANT) {
             memmove(&c->plants[U.sel_index], &c->plants[U.sel_index + 1],
                     sizeof(PlantCfg) * (size_t)(c->plant_count - U.sel_index - 1));
@@ -1187,7 +1203,7 @@ void ui_draw(Canvas *cv, uint32_t now)
         static const int PAGE_ICON[P_COUNT] = {IC_ENV, IC_BIOME, IC_WATER, IC_SUBSTRATE, IC_PLANTS, IC_CREATURES, IC_ENV,
                                                IC_PRESET};
         if (U.page != P_MAIN) icon(hx, 6, PAGE_ICON[U.page]), hx += 16;
-        text_bold(hx, 8, PAGE_TITLES[U.page], COL_TEXT);
+        text_bold(hx, 8, page_title(U.page), COL_TEXT);
         if (round_button(CANVAS_W - 22, 2, 20, 20, 'x')) ui_close();
 
         // content (clipped)

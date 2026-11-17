@@ -5,6 +5,7 @@
 #include "../config/config.h"
 #include "../engine/canvas.h"
 #include "../engine/sprite.h"
+#include "../i18n/i18n.h"
 
 typedef enum { BEH_SCHOOL = 0, BEH_WANDER, BEH_BOTTOM, BEH_SHRIMP, BEH_SNAIL } BehaviorType;
 
@@ -23,7 +24,8 @@ typedef enum {
 } FishPattern;
 typedef enum { BODY_SLIM = 0, BODY_DISC, BODY_SHRIMP, BODY_RAMSHORN, BODY_CONE, BODY_DISCUS, BODY_ANGEL,
                BODY_CORY, BODY_GOURAMI, BODY_KRIB, BODY_MBUNA, BODY_KUHLI, BODY_CARDINAL, BODY_EMBER,
-               BODY_HARLEQUIN, BODY_CONGO, BODY_PEACOCK, BODY_GOLDFISH, BODY_KOI, BODY_MEDAKA } BodyType;
+               BODY_HARLEQUIN, BODY_CONGO, BODY_PEACOCK, BODY_GOLDFISH, BODY_KOI, BODY_MEDAKA, BODY_BETTA,
+               BODY_TANICHTHYS, BODY_RUMMY, BODY_SNAKEHEAD } BodyType;
 // BODY_SHRIMP/RAMSHORN/CONE: invertebrates; BODY_DISCUS and later: dedicated per-species generators
 enum { FIN_FEELERS = 1, FIN_SWEPT = 2 }; // FishShape.flags
 
@@ -43,7 +45,7 @@ typedef struct {
 
 typedef struct {
     const char *id;   // "neon_tetra"
-    const char *name; // "Neon"
+    StrId name;       // display name, tr() it
     const char *biome; // biome the species comes from
     BehaviorType behavior;
     uint8_t size_px;              // nominal width on the 400x240 canvas
@@ -80,6 +82,14 @@ typedef struct {
     // Mbuna: 1 dark edge, 2 back, 3 flank, 4 belly, 5 bars, 6 opercle, 7 fins, 8 pupil, 9 iris, 10 fin edge,
     //   12 egg spots, 13 pelvic fins, 14 pectoral/fin rays.
     // Kuhli: 1 dark edge, 2 back, 3 flank, 4 belly, 5 saddles, 7 fins, 8 eye.
+    // Betta: 1 dark edge, 2 back, 3 body, 4 belly, 5 scales, 6 head, 7 fins, 8 pupil, 9 iris, 10 fin edge,
+    //   11 fin rays, 12 rear body patch, 13 fin base, 14 crown spikes / streamer tips, 15 opercle, throat, mouth.
+    // White cloud: 1 dark edge, 2 back, 3 flank, 4 belly, 5 iridescent line, 6 warm band, 7 fins, 8 pupil,
+    //   9 iris, 10 fin edge, 11 tail, 12 peduncle spot, 13 fin tips.
+    // Rummy-nose: 1 dark edge, 2 back, 3 flank, 4 belly, 5 scale sheen, 6 red head, 7 fins, 8 pupil, 9 iris,
+    //   10 black tail bars, 11 white tail, 12 dark red head top.
+    // Snakehead: 1 dark edge, 2 back, 3 flank, 4 belly, 5 blotches, 6 blotch outline, 7 fins, 8 pupil, 9 iris,
+    //   10 fin rays, 11 pectoral fins, 12 head streaks, 13 pelvic fins.
     // Discus: 1 outline, 2 body shade, 3 body, 4 belly/face, 5 lines, 6 dots/tail, 7 fins, 8 pupil, 9 fin edge/eye ring.
     uint16_t pal[SPECIES_VARIANTS][16]; // sprite_draw reads 16 entries
 } SpeciesDef;

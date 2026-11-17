@@ -1,6 +1,7 @@
 #include "config.h"
 #include <string.h>
 #include "json.h"
+#include "../i18n/i18n.h"
 
 static int clampi(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
@@ -10,6 +11,7 @@ void config_sanitize(AquariumConfig *c)
     c->theme_id[sizeof(c->theme_id) - 1] = 0;
     c->light_rays = (uint8_t)clampi(c->light_rays, 0, 5);
     c->particles = (uint8_t)clampi(c->particles, 0, 100);
+    c->backdrop = (uint8_t)clampi(c->backdrop, 0, BACKDROP_COUNT - 1);
     c->substrate_type = (uint8_t)clampi(c->substrate_type, 0, SUB_COUNT - 1);
     c->substrate_height = (uint8_t)clampi(c->substrate_height, 10, 60);
     c->substrate_roughness = (uint8_t)clampi(c->substrate_roughness, 0, 100);
@@ -49,7 +51,8 @@ void config_sanitize(AquariumConfig *c)
     c->fps_cap = c->fps_cap == 20 ? 20 : 30;
     c->screen_off_minutes = (uint16_t)clampi(c->screen_off_minutes, 0, 600);
     c->brightness = (uint8_t)clampi(c->brightness ? c->brightness : 100, 10, 100);
-    c->creature_limit = (uint16_t)clampi(c->creature_limit ? c->creature_limit : 60, 10, 120);
+    c->creature_limit = (uint16_t)clampi(c->creature_limit ? c->creature_limit : 40, 10, 120);
+    if (c->language >= LANG_COUNT) c->language = LANG_EN;
 }
 
 static void color_hex(JsonWriter *w, uint16_t c)
@@ -70,8 +73,8 @@ size_t config_to_json(const AquariumConfig *c, const char *name, char *buf, size
     color_hex(&w, c->water_top);
     jw_raw(&w, ", \"water_bottom\": ");
     color_hex(&w, c->water_bottom);
-    jw_printf(&w, ",\n  \"light_rays\": %d, \"particles\": %d, \"show_surface\": %s,\n", c->light_rays, c->particles,
-              c->show_surface ? "true" : "false");
+    jw_printf(&w, ",\n  \"light_rays\": %d, \"particles\": %d, \"show_surface\": %s, \"backdrop\": %d,\n", c->light_rays,
+              c->particles, c->show_surface ? "true" : "false", c->backdrop);
     jw_printf(&w, "  \"substrate_type\": %d, \"substrate_color\": ", c->substrate_type);
     color_hex(&w, c->substrate_color);
     jw_printf(&w, ", \"substrate_height\": %d, \"substrate_roughness\": %d, \"substrate_seed\": %lu,\n",
@@ -110,10 +113,10 @@ size_t config_to_json(const AquariumConfig *c, const char *name, char *buf, size
         jw_printf(&w, ", \"count\": %d, \"variant\": %d}", c->species[i].count, c->species[i].variant);
     }
     jw_printf(&w,
-              "],\n  \"day_night_cycle\": %s, \"sim_speed\": %d, \"fps_cap\": %d, \"screen_off_minutes\": %d,"
-              " \"brightness\": %d, \"creature_limit\": %d\n}\n",
-              c->day_night_cycle ? "true" : "false", c->sim_speed, c->fps_cap, c->screen_off_minutes, c->brightness,
-              c->creature_limit);
+              "],\n  \"sim_speed\": %d, \"fps_cap\": %d, \"screen_off_minutes\": %d,"
+              " \"brightness\": %d, \"creature_limit\": %d, \"language\": %d\n}\n",
+              c->sim_speed, c->fps_cap, c->screen_off_minutes, c->brightness,
+              c->creature_limit, c->language);
     return w.overflow ? 0 : w.len;
 }
 
@@ -137,17 +140,19 @@ bool config_from_json(AquariumConfig *c, const char *js, char *name, size_t name
     GI(light_rays, "light_rays");
     GI(particles, "particles");
     GB(show_surface, "show_surface");
+    // configs saved before backdrops existed keep the plain water they were made with
+    c->backdrop = (uint8_t)json_int(js, t, json_get(js, t, 0, "backdrop"), BG_OPEN);
     GI(substrate_type, "substrate_type");
     GI(substrate_color, "substrate_color");
     GI(substrate_height, "substrate_height");
     GI(substrate_roughness, "substrate_roughness");
     c->substrate_seed = (uint32_t)json_int(js, t, json_get(js, t, 0, "substrate_seed"), (long)c->substrate_seed);
-    GB(day_night_cycle, "day_night_cycle");
     GI(sim_speed, "sim_speed");
     GI(fps_cap, "fps_cap");
     GI(screen_off_minutes, "screen_off_minutes");
     GI(brightness, "brightness");
     GI(creature_limit, "creature_limit");
+    GI(language, "language");
 #undef GI
 #undef GB
 

@@ -157,9 +157,9 @@ Con `BRINGUP_TEST 0` carica lo sketch e segui la checklist:
 | 6 | **Tieni premuto 1 s** | Si apre il menu a destra |
 | 7 | Menu → **Bioma** | 6 anteprime, tocca per cambiare bioma |
 | 8 | Menu → **Acqua / Fondale** | Le modifiche (colori, raggi, altezza, "Rigenera") si vedono subito |
-| 9 | Menu → **Creature** | `+`/`−` aggiunge o toglie pesci; "Colore" cambia variante; limite totale 60 |
+| 9 | Menu → **Creature** | `+`/`−` aggiunge o toglie pesci; "Colore" cambia variante; limite totale 40 (default) |
 | 10 | Menu → **Piante e decor → Modalita' modifica** | Tocca e trascina una pianta o decorazione in orizzontale e in verticale (vicino al fondo si aggancia di nuovo); prova Dietro/Davanti, Colore (tocca il quadratino), **-15/+15** (ruota), **- / +** (dimensione, 50-200%), **Fondo** (torna sul fondo e dritta), Elimina, poi **Fatto** |
-| 11 | Menu → **Ambiente** | Giorno/notte, velocità, luminosità, FPS 20/30, spegnimento schermo |
+| 11 | Menu → **Ambiente** | Luminosità, velocità, FPS 20/30, spegnimento schermo |
 | 12 | Menu → **Preset → Salva**, cambia bioma, poi **Carica** | Torna la scena salvata |
 | 13 | Fai una modifica, **chiudi il menu**, aspetta **3 s**, premi **RESET** sulla scheda | L'acquario riparte esattamente come l'avevi lasciato (con il menu aperto non si salva nulla) |
 | 14 | Ambiente → "Spegni dopo 5 min", attendi | La retroilluminazione si spegne; il primo tocco la riaccende (quel tocco non dà cibo) |

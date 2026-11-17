@@ -15,6 +15,9 @@ extern "C" {
 #define CFG_MAX_SPECIES 12
 #define CFG_MAX_USER_PRESETS 8
 
+// Scenic backdrop painted behind everything (distant biotope silhouettes).
+typedef enum { BG_OPEN = 0, BG_ROCKS, BG_RICE, BG_SWAMP, BG_FOREST, BG_REEDS, BACKDROP_COUNT } Backdrop;
+
 typedef enum { SUB_SAND = 0, SUB_GRAVEL, SUB_DARK_ROCK, SUB_PEBBLES, SUB_NONE, SUB_COUNT } SubstrateType;
 
 typedef enum {
@@ -105,6 +108,7 @@ typedef struct {
     uint8_t light_rays;               // 0..5
     uint8_t particles;                // density 0..100
     bool show_surface;
+    uint8_t backdrop; // Backdrop
 
     // Substrate
     uint8_t substrate_type;
@@ -125,12 +129,12 @@ typedef struct {
     SpeciesCfg species[CFG_MAX_SPECIES];
 
     // Environment
-    bool day_night_cycle;
     uint8_t sim_speed;           // 50..200 %
     uint8_t fps_cap;             // 20 | 30
     uint16_t screen_off_minutes; // 0 = never
     uint8_t brightness;          // 10..100 %, simulated (backlight is on/off only)
-    uint16_t creature_limit;     // global cap, default 60
+    uint16_t creature_limit;     // global cap, default 40
+    uint8_t language;            // Lang (i18n.h), 0 = English
 } AquariumConfig;
 
 // Clamp every field to a valid range (after load/migration or UI edits).

@@ -4,6 +4,7 @@
 #include "../engine/font.h"
 #include "../engine/hal.h"
 #include "../engine/input.h"
+#include "../i18n/i18n.h"
 #include "../scene/scene.h"
 #include "../scene/themes.h"
 #include "../ui/ui.h"
@@ -32,6 +33,7 @@ bool app_init(void)
     if (storage_load_active(&s_cfg)) hal_log("config: restored (theme %s)", s_cfg.theme_id);
     else hal_log("config: defaults");
     config_sanitize(&s_cfg);
+    i18n_set_lang(s_cfg.language);
     scene_set_config(&s_cfg, false);
     gesture_init(&s_gest);
     ui_init();
@@ -51,6 +53,7 @@ void app_report_stats(float fps, float frame_ms)
 void app_config_changed(unsigned flags)
 {
     config_sanitize(&s_cfg);
+    i18n_set_lang(s_cfg.language);
     if (flags) scene_config_changed(&s_cfg, flags);
     storage_mark_dirty(&s_cfg, hal_millis());
 }
@@ -59,12 +62,12 @@ void app_load_config(const AquariumConfig *c)
 {
     // keep the environment settings: they are not part of a scene preset
     AquariumConfig n = *c;
-    n.day_night_cycle = s_cfg.day_night_cycle;
     n.sim_speed = s_cfg.sim_speed;
     n.fps_cap = s_cfg.fps_cap;
     n.screen_off_minutes = s_cfg.screen_off_minutes;
     n.brightness = s_cfg.brightness;
     n.creature_limit = s_cfg.creature_limit;
+    n.language = s_cfg.language;
     config_sanitize(&n);
     s_cfg = n;
     scene_set_config(&s_cfg, true);

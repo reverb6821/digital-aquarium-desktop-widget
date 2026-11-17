@@ -1,10 +1,10 @@
 // Scene orchestrator.
 //
 // Layer order (back to front), see spec §6:
-//   bg cache  = water gradient + back static decor           (rebuilt on config change)
+//   bg cache  = water gradient + backdrop + back static decor           (rebuilt on config change)
 //   rays, particles, back plants, food, creatures, bubbles
 //   fg cache  = substrate + front static decor (colour-keyed) (rebuilt on config change)
-//   front plants, surface, edit highlight, day/night + fade
+//   front plants, surface, edit highlight, brightness + fade
 #include "scene.h"
 #include <string.h>
 #include "../engine/fixmath.h"
@@ -15,6 +15,9 @@
 static AquariumConfig s_cfg;
 static AquariumConfig s_pending;
 static Canvas s_bg, s_fg;
+static Canvas s_wb;          // water gradient + backdrop, rebuilt only when they change
+static uint16_t s_wb_top, s_wb_bottom;
+static int s_wb_backdrop = -1;
 static Canvas s_tbg, s_tfg; // thumbnail scratch (allocated lazily)
 static int s_fg_top;        // first row containing foreground pixels
 static float s_time;
@@ -39,6 +42,7 @@ bool scene_init(void)
 {
     fm_init();
     if (!alloc_canvas(&s_bg) || !alloc_canvas(&s_fg)) return false;
+    if (!alloc_canvas(&s_wb)) s_wb.px = NULL; // optional cache: without it the backdrop is redrawn every rebuild
     creatures_init();
     bubbles_init();
     return true;
@@ -47,7 +51,18 @@ bool scene_init(void)
 static void build_static(const AquariumConfig *c, Canvas *bg, Canvas *fg, int *fg_top)
 {
     substrate_profile(c, g_profile);
-    water_build(bg, c);
+    if (s_wb.px && bg == &s_bg) { // live scene only: thumbnails must not evict it
+        // the backdrop is the slow part of a rebuild: keep it while only plants/decor/substrate change
+        if (s_wb_backdrop != c->backdrop || s_wb_top != c->water_top || s_wb_bottom != c->water_bottom) {
+            water_build(&s_wb, c);
+            backdrop_draw(&s_wb, c);
+            s_wb_backdrop = c->backdrop, s_wb_top = c->water_top, s_wb_bottom = c->water_bottom;
+        }
+        canvas_copy(bg, &s_wb);
+    } else {
+        water_build(bg, c);
+        backdrop_draw(bg, c);
+    }
     decor_draw_static(bg, c, LAYER_BACK);
     canvas_fill(fg, FG_KEY);
     substrate_draw(fg, c, g_profile);
@@ -108,20 +123,6 @@ int scene_pick(int x, int y, int *index)
     return SEL_NONE;
 }
 
-// Daylight factor 0.35..1 from the time of day (real if known, else simulated
-// with 1 real minute = 1 simulated hour).
-float scene_daylight(void)
-{
-    if (!s_cfg.day_night_cycle) return 1.0f;
-    int tod = hal_time_of_day_min();
-    float h = tod >= 0 ? (float)tod / 60.0f : (float)((hal_millis() / 1000u) % 1440u) / 60.0f;
-    const float night = 0.35f;
-    if (h >= 8 && h < 18) return 1.0f;
-    if (h >= 21 || h < 5) return night;
-    if (h >= 5 && h < 8) return night + (1 - night) * (h - 5) / 3.0f;
-    return 1.0f - (1 - night) * (h - 18) / 3.0f; // 18..21 dusk
-}
-
 void scene_update(float dt)
 {
     if (s_fade_phase) {
@@ -171,9 +172,8 @@ static void draw_selection(Canvas *cv)
 void scene_render(Canvas *out)
 {
     const float t = s_time;
-    const float day = scene_daylight();
     canvas_copy(out, &s_bg);
-    water_rays_draw(out, &s_cfg, t, day);
+    water_rays_draw(out, &s_cfg, t, 1.0f);
     particles_draw(out, t);
     plants_draw(out, LAYER_BACK, t, s_sel_kind == SEL_PLANT ? s_sel_index : -1);
     decor_draw_dynamic(out, &s_cfg, LAYER_BACK, t);
@@ -186,7 +186,7 @@ void scene_render(Canvas *out)
     water_surface_draw(out, &s_cfg, t);
     if (s_edit) draw_selection(out);
 
-    float k = day * (float)s_cfg.brightness / 100.0f;
+    float k = (float)s_cfg.brightness / 100.0f;
     if (s_fade_phase == 1) k *= 1.0f - s_fade_t / FADE_TIME;
     else if (s_fade_phase == 2) k *= s_fade_t / FADE_TIME;
     if (k < 0.995f) canvas_darken(out, (uint32_t)(fm_clamp(k, 0, 1) * 256.0f));

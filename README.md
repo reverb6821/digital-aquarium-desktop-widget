@@ -19,7 +19,9 @@ Linux.
 - **Pixel-art rendering**: a 400×240 RGB565 canvas, upscaled 2× in the LCD bounce-buffer
   interrupt. No 800×480 frame buffer is needed. The target is 30 FPS.
 - **Living scene**: light rays, a wavy water surface, drifting particles, bubble columns,
-  plants that sway, and an optional day/night cycle.
+  plants that sway, and a fixed light level (no day/night cycle).
+- **Backdrops**: distant biotope scenery behind the water - open water, rockwork, rice paddy,
+  swamp, flooded forest, reed bed. Each biome picks a matching one; change it in Menu → Water.
 - **Behaviours**:
   - fish schools (boids on a spatial grid);
   - solitary fish that wander and pause;
@@ -36,7 +38,7 @@ Linux.
   - add, remove, move (horizontally and vertically), rotate, resize and recolour plants and
     decorations (edit mode with drag);
   - species, count and colour variants;
-  - day/night, speed, brightness, FPS cap, screen-off timer;
+  - brightness, speed, FPS cap, screen-off timer;
   - 8 user presets.
 - **Persistence**: the active tank is restored after a reboot. Presets are JSON files on
   LittleFS.
@@ -56,12 +58,12 @@ You can add any species, plant or decoration to any biome from the menu.
 
 ### Catalogue
 
-- **Fish (16)**:
-  - neon tetra, cardinal tetra, ember tetra, angelfish, discus, corydoras;
-  - harlequin rasbora, gourami, kuhli loach;
+- **Fish (20)**:
+  - neon tetra, cardinal tetra, ember tetra, rummy-nose tetra, angelfish, discus, corydoras;
+  - harlequin rasbora, gourami, kuhli loach, betta splendens (koi, black crowntail, red, blue), snakehead;
   - Congo tetra, kribensis;
   - mbuna, peacock cichlid;
-  - koi, goldfish, medaka.
+  - koi, goldfish, medaka, white cloud minnow (classic, gold).
 - **Invertebrates (3)**:
   - Caridina shrimp (red cherry, crystal red, amano, blue dream);
   - Planorbarius ramshorn snail (brown, red, blue);
@@ -153,3 +155,8 @@ Only `src/board/` touches ESP-IDF/Arduino. Everything else talks to the hardware
 - Not implemented yet: Wi-Fi/NTP clock, web page, assets from microSD, OTA updates.
 - Saved settings from firmware before the freshwater-biomes update are not migrated. The tank
   starts again from the Amazzonico biome.
+
+## License
+
+[MIT](LICENSE). You may use, copy, modify and redistribute this project, including in
+commercial products, as long as the copyright notice and the license text are kept.

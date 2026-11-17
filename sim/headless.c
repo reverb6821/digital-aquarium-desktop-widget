@@ -113,6 +113,7 @@ int main(int argc, char **argv)
     g_sim_use_fake_clock = 1;
     g_sim_fake_ms = 1000;
     remove("sim_data/cfg.bin");
+    remove("sim_data/cfgj.bin"); // active config (storage ACTIVE_KEY)
     remove("sim_data/active.json");
     canvas_init(&cv, px, CANVAS_W, CANVAS_H);
     check(app_init(), "app_init");
@@ -277,7 +278,7 @@ int main(int argc, char **argv)
         shot(name);
     }
 
-    // stress: creature limit 60 with many fish
+    // stress: creature limit 40 with many fish
     {
         AquariumConfig *c = app_cfg();
         theme_apply(c, THEME_AMAZON);
@@ -288,7 +289,7 @@ int main(int argc, char **argv)
         app_config_changed(SC_ALL);
         frames(300);
         printf("  creatures in stress test: %d\n", scene_creature_count());
-        check(scene_creature_count() == 60, "global creature limit (60)");
+        check(scene_creature_count() == 40, "global creature limit (40)");
         shot("10_stress");
     }
     printf("  avg app_frame on host: %.3f ms\n", total_ms / total_frames);

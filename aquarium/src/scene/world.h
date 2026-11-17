@@ -26,6 +26,9 @@ void particles_init(const AquariumConfig *c, uint32_t seed);
 void particles_update(float dt);
 void particles_draw(Canvas *cv, float t);
 
+// ---- backdrop.c ----
+void backdrop_draw(Canvas *bg, const AquariumConfig *c);
+
 // ---- substrate.c ----
 void substrate_profile(const AquariumConfig *c, int16_t *profile);
 void substrate_draw(Canvas *fg, const AquariumConfig *c, const int16_t *profile);

@@ -14,7 +14,7 @@ add_compile_definitions(_DEFAULT_SOURCE)
 
 set(SRC ${CMAKE_CURRENT_SOURCE_DIR}/../aquarium/src)
 file(GLOB PORTABLE_SOURCES
-  ${SRC}/engine/*.c ${SRC}/scene/*.c ${SRC}/config/*.c ${SRC}/ui/*.c ${SRC}/app/*.c)
+  ${SRC}/engine/*.c ${SRC}/scene/*.c ${SRC}/config/*.c ${SRC}/ui/*.c ${SRC}/app/*.c ${SRC}/i18n/*.c)
 
 add_library(aquarium_core STATIC ${PORTABLE_SOURCES} hal_sim.c png_write.c)
 target_link_libraries(aquarium_core PUBLIC m)

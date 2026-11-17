@@ -4,16 +4,17 @@
 #include "../engine/color.h"
 
 const char *const THEME_IDS[THEME_COUNT] = {"amazon", "blackwater", "seasia", "africa", "malawi", "pond"};
-const char *const THEME_NAMES[THEME_COUNT] = {"Amazzonico", "Acque nere", "Sud-Est Asia",
-                                              "Africa Congo", "Lago Malawi", "Laghetto"};
+_Static_assert(S_THEME_LAST - S_THEME_FIRST + 1 == THEME_COUNT, "theme name strings out of sync");
+
+const char *theme_name(int id) { return id >= 0 && id < THEME_COUNT ? tr((StrId)(S_THEME_FIRST + id)) : "?"; }
 
 const WaterPalette WATER_PALETTES[WATER_PALETTE_COUNT] = {
-    {"Amazzonico", RGB565(24, 58, 60), RGB565(5, 16, 18)},
-    {"Acque nere (tannini)", RGB565(70, 46, 20), RGB565(14, 8, 3)},
-    {"Sud-Est Asia", RGB565(28, 66, 58), RGB565(6, 18, 16)},
-    {"Congo", RGB565(46, 56, 36), RGB565(10, 14, 8)},
-    {"Blu Malawi", RGB565(30, 80, 120), RGB565(6, 20, 44)},
-    {"Verde laghetto", RGB565(40, 70, 40), RGB565(9, 20, 10)},
+    {S_WP_AMAZON, RGB565(24, 58, 60), RGB565(5, 16, 18)},
+    {S_WP_BLACKWATER, RGB565(70, 46, 20), RGB565(14, 8, 3)},
+    {S_WP_SEASIA, RGB565(28, 66, 58), RGB565(6, 18, 16)},
+    {S_WP_CONGO, RGB565(46, 56, 36), RGB565(10, 14, 8)},
+    {S_WP_MALAWI, RGB565(30, 80, 120), RGB565(6, 20, 44)},
+    {S_WP_POND, RGB565(40, 70, 40), RGB565(9, 20, 10)},
 };
 
 const uint16_t SWATCHES[SWATCH_COUNT] = {
@@ -104,6 +105,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
     switch (id) {
     case THEME_AMAZON:
     default: // Rio Negro tributary, planted: swords, vallisneria, stem plants, wood
+        c->backdrop = BG_FOREST;
         water(c, RGB565(24, 58, 60), RGB565(5, 16, 18), 4, 40);
         substrate(c, SUB_SAND, RGB565(150, 125, 90), 48, 40, 1234);
         add_decor(c, DECOR_DRIFTWOOD, 120, LAYER_BACK, WOOD);
@@ -129,6 +131,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         add_species(c, "corydoras", 6, 0);
         break;
     case THEME_BLACKWATER: // tea-coloured water, tangle of branches and roots, leaf litter
+        c->backdrop = BG_SWAMP;
         water(c, RGB565(70, 46, 20), RGB565(14, 8, 3), 2, 65);
         substrate(c, SUB_SAND, RGB565(90, 66, 40), 44, 30, 4321);
         add_decor(c, DECOR_BRANCH, 70, LAYER_BACK, WOOD_DARK);
@@ -151,6 +154,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         add_species(c, "corydoras", 5, 1);
         break;
     case THEME_SEASIA: // Borneo stream: Cryptocoryne carpet, Java fern and Buce on rocks/wood
+        c->backdrop = BG_RICE;
         water(c, RGB565(28, 66, 58), RGB565(6, 18, 16), 3, 35);
         substrate(c, SUB_GRAVEL, RGB565(80, 74, 66), 50, 55, 99);
         add_decor(c, DECOR_ROCK_BIG, 70, LAYER_BACK, STONE);
@@ -182,6 +186,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         add_species(c, "assassin_snail", 2, 0);
         break;
     case THEME_AFRICA: // Congo river bank: Bolbitis and Anubias on wood and slate
+        c->backdrop = BG_FOREST;
         water(c, RGB565(46, 56, 36), RGB565(10, 14, 8), 3, 45);
         substrate(c, SUB_SAND, RGB565(120, 100, 75), 46, 45, 777);
         add_decor(c, DECOR_ROOTS, 90, LAYER_BACK, WOOD);
@@ -203,6 +208,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         add_species(c, "kribensis", 2, 0);
         break;
     case THEME_MALAWI: // rocky lake shore: piles of stone, very few plants
+        c->backdrop = BG_ROCKS;
         water(c, RGB565(30, 80, 120), RGB565(6, 20, 44), 5, 25);
         substrate(c, SUB_SAND, RGB565(200, 185, 150), 44, 30, 2024);
         add_decor(c, DECOR_ROCK_BIG, 50, LAYER_BACK, STONE);
@@ -225,6 +231,7 @@ void theme_apply(AquariumConfig *c, ThemeId id)
         add_species(c, "aulonocara", 3, 0);
         break;
     case THEME_POND: // garden pond: green water, pebbles, water lilies
+        c->backdrop = BG_REEDS;
         water(c, RGB565(40, 70, 40), RGB565(9, 20, 10), 3, 75);
         substrate(c, SUB_PEBBLES, RGB565(90, 84, 72), 40, 50, 5150);
         add_decor(c, DECOR_ROCK_BIG, 40, LAYER_BACK, STONE_WARM);
@@ -261,11 +268,10 @@ int theme_index(const char *theme_id)
 void config_defaults(AquariumConfig *c)
 {
     memset(c, 0, sizeof(*c));
-    c->day_night_cycle = false;
     c->sim_speed = 100;
     c->fps_cap = 30;
     c->screen_off_minutes = 0;
     c->brightness = 100;
-    c->creature_limit = 60;
+    c->creature_limit = 40;
     theme_apply(c, THEME_AMAZON);
 }
